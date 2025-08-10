@@ -99,6 +99,15 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
                 </div>
               )}
 
+              {/* GIF Play Icon */}
+              {meme.type === 'gif' && (
+                <div className="absolute top-2 right-2">
+                  <div className="bg-kevin-magenta border border-white px-2 py-1 text-xs font-pixel">
+                    GIF
+                  </div>
+                </div>
+              )}
+
               {/* Hover Overlay */}
               {selectedMeme?.id === meme.id && (
                 <div className="absolute inset-0 bg-kevin-orange bg-opacity-20 flex items-center justify-center">
@@ -143,16 +152,16 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
       {/* Community Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">67</div>
+          <div className="meme-counter text-2xl">{communityMemes.length}</div>
           <div className="text-kevin-orange font-pixel text-xs">Total Memes</div>
         </div>
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">727</div>
-          <div className="text-kevin-neon font-pixel text-xs">Views</div>
+          <div className="meme-counter text-2xl">{communityMemes.filter(m => m.type === 'video').length}</div>
+          <div className="text-kevin-neon font-pixel text-xs">Videos</div>
         </div>
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">12</div>
-          <div className="text-kevin-magenta font-pixel text-xs">Artists</div>
+          <div className="meme-counter text-2xl">{communityMemes.filter(m => m.type === 'gif').length}</div>
+          <div className="text-kevin-magenta font-pixel text-xs">GIFs</div>
         </div>
         <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">∞</div>
