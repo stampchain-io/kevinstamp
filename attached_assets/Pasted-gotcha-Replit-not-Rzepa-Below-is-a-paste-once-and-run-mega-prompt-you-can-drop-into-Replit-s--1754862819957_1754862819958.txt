@@ -1,0 +1,214 @@
+gotcha—Replit, not Rzepa. 💪
+Below is a “paste-once and run” mega-prompt you can drop into Replit’s AI/“Create from prompt” to scaffold a production-ready site for The Kevin Saga. I’ve packed it with structure, styling, content slots, and polish so it nails the meme and is easy to extend.
+
+⸻
+
+🔧 Replit one-shot build prompt
+
+Create a new public repo called kevin-saga using Next.js 14 (App Router) + TypeScript + Tailwind + shadcn/ui + Framer Motion.
+Design goal: classy meme energy—“ghost in the machine” meets Bitcoin orange.
+
+Brand & vibe
+	•	Palette (tailwind theme):
+	•	kevin.orange #F7931A (Bitcoin orange)
+	•	kevin.charcoal #0B0F13
+	•	kevin.graphite #2B2F36
+	•	kevin.steel #6B7280
+	•	kevin.mint #2FA84F (Kevin eye green)
+	•	kevin.sand #C58E73 (accent)
+	•	Typography: Space Grotesk for headings, Inter for body (via next/font).
+	•	Effects: subtle scanline/noise background, gentle glitch on hover for CTAs, “ghost in the machine” shader on hero image, and Framer Motion fades.
+
+Pages & routing (App Router)
+	•	/ (Home): hero, “Kevin is a feature not a bug” strapline, quick lore, CTA buttons (Read Lore, Trade KEVIN).
+	•	/lore (The Kevin Saga): render markdown from content/lore.mdx (use the user text below). Include timeline blocks and callouts.
+	•	/token (KEVIN Token): live stats section (reads from /api/token with env fallback), price & holders, mini-chart (client-only, recharts), recent trades table from content/trades.json until an API is wired.
+	•	/gallery:
+	•	“91 Kevin Stamps” grid from content/stamps.json with lightbox.
+	•	“Community Stamps” and “Memes” grids from content/community.json.
+	•	/media (Embeds): YouTube placeholder for EXIT VALLEY CRYPTO + press mentions list.
+	•	System pages: /privacy, /terms, custom /404.
+
+Data & content
+	•	All copy in /content/*.mdx and simple JSON in /content/*.json.
+	•	Provide seed files:
+	•	content/lore.mdx → paste the user-provided story (see “Seed content” below).
+	•	content/token.json → { supply, protocol, status, marketCapBTC, change24h, vol24h, totalVol, holders }.
+	•	content/trades.json → sample objects { time, from, to, amount, priceSats, btcValue, usdValue }.
+	•	content/stamps.json → array of { id, number, image, hash } with 2–3 samples; more can be added later.
+	•	Add an .env.example with:
+	•	OPENSTAMP_MARKET_ENDPOINT=https://openstamp.io/api/... (placeholder)
+	•	TOKEN_TICKER=KEVIN
+
+API layer
+	•	app/api/token/route.ts: server endpoint. If OPENSTAMP_MARKET_ENDPOINT is set, fetch live stats; else read content/token.json. Return normalized fields { priceSats, marketCapBTC, holders, volume24h, change24h }.
+	•	app/api/trades/route.ts: same pattern, falling back to content/trades.json.
+
+Components (in /components)
+	•	NavBar, SiteFooter
+	•	Hero with Kevin image, glitch text, CTAs (Trade on OpenStamp, Read Lore).
+	•	StatCard, StatsRow
+	•	TradesTable (sortable, sticky header)
+	•	MiniChart (recharts, client-only)
+	•	LightboxGallery
+	•	Section (title/eyebrow wrapper)
+	•	KevinGlitch (small utility to glitch any child)
+	•	Prose (mdx styles)
+	•	BadgeNote (“Feature not a bug” pill)
+
+Styling & theme
+	•	Configure Tailwind with a custom kevin color scale (see palette).
+	•	Add a global subtle noise/scanline background using CSS.
+	•	Dark mode default (charcoal/graphite) with orange accents; light mode toggle included (shadcn ThemeToggle).
+
+Accessibility & SEO
+	•	next-seo with defaults (title, description, canonical).
+	•	OG/Twitter images (placeholder in /public/og.png and /public/twitter.png).
+	•	Semantic landmarks, focus rings, prefers-reduced-motion respect, alt text for all images.
+	•	Generate robots.txt and sitemap.xml.
+
+DX & quality
+	•	ESLint + Prettier configured.
+	•	README.md with quick start, content editing instructions, and where to swap in real APIs.
+	•	Vercel-ready vercel.json, but also works on Replit web server.
+	•	Scripts: "dev", "build", "start", "lint".
+
+Home layout (wire)
+	•	Hero left: headline “Kevin is a feature, not a bug.” subcopy; CTAs.
+	•	Hero right: public/assets/kevin_hero.png with ghost shader.
+	•	Below: three StatCards (Price, Market Cap, Holders) fed by /api/token.
+	•	“Origins” teaser with link to /lore.
+	•	“The 91 Kevin Stamps” teaser grid linking to /gallery.
+	•	Footer with legal: “Not investment advice.” & social links.
+
+Token page specifics
+	•	Pull from /api/token. If no API, show fallback from content/token.json with a banner: “Sample data mode”.
+	•	MiniChart: render mock series from content/trades.json (price over time).
+	•	Button: “Trade KEVIN on OpenStamp” linking to https://openstamp.io/market/src20/trading?ticker=KEVIN.
+
+Assets
+	•	Create /public/assets/ and include placeholders:
+	•	kevin_hero.png
+	•	kevin_avatar.png
+	•	logo.svg (simple K monogram in orange).
+	•	I will upload final art later via Replit; keep filenames stable.
+
+Legal & extras
+	•	Add /terms and /privacy boilerplates.
+	•	Cookie-less analytics slot: simple page-view counter stub (lib/analytics.ts) I can swap later.
+	•	Email capture stub (static form to /api/subscribe writing to a local JSON until I replace).
+	•	PWA optional: add manifest + icons and basic service worker.
+
+Implement now
+	1.	Scaffold project with the above.
+	2.	Add the following seed content and JSON verbatim:
+
+content/lore.mdx
+
+# The Kevin Saga
+
+## Origins: The Birth of Bitcoin Art
+[PASTE USER TEXT HERE, keep headings, lists, and bold exactly as given.]
+
+## The Kevin Stamp Meme: A Ghost in the Machine
+[PASTE USER TEXT HERE.]
+
+## KEVIN The SRC-20 Token
+[PASTE USER TEXT HERE.]
+
+## Token Information
+[PASTE USER TEXT HERE.]
+
+## The Future: Kevin Goes Mainstream
+[PASTE USER TEXT HERE.]
+
+## Gallery
+[Use links to /gallery.]
+
+## Kevin in the Media
+[Link to /media.]
+
+content/token.json
+
+{
+  "supply": 690000000,
+  "protocol": "SRC-20 on Bitcoin Stamps",
+  "status": "First SRC-20 token ever deployed",
+  "marketCapBTC": 17.802,
+  "change24h": -2.64,
+  "vol24h": 0,
+  "totalVolBTC": 269.22,
+  "holders": 2130,
+  "note": "Replace with live API via OPENSTAMP_MARKET_ENDPOINT when available."
+}
+
+content/trades.json
+
+[
+  {
+    "time": "2025-08-08T12:28:00Z",
+    "from": "bc1q33...zcmrru",
+    "to": "bc1qnq...skgfmw",
+    "amount": 35000,
+    "priceSats": 2.65,
+    "btcValue": 0.0009,
+    "usdValue": 109.61
+  },
+  {
+    "time": "2025-08-08T11:16:00Z",
+    "from": "bc1q33...zcmrru",
+    "to": "bc1qrk...5chgt4",
+    "amount": 40000,
+    "priceSats": 2.5,
+    "btcValue": 0.001,
+    "usdValue": 118.18
+  }
+]
+
+content/stamps.json
+
+{
+  "series": "Kevin Stamps",
+  "range": {"start": 4258, "end": 18430},
+  "count": 91,
+  "items": [
+    { "number": 4258, "image": "/assets/kevin_hero.png", "hash": "sha256-PLACEHOLDER" },
+    { "number": 18430, "image": "/assets/kevin_hero.png", "hash": "sha256-PLACEHOLDER" }
+  ]
+}
+
+tailwind.config.ts (extend colors)
+
+extend: {
+  colors: {
+    kevin: {
+      orange: "#F7931A",
+      charcoal: "#0B0F13",
+      graphite: "#2B2F36",
+      steel: "#6B7280",
+      mint: "#2FA84F",
+      sand: "#C58E73"
+    }
+  }
+}
+
+	3.	In README.md, include:
+
+	•	Replit run instructions (npm i && npm run dev), how to replace images (/public/assets/kevin_hero.png etc.), how to wire a real endpoint via OPENSTAMP_MARKET_ENDPOINT, and content editing tips.
+
+	4.	Deliver a clean, running site with placeholder images and seed text.
+
+End of prompt. Build it now.
+
+⸻
+
+What you might have missed (I covered these in the prompt)
+	•	Dark + light mode, accessibility, and reduced-motion.
+	•	SEO (OpenGraph/Twitter), sitemap/robots.
+	•	Legal copy (not investment advice), Terms/Privacy.
+	•	Simple analytics & email capture stubs.
+	•	API fallbacks so it works without live data.
+	•	Gallery lightbox + content JSON schemas for easy updates.
+	•	PWA option for home-screen icon (optional but scaffolded).
+
+If you want, I can also ship a full starter repo here with the components already written and you just drag it into Replit.

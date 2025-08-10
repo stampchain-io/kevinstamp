@@ -1,0 +1,122 @@
+# The Kevin Saga
+
+## Origins: The Birth of Bitcoin Art
+
+Bitcoin Stamps emerged from the Counterparty protocol, where many of the original Bitcoin pioneers gathered from 2016 onwards to create art and tokens on Bitcoin. 
+
+The first person to create a wallet capable of holding what would become Rare Pepes and then NFTs was Joe Looney, who went on to be called the "Godfather of NFTs." Joe himself became the subject of a cult following when DanDarkPill created the RAREPEPE card "JOELOONEYBIN":
+
+**JOELOONEYBIN Details:**
+- Artist: DanDarkPill
+- Collection: Rare Pepes
+- Series: #8, Card: #38
+- Supply: 100
+- Issuance: November 2016
+- Floor price: 4.357Ξ
+- Market cap: $53.5k
+- Holders: 51 (Top 3 holders control 54%)
+
+Much of this history is shrouded in obscurity and folklore. Joe Looney became the subject of various assets, and a cult soon gathered around him. During his studies, Joe was roommates with BOOO_URNS, who created a FAKERARE PEPE called "FLOONEYBIN":
+
+**FLOONEYBIN Details:**
+- Artist: Booo_Urns
+- Collection: Fake Rares
+- Series: #6, Card: #10
+- Supply: 70
+- Issuance: November 2021
+- Floor price: 0.336Ξ
+- Market cap: $82.87k
+- Holders: 45 (Top 3 holders control 30%)
+
+BOOO_URNS assembled a group of artists to create tribute art, often using an application made by fellow Counterparty artist Nathan Sonic, who founded Kaleidoscope (https://kaleidoscopexcp.com/flooneybin/) - an explorer featuring many extremely rare enhanced Pepe assets.
+
+It was in this secret cabal, of which Mike in Space was a member, that he met Arwyn. After Mike had the idea to pursue truly immutable data storage on Bitcoin, Arwyn began building with him and introduced his friend Kevin - the subject of this website and where our story truly begins.
+
+## The Kevin Stamp Meme: A Ghost in the Machine
+
+When stampchain.io was launched and things were going well, Mike in Space created Stamp #4258 - a portrait of Kevin intended as a one-off commemorative gift. But that's where the magic started.
+
+For reasons unknown, the stamping machine took on a mind of its own. Instead of creating just one stamp, it began printing Kevin again and again, periodically re-stamping the same image. From Stamp #4258 (the original) to Stamp #18430, there are 91 Kevin stamps in total - all byte-perfect duplicates, yet each one unique, individual, and legendary.
+
+To this day, nobody knows what caused these stamps to start minting themselves, and nobody knows why they stopped. This was a unique moment - the birth of a ghost in the machine. Any stamp could have been chosen to cause this error in the minting process, but it was the Kevin stamp - based on the creator of the stamping machine himself - that issued itself into existence and folklore.
+
+With such a blanketing of the blockchain, news of the Kevin meme spread rapidly. People were talking in Spaces, in Telegram groups, all over the internet. Who was this mysterious figure being recreated across Bitcoin for no apparent reason? At that time, Kevin (just a friend of Arwyn's) was unknown in the community. However, there has never been such an unveiling in the Bitcoin community as happened with this moment in crypto history.
+
+From that moment, the meme was born: **"Kevin is a feature, not a bug. Kevin is the ghost in the machine."**
+
+A digital celebrity was created - one who embodies the best of what we can all be, that Satoshi within ourselves. A digital gentleman and James Bond, the pinnacle of Bitcoin spirit. Kevin has been memed around the world and is growing rapidly into his future destiny.
+
+## KEVIN The SRC-20 Token
+
+When development began on the SRC-20 protocol, creating tokens wasn't initially a priority. The team was merely investigating the technology, experimenting to discover what was possible. Testing was needed with a couple of tokens, so it was decided to test with "STAMP" and "KEVIN" to see if the protocol worked.
+
+SRC-20 is a fair mint launch platform, meaning everyone has an equal opportunity to stamp whatever tokens they want when initially deployed. For various reasons, the developers decided not to participate in market-making themselves and were happy to simply deploy the tokens.
+
+The plan was to launch STAMP first, then KEVIN. However, due to the blockchain gods' intervention, KEVIN was actually deployed first, enshrining itself as the first token. Even more mysterious is that the very first SRC token ever deployed was a KEVIN pre-mint token that somehow got picked on the blockchain before anything else. 
+
+**KEVIN Token Deployment Details:**
+- **Deployed at Stamp #18516**
+- **Maximum Supply:** 690,000,000
+- **Per Mint Limit:** 420,000
+- **Fair Launch:** 153.92% minted (overminted due to community enthusiasm)
+
+Remember, these were experimental and expensive times. There was no testnet, and these renegades were working on the future frontiers of digital data storage.
+
+Fast forward to today: both KEVIN and STAMP have been huge successes. Though still in their beginning stages, they've already gained consciousness and adoption within the Bitcoin community. KEVIN has gone from strength to strength, forming various partnerships and future product placements, while Kevin the developer himself works hard behind the scenes on the quest for immutable data technology.
+
+## Token Information
+
+**KEVIN Token Details:**
+- Supply: 690,000,000
+- Protocol: SRC-20 on Bitcoin Stamps
+- Status: First SRC-20 token ever deployed
+
+**Market Statistics:**
+- Market Cap: 17.802 BTC
+- 24H Change: -2.64%
+- 24H Volume: 0 BTC
+- Total Volume: 269.22 BTC
+- Holders: 2,130
+
+**Trading Activity:**
+KEVIN demonstrates robust market activity with consistent daily trading. Recent transactions show:
+- Trade sizes ranging from 5,000 to over 2.9 million KEVIN tokens
+- Price ranges from 1.8 to 30+ SATS per token
+- Individual trade values from under $100 to over $24,000
+- Active participation from diverse wallet addresses
+- Strong liquidity with multiple trades executing daily
+
+The token has shown price discovery across various market conditions, with larger trades often executed at competitive rates, indicating healthy market depth and genuine trading interest.
+
+[Trade KEVIN on OpenStamp](https://openstamp.io/market/src20/trading?ticker=KEVIN)
+
+## The Future: Kevin Goes Mainstream
+
+KEVIN has evolved into a global meme. This website is dedicated to providing everyone with information about the legacy and lore of Kevin - the ghost in the machine, the feature not the bug, the digital gentleman of Bitcoin.
+
+## Gallery
+
+### The 91 Kevin Stamps
+A visual collection of all 91 Kevin stamps from #4258 to #18430 - each one byte-perfect yet unique, a testament to the ghost in the machine.
+
+[Gallery of Kevin Stamps - to be added]
+
+### Community Kevin Stamps
+Beyond the original 91 stamps that mysteriously minted themselves, the community has embraced Kevin by creating their own stamps in tribute. Artists and believers from around the world have contributed to the Kevin legend, each adding their own interpretation of the digital gentleman. These community stamps represent the organic growth of the Kevin movement - proof that Kevin has transcended his origins to become a true cultural phenomenon on Bitcoin.
+
+[Gallery of Community Kevin Stamps - to be added]
+
+### Community Memes
+Kevin has inspired artists and memers around the world. Here's a collection of community-created Kevin memes that celebrate the digital gentleman of Bitcoin.
+
+[Gallery of Kevin Memes - to be added]
+
+## Kevin in the Media
+
+KEVIN is currently starring in the new crypto sitcom "EXIT VALLEY CRYPTO" - an animated show featuring crypto legends as they struggle to save the world from tyranny.
+
+[YouTube embed for EXIT VALLEY CRYPTO - to be added]
+
+---
+
+*Kevin continues to grow, evolve, and embed himself deeper into the fabric of Bitcoin culture. Join us as we document this incredible journey of a meme that became a movement.*
