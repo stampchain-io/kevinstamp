@@ -19,7 +19,7 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Politics'
   },
   {
-    id: 'kevsurf',
+    id: 'kevsurf-original',
     title: 'KEVSURF',
     type: 'image',
     imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f07d3377-921a-49ea-9a99-6f50e2505200/width=400',
@@ -322,12 +322,28 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Glitch Art'
   },
   {
-    id: 'kevin-sailing',
-    title: 'KEVIN SAILING',
+    id: 'kevin-4-president',
+    title: 'KEVIN 4 PRESIDENT',
     type: 'image',
-    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/c79866af-ece2-4999-054b-d757dc0f4200/width=400',
-    description: 'Ocean Adventure',
-    category: 'Adventure'
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/0914e9a8-d29b-423b-a633-38b5c1bc3700/width=400',
+    description: 'Presidential Campaign',
+    category: 'Politics'
+  },
+  {
+    id: 'kevsurf',
+    title: 'KEVSURF',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f07d3377-921a-49ea-9a99-6f50e2505200/width=400',
+    description: 'Kevin Surfing',
+    category: 'Sports'
+  },
+  {
+    id: 'jaguar-bond',
+    title: 'JAGUAR BOND',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/56c35540-04c1-4cbf-8e20-34297ca43b00/width=400',
+    description: 'Secret Agent Kevin',
+    category: 'Action'
   },
   {
     id: 'shep1',
@@ -338,12 +354,36 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Animals'
   },
   {
+    id: 'img-0881',
+    title: 'KEVIN PORTRAIT',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f6a33821-c039-4164-bc58-9af890e24f00/width=400',
+    description: 'Portrait Style',
+    category: 'Art'
+  },
+  {
+    id: 'kevin-4-president-2',
+    title: 'KEVIN 4 PRESIDENT 2',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/2e072512-45cc-4bab-1211-5b302731b700/width=400',
+    description: 'Campaign Design 2',
+    category: 'Politics'
+  },
+  {
     id: 's2cash',
     title: 'S2CASH',
     type: 'image',
     imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/30c796dc-57c4-4152-9772-ab7556303e00/width=400',
     description: 'Cash Money Kevin',
     category: 'Finance'
+  },
+  {
+    id: 'francis-chester',
+    title: 'FRANCIS CHESTER',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/a33ce6b3-2fca-4db4-cb51-5979e83a4500/width=400',
+    description: 'Black Sheep Character',
+    category: 'Characters'
   },
   {
     id: 'prisoner-kevin',
@@ -354,36 +394,76 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Drama'
   },
   {
-    id: 'kevin-pixel-gif',
-    title: 'PIXEL KEVIN ANIMATION',
-    type: 'gif',
-    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/kevin-pixel-animation/width=400',
-    description: 'Animated Pixel Art',
-    category: 'Animation'
-  },
-  {
-    id: 'kevin-spinning',
-    title: 'SPINNING KEVIN',
-    type: 'gif',
-    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/kevin-spinning/width=400',
-    description: 'Kevin Spins Forever',
-    category: 'Animation'
-  },
-  {
-    id: 'kevin-glitch-gif',
-    title: 'GLITCH KEVIN GIF',
-    type: 'gif',
-    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/kevin-glitch-animation/width=400',
-    description: 'Digital Glitch Effects',
-    category: 'Glitch Art'
-  },
-  {
-    id: 'kevin-typing',
-    title: 'KEVIN CODING',
-    type: 'gif',
-    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/kevin-typing/width=400',
-    description: 'Kevin Programming',
+    id: 'screenshot-kevin',
+    title: 'KEVIN SCREENSHOT',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/32661ae9-451f-462f-96b0-7d9ac1278f00/width=400',
+    description: 'Screen Capture',
     category: 'Tech'
+  },
+  {
+    id: 'devin-pie',
+    title: 'DEVIN PIE',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/2cb142cc-80a2-49c6-61d5-0a6717edc100/width=400',
+    description: 'Pie Chart Kevin',
+    category: 'Food'
+  },
+  {
+    id: 'mandy',
+    title: 'MANDY',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/d11f393e-1c3b-4020-ead0-6556eef59600/width=400',
+    description: 'Mandy Character',
+    category: 'Characters'
+  },
+  {
+    id: 'amandao',
+    title: 'AMANDAO',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/0388c6e6-0ac5-4eef-86ca-39ed0cdbf700/width=400',
+    description: 'Amanda Character',
+    category: 'Characters'
+  },
+  {
+    id: 'img-4621',
+    title: 'KEVIN IMAGE',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/165b79b1-287d-4345-80a0-70059851a200/width=400',
+    description: 'Kevin Portrait',
+    category: 'Art'
+  },
+  {
+    id: 'kevin-campbell',
+    title: 'KEVIN CAMPBELL',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/bf44c12f-05dd-4c04-c41a-4fc37f269800/width=400',
+    description: 'Campbell Kevin',
+    category: 'Art'
+  },
+  {
+    id: 'kevin-sailing',
+    title: 'KEVIN SAILING',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/c79866af-ece2-4999-054b-d757dc0f4200/width=400',
+    description: 'Ocean Adventure',
+    category: 'Adventure'
+  },
+  {
+    id: 'giant-book',
+    title: 'GIANT BOOK',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/3d57717e-06e8-4d0b-e8c8-5bc41ad6fb00/width=400',
+    description: 'Kevin with Giant Book',
+    category: 'Education'
+  },
+  {
+    id: 'sammy-woods',
+    title: 'SAMMY WOODS',
+    type: 'image',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/022a90dc-f3f0-4341-a982-9bc27882bd00/width=400',
+    description: 'Historical Character',
+    category: 'Historical'
   }
 ];
 

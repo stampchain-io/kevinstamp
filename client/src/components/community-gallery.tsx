@@ -22,7 +22,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
     { key: 'gif', label: 'GIFS', icon: '🎞️' },
   ];
 
-  // Handle video modal close
+  // Handle modal close
   const closeVideoModal = () => {
     setVideoModal(null);
     if (videoRef.current) {
@@ -30,11 +30,23 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
     }
   };
 
+  const closeImageModal = () => {
+    setSelectedMeme(null);
+  };
+
+  const closeAllModals = () => {
+    closeVideoModal();
+    closeImageModal();
+  };
+
   // Handle meme click
   const handleMemeClick = (meme: CommunityMeme) => {
     if (meme.type === 'video' && meme.videoUrl) {
       console.log('Opening video modal:', meme.title, meme.videoUrl);
       setVideoModal(meme);
+    } else if (meme.type === 'image' || meme.type === 'gif') {
+      console.log('Opening image modal:', meme.title, meme.type);
+      setSelectedMeme(meme);
     }
   };
 
@@ -42,7 +54,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        closeVideoModal();
+        closeAllModals();
       }
     };
     document.addEventListener('keydown', handleEscape);
@@ -194,6 +206,58 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
           🎨 VISIT KEVIN DEPOT
         </a>
       </div>
+
+      {/* Image/GIF Modal */}
+      {selectedMeme && (selectedMeme.type === 'image' || selectedMeme.type === 'gif') && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="bg-kevin-charcoal border-4 border-kevin-orange max-w-4xl w-full max-h-screen overflow-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-4 border-b-2 border-kevin-orange">
+              <div>
+                <h3 className="font-pixel text-xl text-kevin-orange">{selectedMeme.title}</h3>
+                <p className="text-sm text-kevin-mint">{selectedMeme.description}</p>
+              </div>
+              <button
+                onClick={closeImageModal}
+                className="pixel-btn px-4 py-2 text-black bg-kevin-orange border-kevin-orange hover:bg-white"
+              >
+                ✕ CLOSE
+              </button>
+            </div>
+
+            {/* Image Display */}
+            <div className="p-4 flex justify-center">
+              <img
+                src={selectedMeme.imageUrl}
+                alt={selectedMeme.title}
+                className="max-w-full max-h-96 object-contain pixel-perfect border-2 border-kevin-green"
+                style={{ imageRendering: 'pixelated' }}
+              />
+            </div>
+            
+            <div className="p-4 bg-black border-t-2 border-kevin-green">
+              <div className="flex justify-between items-center">
+                <div>
+                  <div className="font-pixel text-kevin-orange text-sm">
+                    Type: {selectedMeme.type.toUpperCase()} • Category: {selectedMeme.category}
+                  </div>
+                  <div className="font-pixel text-kevin-mint text-xs">
+                    {selectedMeme.type === 'gif' ? 'Animated GIF from Kevin Depot' : 'Static image from Kevin Depot'}
+                  </div>
+                </div>
+                <a
+                  href="https://memedepot.com/d/kevin-depot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-4 py-2 text-black bg-kevin-neon border-kevin-neon text-xs"
+                >
+                  VIEW MORE ART
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Video Modal */}
       {videoModal && (
