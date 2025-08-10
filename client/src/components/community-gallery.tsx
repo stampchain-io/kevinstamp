@@ -33,6 +33,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
   // Handle meme click
   const handleMemeClick = (meme: CommunityMeme) => {
     if (meme.type === 'video' && meme.videoUrl) {
+      console.log('Opening video modal:', meme.title, meme.videoUrl);
       setVideoModal(meme);
     }
   };
@@ -214,30 +215,15 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
 
             {/* Video Player */}
             <div className="p-4">
-              {videoModal.imageUrl?.includes('cloudflarestream.com') ? (
-                // Cloudflare Stream iframe
-                <iframe
-                  src={`https://iframe.cloudflarestream.com/${videoModal.videoUrl}?muted=false&autoplay=true&loop=true&controls=true`}
-                  className="w-full h-96 bg-black border-2 border-kevin-green"
-                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-                  allowFullScreen
-                ></iframe>
-              ) : (
-                // Standard video element for other sources
-                <video
-                  ref={videoRef}
-                  className="w-full h-auto max-h-96 bg-black border-2 border-kevin-green pixel-perfect"
-                  controls
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  poster={videoModal.imageUrl}
-                >
-                  <source src={videoModal.videoUrl} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              )}
+              <iframe
+                src={`https://iframe.cloudflarestream.com/${videoModal.videoUrl}?autoplay=true&loop=true&controls=true&defaultTextTrack=&poster=${encodeURIComponent(videoModal.imageUrl || '')}`}
+                className="w-full h-96 bg-black border-2 border-kevin-green"
+                style={{ aspectRatio: '16/9' }}
+                frameBorder="0"
+                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowFullScreen
+                title={videoModal.title}
+              ></iframe>
               
               <div className="mt-4 p-4 bg-black border-2 border-kevin-green">
                 <div className="flex justify-between items-center">
