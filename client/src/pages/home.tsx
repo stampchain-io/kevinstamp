@@ -1,0 +1,202 @@
+import PixelHero from "../components/pixel-hero";
+import StampsGallery from "../components/stamps-gallery";
+import CommunityGallery from "../components/community-gallery";
+import { Link } from "wouter";
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-kevin-charcoal text-white">
+      {/* Hero Section */}
+      <PixelHero />
+
+      {/* Kevin Saga Section */}
+      <section className="py-20 bg-kevin-graphite relative">
+        <div className="scanlines absolute inset-0 opacity-30"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">THE KEVIN SAGA</h2>
+            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="order-2 md:order-1">
+              <div className="terminal-window">
+                <h3 className="font-pixel text-2xl text-kevin-orange mb-4">&gt; ORIGIN_STORY.LOG</h3>
+                <p className="mb-4">When stampchain.io launched, Mike in Space created Stamp #4258 - a portrait of Kevin as a commemorative gift.</p>
+                <p className="mb-4 text-kevin-orange">But the machine took on a mind of its own...</p>
+                <p className="mb-4">The stamping machine began printing Kevin repeatedly, creating 91 byte-perfect duplicates across stamps #4258 to #18430.</p>
+                <p className="text-kevin-neon">Nobody knows why it started. Nobody knows why it stopped.</p>
+                <div className="mt-6 text-kevin-magenta">
+                  &gt; THE GHOST IN THE MACHINE WAS BORN
+                </div>
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              {/* Timeline visualization */}
+              <div className="space-y-6">
+                <div className="flex items-center space-x-4 p-4 bg-black border-2 border-kevin-orange">
+                  <div className="w-8 h-8 bg-kevin-orange border-2 border-white pixel-perfect"></div>
+                  <div>
+                    <div className="font-pixel text-kevin-orange">STAMP #4258</div>
+                    <div className="text-sm">Original Kevin Created</div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4 p-4 bg-black border-2 border-kevin-magenta">
+                  <div className="w-8 h-8 bg-kevin-magenta border-2 border-white pixel-perfect animate-pixel-glitch"></div>
+                  <div>
+                    <div className="font-pixel text-kevin-magenta">ANOMALY DETECTED</div>
+                    <div className="text-sm">Machine starts self-replicating</div>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-4 p-4 bg-black border-2 border-kevin-neon">
+                  <div className="w-8 h-8 bg-kevin-neon border-2 border-white pixel-perfect"></div>
+                  <div>
+                    <div className="font-pixel text-kevin-neon">STAMP #18430</div>
+                    <div className="text-sm">Final Kevin - Anomaly ends</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Preview: 91 Kevin Stamps */}
+      <section className="py-20 bg-kevin-charcoal relative">
+        <div className="retro-grid absolute inset-0 opacity-20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">91 LEGENDARY STAMPS</h2>
+            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+            <p className="text-kevin-mint font-terminal">Preview of the legendary stamp collection</p>
+          </div>
+
+          <StampsGallery showAll={false} itemsPerPage={16} />
+
+          <div className="text-center mt-12">
+            <Link href="/stamps">
+              <div className="pixel-btn px-8 py-4 text-black font-bold cursor-pointer">
+                🎯 VIEW ALL 91 STAMPS
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Preview: Community Gallery */}
+      <section className="py-20 bg-kevin-graphite relative">
+        <div className="scanlines absolute inset-0 opacity-20"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">EPIC COMMUNITY GALLERY</h2>
+            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+            <p className="text-kevin-mint font-terminal">Wild creativity from Kevin believers worldwide</p>
+          </div>
+
+          <CommunityGallery showAll={false} itemsPerPage={8} />
+
+          <div className="text-center mt-12">
+            <Link href="/community">
+              <div className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-neon border-kevin-neon cursor-pointer">
+                🎨 EXPLORE ALL MEMES
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Token Preview */}
+      <section className="py-20 bg-kevin-charcoal relative">
+        <div className="retro-grid absolute inset-0 opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">KEVIN TOKEN</h2>
+            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+          </div>
+
+          {/* Token Stats Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
+            <div className="bg-black border-2 border-kevin-orange p-6 text-center">
+              <div className="meme-counter text-3xl">690M</div>
+              <div className="font-pixel text-kevin-orange text-sm mt-2">TOTAL SUPPLY</div>
+            </div>
+            <div className="bg-black border-2 border-kevin-neon p-6 text-center">
+              <div className="meme-counter text-3xl">17.8</div>
+              <div className="font-pixel text-kevin-neon text-sm mt-2">BTC MARKET CAP</div>
+            </div>
+            <div className="bg-black border-2 border-kevin-magenta p-6 text-center">
+              <div className="meme-counter text-3xl">2.1K</div>
+              <div className="font-pixel text-kevin-magenta text-sm mt-2">HOLDERS</div>
+            </div>
+            <div className="bg-black border-2 border-kevin-cyan p-6 text-center">
+              <div className="meme-counter text-3xl">269</div>
+              <div className="font-pixel text-kevin-cyan text-sm mt-2">TOTAL VOLUME</div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link href="/token">
+                <div className="pixel-btn px-8 py-4 text-black font-bold cursor-pointer">
+                  📊 TOKEN DETAILS
+                </div>
+              </Link>
+              <a 
+                href="https://openstamp.io/market/src20/trading?ticker=KEVIN" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-orange border-kevin-orange"
+              >
+                💰 TRADE KEVIN
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-black border-t-2 border-kevin-orange py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+              <div className="font-pixel text-2xl text-kevin-orange mb-4">K3V1N</div>
+              <div className="text-white text-sm leading-relaxed">
+                The Ghost in the Machine<br />
+                Feature, not a bug<br />
+                Living legend on Bitcoin
+              </div>
+            </div>
+            <div>
+              <div className="font-pixel text-lg text-white mb-4">LINKS</div>
+              <div className="space-y-2 text-sm">
+                <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Stampchain.io</a>
+                <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Trade KEVIN</a>
+                <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Depot</a>
+                <Link href="/stamps"><div className="text-kevin-orange hover:text-white cursor-pointer">91 Stamps Gallery</div></Link>
+              </div>
+            </div>
+            <div>
+              <div className="font-pixel text-lg text-white mb-4">LEGAL</div>
+              <div className="text-sm text-kevin-steel leading-relaxed">
+                Not investment advice.<br />
+                Kevin is a meme.<br />
+                DYOR. Ghost responsibly.
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-kevin-graphite mt-8 pt-8 text-center">
+            <div className="terminal-window inline-block">
+              <div className="font-pixel text-kevin-neon">
+                &gt; KEVIN@BITCOIN:~$ echo "FEATURE_NOT_BUG" | hash256
+              </div>
+              <div className="text-white mt-2">
+                0x4b6576696e20697320746865206768... [HASH_CONTINUES_FOREVER]
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
