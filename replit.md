@@ -38,6 +38,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Page Structure
 - **Home** (`/`): Hero section with Kevin saga overview and featured content
+- **Lore** (`/lore`): Comprehensive Kevin mythology, origins, and the ghost in the machine story
 - **Stamps** (`/stamps`): Gallery of all 91 Kevin stamps with external links
 - **Community** (`/community`): User-generated memes and artwork gallery
 - **Token** (`/token`): KEVIN SRC-20 token information and statistics

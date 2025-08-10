@@ -7,6 +7,7 @@ export default function PixelNav() {
 
   const navItems = [
     { path: "/", label: "HOME", icon: "🏠" },
+    { path: "/lore", label: "LORE", icon: "📖" },
     { path: "/stamps", label: "STAMPS", icon: "📊" },
     { path: "/community", label: "MEMES", icon: "🎨" },
     { path: "/token", label: "TOKEN", icon: "💰" },

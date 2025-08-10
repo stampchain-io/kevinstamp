@@ -9,6 +9,7 @@ import Home from "./pages/home";
 import Stamps from "./pages/stamps";
 import Community from "./pages/community";
 import Token from "./pages/token";
+import Lore from "./pages/lore";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/stamps" component={Stamps} />
         <Route path="/community" component={Community} />
         <Route path="/token" component={Token} />
+        <Route path="/lore" component={Lore} />
         <Route component={NotFound} />
       </Switch>
     </>

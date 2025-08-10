@@ -61,6 +61,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* LORE Section - New Epic Feature */}
+      <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative">
+        <div className="scanlines absolute inset-0 opacity-30"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-6xl text-kevin-orange mb-4 animate-pixel-glow">THE KEVIN SAGA</h2>
+            <div className="w-32 h-2 bg-gradient-to-r from-kevin-orange to-purple-600 mx-auto mb-8"></div>
+            <p className="text-xl text-kevin-mint font-terminal">Origins • Mystery • Legend</p>
+          </div>
+
+          <div className="max-w-4xl mx-auto mb-12">
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 text-center">
+                <div className="text-4xl mb-4">🌟</div>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">ORIGINS</h3>
+                <p className="text-sm text-kevin-mint">From the secret cabals of Bitcoin art pioneers to the birth of immutable data storage</p>
+              </div>
+              
+              <div className="bg-black bg-opacity-50 border-2 border-kevin-orange p-6 text-center">
+                <div className="text-4xl mb-4">👻</div>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">THE GHOST</h3>
+                <p className="text-sm text-kevin-mint">91 mysterious self-replicating stamps that appeared on Bitcoin without explanation</p>
+              </div>
+              
+              <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center">
+                <div className="text-4xl mb-4">🪙</div>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">FIRST TOKEN</h3>
+                <p className="text-sm text-kevin-mint">KEVIN became the first SRC-20 token through divine blockchain intervention</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <Link href="/lore">
+              <div className="pixel-btn px-10 py-5 text-black font-bold text-xl bg-gradient-to-r from-kevin-orange to-purple-600 border-kevin-orange cursor-pointer hover:from-purple-600 hover:to-kevin-orange transition-all">
+                📖 READ THE FULL SAGA
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Preview: 91 Kevin Stamps */}
       <section className="py-20 bg-kevin-charcoal relative">
         <div className="retro-grid absolute inset-0 opacity-20"></div>
