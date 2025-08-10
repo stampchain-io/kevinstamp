@@ -53,6 +53,267 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Art'
   },
   {
+    id: 'walking-corridor',
+    title: 'WALKING DOWN CORRIDOR',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/76088736b758ae1ff2a0491606bfb751/thumbnails/thumbnail.jpg',
+    videoUrl: '76088736b758ae1ff2a0491606bfb751',
+    description: 'Kevin walking down corridor',
+    category: 'Animation'
+  },
+  {
+    id: 'tv-interference',
+    title: 'TV INTERFERENCE',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/6c0d7bf82b62c624bd5394007c1fe446/thumbnails/thumbnail.jpg',
+    videoUrl: '6c0d7bf82b62c624bd5394007c1fe446',
+    description: 'TV interference glitch',
+    category: 'Glitch Art'
+  },
+  {
+    id: 'glitch-animation',
+    title: 'GLITCH ANIMATION',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/21f715769ff485c16e4472bcac52e917/thumbnails/thumbnail.jpg',
+    videoUrl: '21f715769ff485c16e4472bcac52e917',
+    description: 'Image glitch animation',
+    category: 'Glitch Art'
+  },
+  {
+    id: 'animated-kevin',
+    title: 'ANIMATED KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/711ed784622153f0bba353c3c6f6fb34/thumbnails/thumbnail.jpg',
+    videoUrl: '711ed784622153f0bba353c3c6f6fb34',
+    description: 'Kevin animation',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-video-1',
+    title: 'KEVIN MOMENT',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/1ad15edb6d2dd5fbf1a38ba052d3686f/thumbnails/thumbnail.jpg',
+    videoUrl: '1ad15edb6d2dd5fbf1a38ba052d3686f',
+    description: 'Kevin video moment',
+    category: 'Entertainment'
+  },
+  {
+    id: 'laughing-kevin',
+    title: 'LAUGHING KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/e84162f743e8d66a8d48e0390791d36e/thumbnails/thumbnail.jpg',
+    videoUrl: 'e84162f743e8d66a8d48e0390791d36e',
+    description: 'They are laughing',
+    category: 'Comedy'
+  },
+  {
+    id: 'confident-kevin',
+    title: 'CONFIDENT KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/e699c2ab362b7f6028c4852c110124fe/thumbnails/thumbnail.jpg',
+    videoUrl: 'e699c2ab362b7f6028c4852c110124fe',
+    description: 'Feeling very confident',
+    category: 'Attitude'
+  },
+  {
+    id: 'smug-kevin',
+    title: 'SMUG KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/9dcffd9a177e1b4f8d4fc0dab08f7a97/thumbnails/thumbnail.jpg',
+    videoUrl: '9dcffd9a177e1b4f8d4fc0dab08f7a97',
+    description: 'Looking smug',
+    category: 'Attitude'
+  },
+  {
+    id: 'magic-spell',
+    title: 'MAGIC SPELL',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/33534063b48b3d20164d7decbd864d15/thumbnails/thumbnail.jpg',
+    videoUrl: '33534063b48b3d20164d7decbd864d15',
+    description: 'Working magic spell while portal opens',
+    category: 'Magic'
+  },
+  {
+    id: 'running-kevin',
+    title: 'RUNNING KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/ac402aaf365d76b78a392ecbe1553f7d/thumbnails/thumbnail.jpg',
+    videoUrl: 'ac402aaf365d76b78a392ecbe1553f7d',
+    description: 'Kevin running',
+    category: 'Action'
+  },
+  {
+    id: 'alien-abduction',
+    title: 'ALIEN ABDUCTION',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/4db2359b0246ceda88ba4057e967fb9b/thumbnails/thumbnail.jpg',
+    videoUrl: '4db2359b0246ceda88ba4057e967fb9b',
+    description: 'Abducted by aliens',
+    category: 'Sci-Fi'
+  },
+  {
+    id: 'kevin-video-2',
+    title: 'KEVIN ACTION',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/361f2b0ad3acd320d765c73266de781f/thumbnails/thumbnail.jpg',
+    videoUrl: '361f2b0ad3acd320d765c73266de781f',
+    description: 'Kevin in action',
+    category: 'Action'
+  },
+  {
+    id: 'glitch-kevin-2',
+    title: 'GLITCH KEVIN 2',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/5f3c1f6aed0630286ee76f64b8572ee8/thumbnails/thumbnail.jpg',
+    videoUrl: '5f3c1f6aed0630286ee76f64b8572ee8',
+    description: 'Glitch animation',
+    category: 'Glitch Art'
+  },
+  {
+    id: 'eating-popcorn',
+    title: 'EATING POPCORN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/8893e491e93bdc9d3cf027746ec57519/thumbnails/thumbnail.jpg',
+    videoUrl: '8893e491e93bdc9d3cf027746ec57519',
+    description: 'Eating popcorn and enjoying',
+    category: 'Entertainment'
+  },
+  {
+    id: 'feeling-cold',
+    title: 'FEELING COLD',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/398acea0a6b4475b8bd97062cad9ac84/thumbnails/thumbnail.jpg',
+    videoUrl: '398acea0a6b4475b8bd97062cad9ac84',
+    description: 'Feeling cold',
+    category: 'Emotion'
+  },
+  {
+    id: 'feeling-unbeatable',
+    title: 'FEELING UNBEATABLE',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/7fae7aaea0729ab940ce63fe7a803a31/thumbnails/thumbnail.jpg',
+    videoUrl: '7fae7aaea0729ab940ce63fe7a803a31',
+    description: 'Feeling unbeatable with swagger',
+    category: 'Attitude'
+  },
+  {
+    id: 'typing-keyboard',
+    title: 'TYPING ON KEYBOARD',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/9f450d62cc607ad71ff6460088b76c6e/thumbnails/thumbnail.jpg',
+    videoUrl: '9f450d62cc607ad71ff6460088b76c6e',
+    description: 'Typing on the keyboard',
+    category: 'Tech'
+  },
+  {
+    id: 'levitating-kevin',
+    title: 'LEVITATING KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/60e9fd7f1ec2b6fc5541f615e7ea3072/thumbnails/thumbnail.jpg',
+    videoUrl: '60e9fd7f1ec2b6fc5541f615e7ea3072',
+    description: 'Levitating and giving off energy',
+    category: 'Magic'
+  },
+  {
+    id: 'alien-abduction-2',
+    title: 'ALIEN ABDUCTION 2',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/19a46048b00ac15cbfed2926c722b937/thumbnails/thumbnail.jpg',
+    videoUrl: '19a46048b00ac15cbfed2926c722b937',
+    description: 'Abducted by aliens',
+    category: 'Sci-Fi'
+  },
+  {
+    id: 'money-rain',
+    title: 'MONEY RAIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/a1c8b11771d4bc008cfaf5491a1df0e7/thumbnails/thumbnail.jpg',
+    videoUrl: 'a1c8b11771d4bc008cfaf5491a1df0e7',
+    description: 'Money raining down',
+    category: 'Finance'
+  },
+  {
+    id: 'kevin-video-3',
+    title: 'KEVIN SEQUENCE',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/2878a16fb325ffc4f8a8cecd050bfc13/thumbnails/thumbnail.jpg',
+    videoUrl: '2878a16fb325ffc4f8a8cecd050bfc13',
+    description: 'Kevin video sequence',
+    category: 'Entertainment'
+  },
+  {
+    id: 'incredible-magic',
+    title: 'INCREDIBLE MAGIC',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/d47e6e85526ab8187930fef4a09b7967/thumbnails/thumbnail.jpg',
+    videoUrl: 'd47e6e85526ab8187930fef4a09b7967',
+    description: 'Incredible magic is happening',
+    category: 'Magic'
+  },
+  {
+    id: 'nightmare-kevin',
+    title: 'NIGHTMARE KEVIN',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/75b8d65cf6b2fa0a22fbf6b5c9b78fad/thumbnails/thumbnail.jpg',
+    videoUrl: '75b8d65cf6b2fa0a22fbf6b5c9b78fad',
+    description: 'Living in a nightmare',
+    category: 'Drama'
+  },
+  {
+    id: 'boss-attitude',
+    title: 'BOSS ATTITUDE',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/ea1ac8dd2e9c705ad6628a9a7f261a4e/thumbnails/thumbnail.jpg',
+    videoUrl: 'ea1ac8dd2e9c705ad6628a9a7f261a4e',
+    description: 'The boss attitude',
+    category: 'Attitude'
+  },
+  {
+    id: 'james-bond-credits',
+    title: 'JAMES BOND CREDITS',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/a6f64bab755c465ca1d0ebe6753a49bf/thumbnails/thumbnail.jpg',
+    videoUrl: 'a6f64bab755c465ca1d0ebe6753a49bf',
+    description: 'James Bond opening credits',
+    category: 'Movies'
+  },
+  {
+    id: 'offering-business',
+    title: 'OFFERING BUSINESS',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/442e0d542d4664c51e36eecd05da0c2a/thumbnails/thumbnail.jpg',
+    videoUrl: '442e0d542d4664c51e36eecd05da0c2a',
+    description: 'Walking around offering business',
+    category: 'Business'
+  },
+  {
+    id: 'running-from-dino',
+    title: 'RUNNING FROM DINO',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/02ef13744bd564ef7ac107c3eda8548b/thumbnails/thumbnail.jpg',
+    videoUrl: '02ef13744bd564ef7ac107c3eda8548b',
+    description: 'Running away from the dinosaur',
+    category: 'Action'
+  },
+  {
+    id: 'action-movie',
+    title: 'ACTION MOVIE STYLE',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/180fcef43b97093ff2d332111465e105/thumbnails/thumbnail.jpg',
+    videoUrl: '180fcef43b97093ff2d332111465e105',
+    description: 'Action movie style',
+    category: 'Action'
+  },
+  {
+    id: 'walking-sheep',
+    title: 'WALKING THE SHEEP',
+    type: 'video',
+    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/6d49e973e05cf3df2ac9bac64a018414/thumbnails/thumbnail.jpg',
+    videoUrl: '6d49e973e05cf3df2ac9bac64a018414',
+    description: 'Walking the sheep',
+    category: 'Animals'
+  },
+  {
     id: 'glitch-kevin',
     title: 'GLITCH KEVIN',
     type: 'image',
