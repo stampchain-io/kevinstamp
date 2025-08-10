@@ -4,12 +4,12 @@ export default function LorePage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-kevin-green font-mono">
       {/* Header */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 pt-12 pb-8">
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 pixel-text animate-pixel-glow">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 pixel-text animate-pixel-glow leading-tight">
             THE KEVIN SAGA
           </h1>
-          <p className="text-xl md:text-2xl text-kevin-orange animate-pulse">
+          <p className="text-lg sm:text-xl md:text-2xl text-kevin-orange animate-pulse">
             Origins • Mystery • Legend
           </p>
         </div>
