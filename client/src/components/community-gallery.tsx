@@ -113,7 +113,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
               <img 
                 src={meme.imageUrl}
                 alt={meme.title}
-                className="w-full h-32 object-cover pixel-perfect transition-transform duration-200 hover:scale-105"
+                className="w-full h-32 object-contain pixel-perfect transition-transform duration-200 hover:scale-105 bg-kevin-charcoal"
                 loading="lazy"
                 style={{ imageRendering: 'pixelated' }}
               />
