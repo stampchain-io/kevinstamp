@@ -67,28 +67,28 @@ export default function Token() {
 
           {/* Deployment Details */}
           <div className="terminal-window max-w-4xl mx-auto mb-12">
-            <h2 className="font-pixel text-2xl text-kevin-orange mb-6">
+            <h2 className="font-pixel text-xl sm:text-2xl text-kevin-orange mb-6 break-words">
               &gt; TOKEN_DEPLOYMENT.DAT
             </h2>
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               <div>
-                <h3 className="font-pixel text-lg text-kevin-neon mb-4">DEPLOYMENT INFO</h3>
-                <div className="space-y-2">
+                <h3 className="font-pixel text-base sm:text-lg text-kevin-neon mb-4">DEPLOYMENT INFO</h3>
+                <div className="space-y-3">
                   {deploymentInfo.slice(0, 3).map((item, index) => (
-                    <div key={index} className="flex justify-between">
-                      <span className="text-white">{item.label}:</span>
-                      <span className="text-kevin-orange font-pixel text-sm">{item.value}</span>
+                    <div key={index} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-2">
+                      <span className="text-white text-sm break-words">{item.label}:</span>
+                      <span className="text-kevin-orange font-pixel text-xs sm:text-sm break-all">{item.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div>
-                <h3 className="font-pixel text-lg text-kevin-neon mb-4">MARKET DATA</h3>
-                <div className="space-y-2">
+                <h3 className="font-pixel text-base sm:text-lg text-kevin-neon mb-4">MARKET DATA</h3>
+                <div className="space-y-3">
                   {deploymentInfo.slice(3).map((item, index) => (
-                    <div key={index} className="flex justify-between">
-                      <span className="text-white">{item.label}:</span>
-                      <span className="text-kevin-orange font-pixel text-sm">{item.value}</span>
+                    <div key={index} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-2">
+                      <span className="text-white text-sm break-words">{item.label}:</span>
+                      <span className="text-kevin-orange font-pixel text-xs sm:text-sm break-all">{item.value}</span>
                     </div>
                   ))}
                 </div>
