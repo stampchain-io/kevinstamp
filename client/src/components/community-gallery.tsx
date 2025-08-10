@@ -9,6 +9,7 @@ interface CommunityGalleryProps {
 export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: CommunityGalleryProps) {
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
+  const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
   const [videoModal, setVideoModal] = useState<CommunityMeme | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -103,17 +104,18 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
         {displayMemes.map((meme) => (
           <div
             key={meme.id}
-            className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer"
-            onMouseEnter={() => setSelectedMeme(meme)}
-            onMouseLeave={() => setSelectedMeme(null)}
+            className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20"
+            onMouseEnter={() => setHoveredMeme(meme)}
+            onMouseLeave={() => setHoveredMeme(null)}
             onClick={() => handleMemeClick(meme)}
           >
             <div className="relative">
               <img 
                 src={meme.imageUrl}
                 alt={meme.title}
-                className="w-full h-32 object-cover pixel-perfect"
+                className="w-full h-32 object-cover pixel-perfect transition-transform duration-200 hover:scale-105"
                 loading="lazy"
+                style={{ imageRendering: 'pixelated' }}
               />
               
               {/* Video Play Icon */}
@@ -135,10 +137,10 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
               )}
 
               {/* Hover Overlay */}
-              {selectedMeme?.id === meme.id && (
-                <div className="absolute inset-0 bg-kevin-orange bg-opacity-20 flex items-center justify-center">
-                  <div className="text-white font-pixel text-xs">
-                    {meme.type === 'video' ? 'PLAY VIDEO' : 'VIEW'}
+              {hoveredMeme?.id === meme.id && (
+                <div className="absolute inset-0 bg-kevin-orange bg-opacity-30 flex items-center justify-center backdrop-blur-sm">
+                  <div className="text-white font-pixel text-sm bg-black bg-opacity-70 px-3 py-1 border border-kevin-orange">
+                    {meme.type === 'video' ? 'PLAY VIDEO' : meme.type === 'gif' ? 'VIEW GIF' : 'VIEW IMAGE'}
                   </div>
                 </div>
               )}
