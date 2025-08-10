@@ -34,7 +34,7 @@ export default function PixelHero() {
             {/* Main Kevin Image */}
             <div className="relative">
               <img 
-                src="https://stampchain.io/api/image/4258" 
+                src="https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png" 
                 alt="Kevin - The Ghost in the Machine" 
                 className={`
                   pixel-perfect w-32 h-32 border-4 border-kevin-orange bg-black scanlines relative z-10
@@ -44,7 +44,7 @@ export default function PixelHero() {
               
               {/* Glitch duplicate layers */}
               <img 
-                src="https://stampchain.io/api/image/4258" 
+                src="https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png" 
                 alt="" 
                 className="pixel-perfect w-32 h-32 absolute top-0 left-0 opacity-30 animate-pixel-glitch"
                 style={{ filter: 'hue-rotate(120deg)' }}
