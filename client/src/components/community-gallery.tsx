@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
 
 interface CommunityGalleryProps {
@@ -9,6 +9,8 @@ interface CommunityGalleryProps {
 export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: CommunityGalleryProps) {
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
+  const [videoModal, setVideoModal] = useState<CommunityMeme | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const filteredMemes = filterMemesByType(filter);
   const displayMemes = showAll ? filteredMemes : filteredMemes.slice(0, itemsPerPage);
@@ -19,6 +21,32 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
     { key: 'video', label: 'VIDEOS', icon: '🎬' },
     { key: 'gif', label: 'GIFS', icon: '🎞️' },
   ];
+
+  // Handle video modal close
+  const closeVideoModal = () => {
+    setVideoModal(null);
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  // Handle meme click
+  const handleMemeClick = (meme: CommunityMeme) => {
+    if (meme.type === 'video' && meme.videoUrl) {
+      setVideoModal(meme);
+    }
+  };
+
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeVideoModal();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
 
   return (
     <div className="space-y-8">
@@ -52,6 +80,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
             className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer"
             onMouseEnter={() => setSelectedMeme(meme)}
             onMouseLeave={() => setSelectedMeme(null)}
+            onClick={() => handleMemeClick(meme)}
           >
             <div className="relative">
               <img 
@@ -64,8 +93,8 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
               {/* Video Play Icon */}
               {meme.type === 'video' && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-kevin-cyan border-2 border-white flex items-center justify-center">
-                    <div className="w-0 h-0 border-l-4 border-l-black border-y-2 border-y-transparent ml-1"></div>
+                  <div className="w-12 h-12 bg-kevin-cyan border-2 border-white flex items-center justify-center animate-pulse">
+                    <div className="w-0 h-0 border-l-6 border-l-black border-y-3 border-y-transparent ml-1"></div>
                   </div>
                 </div>
               )}
@@ -73,7 +102,9 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
               {/* Hover Overlay */}
               {selectedMeme?.id === meme.id && (
                 <div className="absolute inset-0 bg-kevin-orange bg-opacity-20 flex items-center justify-center">
-                  <div className="text-white font-pixel text-xs">VIEW</div>
+                  <div className="text-white font-pixel text-xs">
+                    {meme.type === 'video' ? 'PLAY VIDEO' : 'VIEW'}
+                  </div>
                 </div>
               )}
             </div>
@@ -140,6 +171,72 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
           🎨 VISIT KEVIN DEPOT
         </a>
       </div>
+
+      {/* Video Modal */}
+      {videoModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-4">
+          <div className="bg-kevin-charcoal border-4 border-kevin-orange max-w-4xl w-full max-h-screen overflow-auto">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-4 border-b-2 border-kevin-orange">
+              <div>
+                <h3 className="font-pixel text-xl text-kevin-orange">{videoModal.title}</h3>
+                <p className="text-sm text-kevin-mint">{videoModal.description}</p>
+              </div>
+              <button
+                onClick={closeVideoModal}
+                className="pixel-btn px-4 py-2 text-black bg-kevin-orange border-kevin-orange hover:bg-white"
+              >
+                ✕ CLOSE
+              </button>
+            </div>
+
+            {/* Video Player */}
+            <div className="p-4">
+              {videoModal.imageUrl?.includes('cloudflarestream.com') ? (
+                // Cloudflare Stream iframe
+                <iframe
+                  src={`https://iframe.cloudflarestream.com/${videoModal.videoUrl}?muted=false&autoplay=true&loop=true&controls=true`}
+                  className="w-full h-96 bg-black border-2 border-kevin-green"
+                  allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                  allowFullScreen
+                ></iframe>
+              ) : (
+                // Standard video element for other sources
+                <video
+                  ref={videoRef}
+                  className="w-full h-auto max-h-96 bg-black border-2 border-kevin-green pixel-perfect"
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster={videoModal.imageUrl}
+                >
+                  <source src={videoModal.videoUrl} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
+              
+              <div className="mt-4 p-4 bg-black border-2 border-kevin-green">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="font-pixel text-kevin-orange text-sm">Category: {videoModal.category}</div>
+                    <div className="font-pixel text-kevin-mint text-xs">Click and drag to scrub • Space to play/pause</div>
+                  </div>
+                  <a
+                    href="https://memedepot.com/d/kevin-depot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pixel-btn px-4 py-2 text-black bg-kevin-neon border-kevin-neon text-xs"
+                  >
+                    VIEW MORE VIDEOS
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

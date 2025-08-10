@@ -4,6 +4,7 @@ export interface CommunityMeme {
   title: string;
   type: 'image' | 'video' | 'gif';
   imageUrl: string;
+  videoUrl?: string; // For MP4 videos
   description: string;
   category: string;
 }
@@ -38,6 +39,7 @@ export const communityMemes: CommunityMeme[] = [
     title: 'KEVIN JUMPS',
     type: 'video',
     imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/7208efb8d4e98aab066f26800c1e01a8/thumbnails/thumbnail.jpg',
+    videoUrl: '7208efb8d4e98aab066f26800c1e01a8',
     description: 'Animated Kevin',
     category: 'Animation'
   },
@@ -46,6 +48,7 @@ export const communityMemes: CommunityMeme[] = [
     title: 'KALEIDOSCOPE',
     type: 'video',
     imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/6040ad1a8cb0059d318c1d339e738528/thumbnails/thumbnail.jpg',
+    videoUrl: '6040ad1a8cb0059d318c1d339e738528',
     description: 'Trippy Effects',
     category: 'Art'
   },
