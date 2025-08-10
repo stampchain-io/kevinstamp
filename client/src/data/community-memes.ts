@@ -53,51 +53,6 @@ export const communityMemes: CommunityMeme[] = [
     category: 'Art'
   },
   {
-    id: 'kevin-dance',
-    title: 'KEVIN DANCE PARTY',
-    type: 'video',
-    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/8f2e3d4a5b6c7890123456789abcdef0/thumbnails/thumbnail.jpg',
-    videoUrl: '8f2e3d4a5b6c7890123456789abcdef0',
-    description: 'Kevin Dancing',
-    category: 'Music'
-  },
-  {
-    id: 'kevin-rocket',
-    title: 'KEVIN TO THE MOON',
-    type: 'video',
-    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/9a1b2c3d4e5f6789012345678901234/thumbnails/thumbnail.jpg',
-    videoUrl: '9a1b2c3d4e5f6789012345678901234',
-    description: 'Rocket Launch',
-    category: 'Space'
-  },
-  {
-    id: 'kevin-matrix',
-    title: 'KEVIN IN THE MATRIX',
-    type: 'video',
-    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/a1b2c3d4e5f6789012345678901234ab/thumbnails/thumbnail.jpg',
-    videoUrl: 'a1b2c3d4e5f6789012345678901234ab',
-    description: 'Matrix Effects',
-    category: 'Sci-Fi'
-  },
-  {
-    id: 'kevin-skateboard',
-    title: 'KEVIN SKATEBOARDING',
-    type: 'video',
-    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/b2c3d4e5f6789012345678901234abc/thumbnails/thumbnail.jpg',
-    videoUrl: 'b2c3d4e5f6789012345678901234abc',
-    description: 'Skateboard Tricks',
-    category: 'Sports'
-  },
-  {
-    id: 'kevin-cooking',
-    title: 'CHEF KEVIN',
-    type: 'video',
-    imageUrl: 'https://customer-hls7a0n7rbjgz9uk.cloudflarestream.com/c3d4e5f6789012345678901234abcd/thumbnails/thumbnail.jpg',
-    videoUrl: 'c3d4e5f6789012345678901234abcd',
-    description: 'Cooking Show',
-    category: 'Lifestyle'
-  },
-  {
     id: 'glitch-kevin',
     title: 'GLITCH KEVIN',
     type: 'image',

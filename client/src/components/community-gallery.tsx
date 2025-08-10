@@ -72,6 +72,19 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
         </div>
       </div>
 
+      {/* Video Section Message */}
+      {filter === 'video' && (
+        <div className="bg-kevin-charcoal border-2 border-kevin-orange p-6 text-center mb-8">
+          <h3 className="font-pixel text-xl text-kevin-orange mb-3">🎬 EXCLUSIVE KEVIN VIDEOS</h3>
+          <p className="text-kevin-mint mb-4">
+            These are authentic videos from Kevin Depot featuring our digital gentleman in action!
+          </p>
+          <p className="text-sm text-kevin-cyan">
+            Want to see your Kevin video here? Submit to Kevin Depot and become part of the legend!
+          </p>
+        </div>
+      )}
+
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {displayMemes.map((meme) => (
