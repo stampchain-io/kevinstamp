@@ -30,7 +30,7 @@ export default function PixelNav() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-4">
             {navItems.map((item) => (
               <Link key={item.path} href={item.path}>
                 <div className={`
@@ -45,6 +45,13 @@ export default function PixelNav() {
                 </div>
               </Link>
             ))}
+            
+            {/* Lazy Kevins Coming Soon Button */}
+            <div className="pixel-btn px-4 py-2 text-xs lazy-kevin-flash border-kevin-magenta cursor-pointer hover:animate-none relative overflow-hidden">
+              <div className="relative z-10 font-bold">
+                🚀 LAZY KEVINS COMING SOON
+              </div>
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -81,6 +88,14 @@ export default function PixelNav() {
                   </div>
                 </Link>
               ))}
+              
+              {/* Mobile Lazy Kevins Button */}
+              <div className="px-4 py-2 font-pixel text-xs text-kevin-magenta animate-pulse">
+                <div className="bg-kevin-magenta text-black px-2 py-1 inline-block relative overflow-hidden">
+                  <div className="absolute inset-0 bg-kevin-orange opacity-50 animate-ping"></div>
+                  <span className="relative z-10 font-bold">🚀 LAZY KEVINS COMING SOON</span>
+                </div>
+              </div>
             </div>
           </div>
         )}

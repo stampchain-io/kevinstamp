@@ -225,6 +225,11 @@
     animation: pixel-glitch 2s infinite;
   }
 
+  /* Lazy Kevins Flash Animation */
+  .lazy-kevin-flash {
+    animation: lazyKevinFlash 1.5s infinite ease-in-out;
+  }
+
   .animate-scanline-move {
     animation: scanline-move 2s linear infinite;
   }
@@ -274,4 +279,17 @@
   0%, 100% { transform: translateY(0) rotate(0deg); }
   33% { transform: translateY(-8px) rotate(2deg); }
   66% { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes lazyKevinFlash {
+  0%, 100% { 
+    background-color: rgb(191, 26, 247);
+    color: black;
+    box-shadow: 0 0 10px rgb(191, 26, 247);
+  }
+  50% { 
+    background-color: rgb(247, 147, 26);
+    color: black;
+    box-shadow: 0 0 20px rgb(247, 147, 26);
+  }
 }
