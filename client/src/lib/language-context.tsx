@@ -13,8 +13,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguage] = useState<Language>('en');
   const t = getTranslation(language);
 
+  const handleSetLanguage = (lang: Language) => {
+    console.log('Language context updating from', language, 'to', lang);
+    setLanguage(lang);
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
       {children}
     </LanguageContext.Provider>
   );
