@@ -103,71 +103,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Kevin in Media Section */}
-      <section className="py-20 bg-black relative">
-        <div className="scanlines absolute inset-0 opacity-40"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4 animate-pixel-glow">KEVIN IN MEDIA</h2>
-            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-xl text-kevin-mint font-terminal">Kevin's legendary television appearances</p>
-          </div>
-
-          <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              <div className="bg-gradient-to-b from-red-600 to-red-800 border-2 border-red-400 p-6 text-center">
-                <div className="text-5xl mb-4">🎬</div>
-                <h3 className="font-pixel text-xl text-white mb-3">EXIT VALLEY CRYPTO</h3>
-                <p className="text-sm text-red-100 mb-4">Animated crypto sitcom featuring Kevin and legends saving the world from tyranny</p>
-                <a 
-                  href="https://youtu.be/rH80shM2f5s?si=viGXviwb4m7eNSKv" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-red-100 transition-colors"
-                >
-                  WATCH NOW
-                </a>
-              </div>
-              
-              <div className="bg-gradient-to-b from-blue-600 to-blue-800 border-2 border-blue-400 p-6 text-center">
-                <div className="text-5xl mb-4">🎭</div>
-                <h3 className="font-pixel text-xl text-white mb-3">ARWYN & FRIENDS</h3>
-                <p className="text-sm text-blue-100 mb-4">Kevin's adventures with the Bitcoin Stamps crew in this epic series</p>
-                <a 
-                  href="https://www.youtube.com/watch?v=PipH4h3unHs&t=63s" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-blue-100 transition-colors"
-                >
-                  WATCH NOW
-                </a>
-              </div>
-              
-              <div className="bg-gradient-to-b from-purple-600 to-purple-800 border-2 border-purple-400 p-6 text-center">
-                <div className="text-5xl mb-4">📺</div>
-                <h3 className="font-pixel text-xl text-white mb-3">KEVIN TV</h3>
-                <p className="text-sm text-purple-100 mb-4">"We Are All Kevin" - Official YouTube channel for all Kevin content</p>
-                <a 
-                  href="https://www.youtube.com/@weareallkevin" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-purple-100 transition-colors"
-                >
-                  SUBSCRIBE
-                </a>
-              </div>
-            </div>
-
-            <div className="text-center">
-              <div className="bg-kevin-graphite border-2 border-kevin-orange p-6 inline-block">
-                <h3 className="font-pixel text-2xl text-kevin-orange mb-2">Kevin: From Blockchain to Hollywood</h3>
-                <p className="text-kevin-mint">A digital legend transcending into mainstream entertainment</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Preview: 91 Kevin Stamps */}
       <section className="py-20 bg-kevin-charcoal relative">
         <div className="retro-grid absolute inset-0 opacity-20"></div>
@@ -256,6 +191,71 @@ export default function Home() {
               >
                 💰 TRADE KEVIN
               </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Kevin in Media Section */}
+      <section className="py-20 bg-black relative">
+        <div className="scanlines absolute inset-0 opacity-40"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4 animate-pixel-glow">KEVIN IN MEDIA</h2>
+            <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+            <p className="text-xl text-kevin-mint font-terminal">Kevin's legendary television appearances</p>
+          </div>
+
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              <div className="bg-gradient-to-b from-red-600 to-red-800 border-2 border-red-400 p-6 text-center">
+                <div className="text-5xl mb-4">🎬</div>
+                <h3 className="font-pixel text-xl text-white mb-3">EXIT VALLEY CRYPTO</h3>
+                <p className="text-sm text-red-100 mb-4">Animated crypto sitcom featuring Kevin and legends saving the world from tyranny</p>
+                <a 
+                  href="https://youtu.be/rH80shM2f5s?si=viGXviwb4m7eNSKv" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-red-100 transition-colors"
+                >
+                  WATCH NOW
+                </a>
+              </div>
+              
+              <div className="bg-gradient-to-b from-blue-600 to-blue-800 border-2 border-blue-400 p-6 text-center">
+                <div className="text-5xl mb-4">🎭</div>
+                <h3 className="font-pixel text-xl text-white mb-3">ARWYN & FRIENDS</h3>
+                <p className="text-sm text-blue-100 mb-4">Kevin's adventures with the Bitcoin Stamps crew in this epic series</p>
+                <a 
+                  href="https://www.youtube.com/watch?v=PipH4h3unHs&t=63s" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-blue-100 transition-colors"
+                >
+                  WATCH NOW
+                </a>
+              </div>
+              
+              <div className="bg-gradient-to-b from-purple-600 to-purple-800 border-2 border-purple-400 p-6 text-center">
+                <div className="text-5xl mb-4">📺</div>
+                <h3 className="font-pixel text-xl text-white mb-3">KEVIN TV</h3>
+                <p className="text-sm text-purple-100 mb-4">"We Are All Kevin" - Official YouTube channel for all Kevin content</p>
+                <a 
+                  href="https://www.youtube.com/@weareallkevin" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-purple-100 transition-colors"
+                >
+                  SUBSCRIBE
+                </a>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <div className="bg-kevin-graphite border-2 border-kevin-orange p-6 inline-block">
+                <h3 className="font-pixel text-2xl text-kevin-orange mb-2">Kevin: From Blockchain to Hollywood</h3>
+                <p className="text-kevin-mint">A digital legend transcending into mainstream entertainment</p>
+              </div>
             </div>
           </div>
         </div>
