@@ -216,16 +216,17 @@ export default function Token() {
               <div>
                 <div className="text-kevin-neon font-pixel mb-2">WHAT IS SRC-20?</div>
                 <div className="text-white">
-                  SRC-20 is a token standard built on Bitcoin Stamps, enabling the creation of 
-                  fungible tokens directly on the Bitcoin blockchain with guaranteed immutability.
+                  SRC-20 is the first multi-fungible token standard built directly on Bitcoin's UTXO model 
+                  through Bitcoin Stamps, enabling true fungible tokens on the Bitcoin blockchain with 
+                  guaranteed immutability and permanent storage.
                 </div>
               </div>
               <div>
                 <div className="text-kevin-magenta font-pixel mb-2">KEVIN'S SIGNIFICANCE</div>
                 <div className="text-white">
-                  KEVIN was the very first SRC-20 token deployed, making it a historic milestone 
-                  in Bitcoin token development. It was created during experimental testing but 
-                  became a community phenomenon.
+                  KEVIN was the very first SRC-20 token ever deployed, making it the genesis multi-fungible 
+                  token on Bitcoin's UTXO. Created during experimental testing, it became a historic milestone 
+                  and community phenomenon as the first of its kind.
                 </div>
               </div>
               <div>
