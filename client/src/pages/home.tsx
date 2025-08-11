@@ -291,6 +291,35 @@ export default function Home() {
               </div>
             </div>
 
+            {/* YouTube Video Previews */}
+            <div className="grid md:grid-cols-2 gap-8 mb-12">
+              <div className="bg-black border-2 border-red-400 p-4">
+                <h4 className="font-pixel text-red-400 text-lg mb-4 text-center">EXIT VALLEY CRYPTO - PREVIEW</h4>
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/rH80shM2f5s"
+                    title="Exit Valley Crypto"
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+              
+              <div className="bg-black border-2 border-blue-400 p-4">
+                <h4 className="font-pixel text-blue-400 text-lg mb-4 text-center">ARWYN & FRIENDS - PREVIEW</h4>
+                <div className="aspect-video">
+                  <iframe
+                    src="https://www.youtube.com/embed/PipH4h3unHs?start=63"
+                    title="Arwyn & Friends"
+                    className="w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+
             <div className="text-center">
               <div className="bg-kevin-graphite border-2 border-kevin-orange p-6 inline-block">
                 <h3 className="font-pixel text-2xl text-kevin-orange mb-2">Kevin: From Blockchain to Hollywood</h3>
