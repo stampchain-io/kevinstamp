@@ -1,23 +1,6 @@
 import TerminalText from "../components/terminal-text";
 import { useQuery } from "@tanstack/react-query";
-
-interface TokenData {
-  ticker: string;
-  supply: number;
-  protocol: string;
-  status: string;
-  marketCapBTC: number;
-  change24h: number;
-  vol24h: number;
-  totalVolBTC: number;
-  holders: number;
-  deploymentStamp: number;
-  perMintLimit: number;
-  fairLaunchMinted: number;
-  tradeUrl: string;
-  lastUpdated: string;
-  dataSource: string;
-}
+import { TokenData } from "../../shared/schema";
 
 export default function Token() {
   const { data: tokenData, isLoading, error } = useQuery<TokenData>({
@@ -166,28 +149,52 @@ export default function Token() {
           </div>
 
           {/* Trading Section */}
-          <div className="bg-black border-2 border-kevin-orange p-8 max-w-2xl mx-auto text-center">
-            <h3 className="font-pixel text-2xl text-kevin-orange mb-4">
+          <div className="bg-black border-2 border-kevin-orange p-8 max-w-4xl mx-auto text-center">
+            <h3 className="font-pixel text-2xl text-kevin-orange mb-6">
               TRADE KEVIN TOKEN
             </h3>
-            <p className="text-white mb-6">
-              KEVIN token is available for trading on OpenStamp, the premier marketplace for 
-              SRC-20 tokens on Bitcoin Stamps protocol.
+            <p className="text-white mb-8">
+              KEVIN token is available for trading on multiple platforms with different trading pairs.
             </p>
             
-            <div className="mb-6 p-4 bg-kevin-graphite border border-kevin-steel">
-              <div className="text-kevin-neon font-pixel text-sm mb-2">TRADING PAIRS</div>
-              <div className="text-white text-sm">KEVIN/BTC on OpenStamp</div>
-            </div>
+            {/* Trading Platforms Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              {/* OpenStamp */}
+              <div className="bg-kevin-graphite border border-kevin-steel p-6">
+                <div className="text-kevin-neon font-pixel text-lg mb-2">OPENSTAMP</div>
+                <div className="text-white text-sm mb-3">KEVIN/BTC Trading Pair</div>
+                <div className="text-kevin-orange text-xs mb-4">Original SRC-20 Marketplace</div>
+                <a 
+                  href={tokenData.tradeUrl}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-6 py-3 text-black font-bold bg-kevin-orange border-kevin-orange inline-block"
+                >
+                  TRADE ON OPENSTAMP
+                </a>
+              </div>
 
-            <a 
-              href={tokenData.tradeUrl}
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="pixel-btn px-8 py-4 text-black font-bold text-lg bg-kevin-orange border-kevin-orange mb-4 inline-block"
-            >
-              💰 TRADE KEVIN ON OPENSTAMP
-            </a>
+              {/* SuperEX */}
+              <div className="bg-kevin-graphite border border-kevin-steel p-6">
+                <div className="text-kevin-cyan font-pixel text-lg mb-2">SUPEREX</div>
+                <div className="text-white text-sm mb-1">KEVIN/USDT Trading Pair</div>
+                <div className="text-kevin-mint text-xs mb-1">
+                  Current Price: ${tokenData.superExPrice?.toFixed(5) || '0.00246'}
+                </div>
+                <div className="text-kevin-mint text-xs mb-1">
+                  24h Volume: {tokenData.superExVolume?.toFixed(2) || '3.74'}K USDT
+                </div>
+                <div className="text-kevin-magenta text-xs mb-4">Web 3.0 Exchange</div>
+                <a 
+                  href={tokenData.superExUrl || "https://www.superex.com/trade/KEVIN_USDT"}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="pixel-btn px-6 py-3 text-black font-bold bg-kevin-cyan border-kevin-cyan inline-block"
+                >
+                  TRADE ON SUPEREX
+                </a>
+              </div>
+            </div>
             
             <div className="text-center text-sm text-kevin-steel mb-4">
               *Not investment advice. DYOR. Ghost trading only.

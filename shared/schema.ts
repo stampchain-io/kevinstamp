@@ -41,3 +41,25 @@ export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertKevinInquiry = z.infer<typeof insertKevinInquirySchema>;
 export type KevinInquiry = typeof kevinInquiries.$inferSelect;
+
+// Token data type for API responses
+export interface TokenData {
+  ticker: string;
+  supply: number;
+  protocol: string;
+  status: string;
+  marketCapBTC: number;
+  change24h: number;
+  vol24h: number;
+  totalVolBTC: number;
+  holders: number;
+  superExPrice?: number;
+  superExVolume?: number;
+  superExUrl?: string;
+  deploymentStamp: number;
+  perMintLimit: number;
+  fairLaunchMinted: number;
+  tradeUrl: string;
+  lastUpdated: string;
+  dataSource: string;
+}

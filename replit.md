@@ -54,7 +54,8 @@ Preferred communication style: Simple, everyday language.
 
 ### Third-Party Services
 - **Stampchain.io**: Primary data source for Bitcoin Stamps images and metadata
-- **OpenStamp.io**: Trading platform integration for KEVIN token (placeholder)
+- **OpenStamp.io**: Trading platform integration for KEVIN token (KEVIN/BTC pair)
+- **SuperEX.com**: Web3 crypto exchange with KEVIN/USDT trading pair integration
 - **Neon Database**: Serverless PostgreSQL hosting
 - **Cloudflare Stream**: Video hosting for community content
 - **YouTube**: Kevin's media appearances and official "We Are All Kevin" channel integration
