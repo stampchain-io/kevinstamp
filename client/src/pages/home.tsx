@@ -41,7 +41,7 @@ export default function Home() {
     }
   };
   return (
-    <div className="min-h-screen bg-kevin-charcoal text-white">
+    <div className="min-h-screen bg-kevin-charcoal text-white relative" style={{zIndex: 2}}>
       {/* Hero Section */}
       <PixelHero />
       {/* Kevin Saga Section */}
