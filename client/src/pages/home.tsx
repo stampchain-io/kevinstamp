@@ -122,7 +122,7 @@ export default function Home() {
               <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center">
                 <div className="text-4xl mb-4">🪙</div>
                 <h3 className="font-pixel text-xl text-kevin-orange mb-3">FIRST TOKEN</h3>
-                <p className="text-sm text-kevin-mint">KEVIN became the first SRC-20 token through divine blockchain intervention</p>
+                <p className="text-sm text-kevin-mint">KEVIN is  the first Fully immutable fungible  token on the UTXO of Bitcoin</p>
               </div>
             </div>
           </div>
