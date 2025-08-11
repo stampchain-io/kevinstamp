@@ -330,11 +330,10 @@ export default function Home() {
                   </label>
                   <select className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none">
                     <option value="">Select your budget range</option>
-                    <option value="0.1-0.5">0.1 - 0.5 BTC</option>
-                    <option value="0.5-1">0.5 - 1 BTC</option>
                     <option value="1-2">1 - 2 BTC</option>
                     <option value="2-5">2 - 5 BTC</option>
-                    <option value="5+">5+ BTC (Serious Collector)</option>
+                    <option value="5-10">5 - 10 BTC</option>
+                    <option value="10+">10+ BTC (Elite Collector)</option>
                   </select>
                 </div>
 
