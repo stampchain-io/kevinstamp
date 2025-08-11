@@ -110,12 +110,9 @@ export default function AudioPlayer({ className = '' }: AudioPlayerProps) {
           </div>
 
           {/* Track Info */}
-          <div className="text-xs text-kevin-orange font-pixel hidden sm:block">
-            🎵 MATRIX
-          </div>
+          <div className="text-xs text-kevin-orange font-pixel hidden sm:block">🎵 </div>
         </div>
       </div>
-
       {/* Hidden Audio Element */}
       <audio
         ref={audioRef}

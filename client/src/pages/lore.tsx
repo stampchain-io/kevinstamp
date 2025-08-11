@@ -20,8 +20,8 @@ export default function LorePage() {
             🌟 ORIGINS: THE BIRTH OF BITCOIN ART
           </h2>
 
-          <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 md:p-8 rounded-lg mb-8">
-            <p className="text-lg leading-relaxed mb-6">
+          <div className="bg-black bg-opacity-80 border-2 border-kevin-green p-6 md:p-8 rounded-lg mb-8">
+            <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
               Bitcoin Stamps emerged from the Counterparty protocol, where many
               of the original Bitcoin pioneers gathered from 2016 onwards to
               create art and tokens on Bitcoin. The first person to create a
@@ -58,7 +58,7 @@ export default function LorePage() {
               </div>
             </div>
 
-            <p className="text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed text-white font-semibold">
               It was in this secret cabal, of which Mike in Space was a member,
               that he met Arwyn. After Mike had the idea to pursue truly
               immutable data storage on Bitcoin, Arwyn began building with him
@@ -74,7 +74,7 @@ export default function LorePage() {
             👻 THE GHOST IN THE MACHINE
           </h2>
 
-          <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 md:p-8 rounded-lg">
+          <div className="bg-black bg-opacity-80 border-2 border-kevin-green p-6 md:p-8 rounded-lg">
             <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
               <div className="flex-shrink-0">
                 <img
@@ -88,13 +88,13 @@ export default function LorePage() {
                 <h3 className="text-2xl font-bold text-kevin-orange mb-4">
                   Stamp #4258: The Original
                 </h3>
-                <p className="text-lg leading-relaxed mb-4">
+                <p className="text-lg leading-relaxed mb-4 text-white font-semibold">
                   When stampchain.io was launched and things were going well,
                   Arwyn created Stamp #4258 - a portrait of our glorious new DEV
                   Kevin, intended as a one-off commemorative gift. But that's
                   where the magic started.
                 </p>
-                <p className="text-lg leading-relaxed">
+                <p className="text-lg leading-relaxed text-white font-semibold">
                   For reasons unknown, the stamping machine took on a mind of
                   its own. Instead of creating just one stamp, it began printing
                   Kevin again and again, periodically re-stamping the same
@@ -118,7 +118,7 @@ export default function LorePage() {
               </div>
             </div>
 
-            <p className="text-lg leading-relaxed mb-6">
+            <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
               To this day, nobody knows what caused these stamps to start
               minting themselves, and nobody knows why they stopped. This was a
               unique moment - the birth of a ghost in the machine. Any stamp
