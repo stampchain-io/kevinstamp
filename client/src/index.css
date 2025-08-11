@@ -293,3 +293,23 @@
     box-shadow: 0 0 20px rgb(247, 147, 26);
   }
 }
+
+/* Audio Player Slider Styling */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  height: 12px;
+  width: 12px;
+  background: #F7931A;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #000;
+}
+
+.slider::-moz-range-thumb {
+  height: 12px;
+  width: 12px;
+  background: #F7931A;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid #000;
+}

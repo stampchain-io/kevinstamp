@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import PixelNav from "./components/pixel-nav";
 import MatrixRain from "./components/matrix-rain";
+import AudioPlayer from "./components/audio-player";
 import Home from "./pages/home";
 import Stamps from "./pages/stamps";
 import Community from "./pages/community";
@@ -25,6 +26,7 @@ function Router() {
         <Route path="/lore" component={Lore} />
         <Route component={NotFound} />
       </Switch>
+      <AudioPlayer />
     </>
   );
 }
