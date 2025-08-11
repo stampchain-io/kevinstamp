@@ -11,19 +11,19 @@ export default function Token() {
   });
 
   const terminalLines = [
-    "> QUERYING SRC-20 PROTOCOL...",
-    "Loading KEVIN token data...",
-    "Protocol: Bitcoin Stamps SRC-20",
-    "Status: FIRST TOKEN EVER DEPLOYED",
-    tokenData ? `Market status: ${tokenData.dataSource}` : "Market status: LOADING..."
+    t.token.queryProtocol,
+    t.token.loadingData,
+    t.token.protocolStatus,
+    t.token.deployStatus,
+    tokenData ? `${t.token.marketStatus}: ${tokenData.dataSource}` : `${t.token.marketStatus}: LOADING...`
   ];
 
   if (isLoading) {
     return (
       <div className="min-h-screen bg-kevin-charcoal text-white pt-20 flex items-center justify-center">
         <div className="terminal-window p-8 text-center">
-          <div className="font-pixel text-kevin-orange text-xl mb-4">Loading KEVIN Token Data...</div>
-          <div className="text-kevin-neon">Connecting to OpenStamp API...</div>
+          <div className="font-pixel text-kevin-orange text-xl mb-4">{t.token.loading}</div>
+          <div className="text-kevin-neon">{t.token.connecting}</div>
         </div>
       </div>
     );
@@ -33,8 +33,8 @@ export default function Token() {
     return (
       <div className="min-h-screen bg-kevin-charcoal text-white pt-20 flex items-center justify-center">
         <div className="terminal-window p-8 text-center">
-          <div className="font-pixel text-red-400 text-xl mb-4">Error Loading Token Data</div>
-          <div className="text-white">Unable to connect to market data source.</div>
+          <div className="font-pixel text-red-400 text-xl mb-4">{t.token.error}</div>
+          <div className="text-white">{t.token.errorDesc}</div>
         </div>
       </div>
     );
@@ -42,25 +42,25 @@ export default function Token() {
 
   const tokenStats = [
     { 
-      label: "TOTAL SUPPLY", 
+      label: t.token.totalSupply, 
       value: tokenData.supply.toLocaleString(), 
       unit: "KEVIN", 
       color: "kevin-orange" 
     },
     { 
-      label: "MARKET CAP", 
+      label: t.token.marketCapLabel, 
       value: tokenData.marketCapBTC.toString(), 
       unit: "BTC", 
       color: "kevin-neon" 
     },
     { 
-      label: "HOLDERS", 
+      label: t.token.holdersLabel, 
       value: tokenData.holders.toLocaleString(), 
-      unit: "Wallets", 
+      unit: t.token.wallets, 
       color: "kevin-magenta" 
     },
     { 
-      label: "TOTAL VOLUME", 
+      label: t.token.totalVolumeLabel, 
       value: tokenData.totalVolBTC.toString(), 
       unit: "BTC", 
       color: "kevin-cyan" 
@@ -68,10 +68,10 @@ export default function Token() {
   ];
 
   const deploymentInfo = [
-    { label: "Deployment Stamp", value: `#${tokenData.deploymentStamp}` },
-    { label: "Per Mint Limit", value: `${tokenData.perMintLimit.toLocaleString()} KEVIN` },
-    { label: "Fair Launch Status", value: `${tokenData.fairLaunchMinted}% minted` },
-    { label: "Protocol", value: tokenData.protocol },
+    { label: t.token.deploymentStamp, value: `#${tokenData.deploymentStamp}` },
+    { label: t.token.perMintLimit, value: `${tokenData.perMintLimit.toLocaleString()} KEVIN` },
+    { label: t.token.fairLaunchStatus, value: `${tokenData.fairLaunchMinted}% ${t.token.minted}` },
+    { label: t.token.protocol, value: tokenData.protocol },
     { 
       label: "24H Change", 
       value: `${tokenData.change24h > 0 ? '+' : ''}${tokenData.change24h}%` 

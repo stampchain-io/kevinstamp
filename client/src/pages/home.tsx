@@ -351,25 +351,25 @@ export default function Home() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block font-pixel text-kevin-orange text-sm mb-2">
-                      COLLECTOR NAME *
+                      {t.home.contactForm.name} *
                     </label>
                     <input 
                       type="text"
                       name="name"
                       className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
-                      placeholder="Enter your name"
+                      placeholder={t.home.contactForm.placeholder.name}
                       required
                     />
                   </div>
                   <div>
                     <label className="block font-pixel text-kevin-orange text-sm mb-2">
-                      CONTACT METHOD *
+                      {t.home.contactForm.email} *
                     </label>
                     <input 
                       type="email"
                       name="email"
                       className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
-                      placeholder="your@email.com"
+                      placeholder={t.home.contactForm.placeholder.email}
                       required
                     />
                   </div>
@@ -377,12 +377,12 @@ export default function Home() {
 
                 <div>
                   <label className="block font-pixel text-kevin-orange text-sm mb-2">
-                    WHY DO YOU WANT A KEVIN STAMP? *
+                    {t.home.contactForm.message} *
                   </label>
                   <textarea 
                     name="motivation"
                     className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none h-24 resize-none"
-                    placeholder="Describe your interest in Kevin stamps and your collecting philosophy..."
+                    placeholder={t.home.contactForm.placeholder.message}
                     required
                   ></textarea>
                 </div>

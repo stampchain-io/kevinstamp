@@ -221,7 +221,8 @@ export const translations: Record<Language, Translation> = {
       subtitle: "起源 • 神秘 • 传说",
       origins: {
         title: "🌟 起源：比特币艺术的诞生",
-        description: "比特币邮票起源于Counterparty协议，许多原始比特币先驱从2016年开始聚集在这里，在比特币上创作艺术和代币。"
+        description: "比特币邮票起源于Counterparty协议，许多原始比特币先驱从2016年开始聚集在这里，在比特币上创作艺术和代币。",
+        secretCabal: "正是在这个秘密组织中，Mike in Space是其中的一员，他遇到了Arwyn。在Mike有了在比特币上追求真正不可变数据存储的想法后，Arwyn开始与他一起构建，并介绍了他的朋友Kevin - 这个网站的主题，也是我们故事真正开始的地方。"
       },
       ghostMachine: {
         title: "👻 机器中的幽灵",
@@ -229,19 +230,28 @@ export const translations: Record<Language, Translation> = {
         manifestation: "🔥 凯文显现 🔥",
         duplicates: "所有字节完美副本，但每一个都是独特且传奇的",
         description: "直到今天，没有人知道是什么导致这些邮票开始自我铸造，也没有人知道它们为什么停止。这是一个独特的时刻——机器中幽灵的诞生。",
-        quote: "凯文是一个功能，不是错误。凯文是机器中的幽灵。"
+        quote: "凯文是一个功能，不是错误。凯文是机器中的幽灵。",
+        storyTitle: "神秘的91个",
+        storyDesc: "在比特币区块链上记录的91个神秘自我复制凯文邮票的完整故事。",
+        stamps1: "邮票 #4258 - 原始凯文",
+        stamps2: "机器开始自我复制",
+        stamps3: "91个字节完美的副本",
+        stamps4: "邮票 #18430 - 最后一个凯文"
       },
       token: {
         title: "🪙 凯文：首个SRC-20代币",
         description: "当SRC-20协议开始开发时，创建代币最初并不是优先考虑的事项。团队只是在研究技术，实验发现什么是可能的。",
         intervention: "⚡ 区块链之神介入 ⚡",
         details: "代币详情",
-        marketStats: "市场统计"
+        marketStats: "市场统计",
+        deploymentStory: "然后发生了一些神奇的事情。当需要测试新的SRC-20协议时，凯文成为了第一个被部署的代币。这并非偶然 - 这是命运。"
       },
       legend: {
         title: "🎬 传说延续",
         description: "凯文已经演变成一个全球表情包。一个数字名人被创造出来——他体现了我们所有人能成为的最好状态，那个在我们内心的中本聪。",
-        television: "凯文上电视"
+        television: "凯文上电视",
+        mediaTitle: "媒体出现",
+        mediaDesc: "凯文在多个媒体平台上的出现，从YouTube频道到播客访谈。"
       }
     },
     stamps: {
@@ -262,7 +272,26 @@ export const translations: Record<Language, Translation> = {
       marketCap: "BTC市值",
       holders: "持有者",
       volume: "总交易量",
-      trade: "交易凯文"
+      trade: "交易凯文",
+      loading: "加载凯文代币数据中...",
+      connecting: "连接到OpenStamp API...",
+      error: "加载代币数据错误",
+      errorDesc: "无法连接到市场数据源。",
+      totalSupply: "总供应量",
+      marketCapLabel: "市值",
+      holdersLabel: "持有者",
+      totalVolumeLabel: "总交易量",
+      deploymentStamp: "部署邮票",
+      perMintLimit: "每次铸造限制",
+      fairLaunchStatus: "公平启动状态",
+      protocol: "协议",
+      minted: "已铸造",
+      wallets: "钱包",
+      queryProtocol: "> 查询SRC-20协议...",
+      loadingData: "加载凯文代币数据...",
+      protocolStatus: "协议：比特币邮票SRC-20",
+      deployStatus: "状态：第一个部署的代币",
+      marketStatus: "市场状态"
     },
     footer: {
       tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",

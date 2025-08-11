@@ -56,11 +56,7 @@ export default function LorePage() {
             </div>
 
             <p className="text-lg leading-relaxed text-white font-semibold">
-              It was in this secret cabal, of which Mike in Space was a member,
-              that he met Arwyn. After Mike had the idea to pursue truly
-              immutable data storage on Bitcoin, Arwyn began building with him
-              and introduced his friend Kevin - the subject of this website and
-              where our story truly begins.
+              {t.lore.origins.secretCabal}
             </p>
           </div>
         </div>
