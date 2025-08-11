@@ -8,7 +8,7 @@ interface CommunityGalleryProps {
   itemsPerPage?: number;
 }
 
-export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: CommunityGalleryProps) {
+export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }: CommunityGalleryProps) {
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
   const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
@@ -23,6 +23,18 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
 
   const filteredMemes = filterMemesByType(filter);
   const displayMemes = showAll ? filteredMemes : filteredMemes.slice(0, itemsPerPage);
+  
+  // Debug logging
+  useEffect(() => {
+    console.log('Community Gallery Debug:', {
+      totalMemes: communityMemes.length,
+      filteredMemes: filteredMemes.length,
+      displayMemes: displayMemes.length,
+      showAll,
+      itemsPerPage,
+      filter
+    });
+  }, [filteredMemes.length, displayMemes.length, showAll, itemsPerPage, filter]);
 
   const filters = [
     { key: 'all', label: 'ALL', icon: '🎨' },
