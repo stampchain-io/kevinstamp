@@ -37,8 +37,8 @@ Preferred communication style: Simple, everyday language.
 - **Image Handling**: Direct integration with stampchain.io API for stamp images
 
 ### Page Structure
-- **Home** (`/`): Hero section with Kevin saga overview and featured content
-- **Lore** (`/lore`): Comprehensive Kevin mythology, origins, and the ghost in the machine story
+- **Home** (`/`): Hero section with Kevin saga overview, media appearances, and featured content
+- **Lore** (`/lore`): Comprehensive Kevin mythology, origins, the ghost in the machine story, and television appearances
 - **Stamps** (`/stamps`): Gallery of all 91 Kevin stamps with external links
 - **Community** (`/community`): User-generated memes and artwork gallery
 - **Token** (`/token`): KEVIN SRC-20 token information and statistics
@@ -55,6 +55,7 @@ Preferred communication style: Simple, everyday language.
 - **OpenStamp.io**: Trading platform integration for KEVIN token (placeholder)
 - **Neon Database**: Serverless PostgreSQL hosting
 - **Cloudflare Stream**: Video hosting for community content
+- **YouTube**: Kevin's media appearances and official "We Are All Kevin" channel integration
 
 ### Key Libraries
 - **UI Components**: Radix UI primitives for accessibility-compliant components

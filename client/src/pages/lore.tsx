@@ -242,16 +242,62 @@ export default function LorePage() {
             </p>
 
             <div className="bg-gradient-to-r from-purple-600 to-kevin-orange p-6 rounded-lg text-center mb-6">
-              <h3 className="text-2xl font-bold text-black mb-2">
-                NOW STARRING IN
+              <h3 className="text-2xl font-bold text-black mb-4">
+                KEVIN ON TELEVISION
               </h3>
-              <p className="text-3xl font-bold text-black">
-                "EXIT VALLEY CRYPTO"
-              </p>
-              <p className="text-lg text-black mt-2">
-                An animated crypto sitcom featuring legends saving the world
-                from tyranny
-              </p>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-2xl font-bold text-black">
+                    "EXIT VALLEY CRYPTO"
+                  </p>
+                  <p className="text-sm text-black">
+                    Animated crypto sitcom featuring legends saving the world
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-black">
+                    "ARWYN & FRIENDS"
+                  </p>
+                  <p className="text-sm text-black">
+                    Kevin's adventures with the Bitcoin Stamps crew
+                  </p>
+                </div>
+                <div className="mt-4">
+                  <p className="text-lg font-bold text-black">
+                    📺 KEVIN TV - "WE ARE ALL KEVIN"
+                  </p>
+                  <p className="text-sm text-black">
+                    Official YouTube channel for all Kevin content
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-4 mb-6">
+              <a 
+                href="https://youtu.be/rH80shM2f5s?si=viGXviwb4m7eNSKv" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-red-600 text-white px-4 py-3 rounded-lg font-bold text-center hover:bg-red-700 transition-colors"
+              >
+                🎬 Exit Valley Crypto
+              </a>
+              <a 
+                href="https://www.youtube.com/watch?v=PipH4h3unHs&t=63s" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-600 text-white px-4 py-3 rounded-lg font-bold text-center hover:bg-blue-700 transition-colors"
+              >
+                🎭 Arwyn & Friends
+              </a>
+              <a 
+                href="https://www.youtube.com/@weareallkevin" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-purple-600 text-white px-4 py-3 rounded-lg font-bold text-center hover:bg-purple-700 transition-colors"
+              >
+                📺 KEVIN TV Channel
+              </a>
             </div>
 
             <div className="text-center">
