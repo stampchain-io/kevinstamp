@@ -1,7 +1,9 @@
 import CommunityGallery from "../components/community-gallery";
 import TerminalText from "../components/terminal-text";
+import { useLanguage } from "../lib/language-context";
 
 export default function Community() {
+  const { t } = useLanguage();
   const terminalLines = [
     "> CONNECTING TO KEVIN DEPOT...",
     "Scanning community creations...",
@@ -18,11 +20,11 @@ export default function Community() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h1 className="font-pixel font-black text-6xl text-kevin-orange mb-4">
-              COMMUNITY GALLERY
+              {t.community.title}
             </h1>
             <div className="w-32 h-1 bg-kevin-orange mx-auto mb-8"></div>
             <p className="text-xl text-kevin-mint font-terminal mb-8">
-              Wild creativity from Kevin believers worldwide
+              {t.community.subtitle}
             </p>
             
             <TerminalText 

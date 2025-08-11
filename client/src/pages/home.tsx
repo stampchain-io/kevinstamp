@@ -51,7 +51,7 @@ export default function Home() {
         <div className="scanlines absolute inset-0 opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">THE KEVIN SAGA</h2>
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.home.title}</h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
           </div>
 
@@ -123,8 +123,8 @@ export default function Home() {
               
               <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center">
                 <div className="text-4xl mb-4">🪙</div>
-                <h3 className="font-pixel text-xl text-kevin-orange mb-3">FIRST TOKEN</h3>
-                <p className="text-sm text-kevin-mint">KEVIN is  the first Fully immutable fungible  token on the UTXO of Bitcoin</p>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.firstSrc20Token}</h3>
+                <p className="text-sm text-kevin-mint">KEVIN is the first Fully immutable fungible token on the UTXO of Bitcoin</p>
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@ export default function Home() {
           <div className="text-center">
             <Link href="/lore">
               <div className="pixel-btn px-10 py-5 text-black font-bold text-xl bg-gradient-to-r from-kevin-orange to-purple-600 border-kevin-orange cursor-pointer hover:from-purple-600 hover:to-kevin-orange transition-all">
-                📖 READ THE FULL SAGA
+                📖 {t.lore.title}
               </div>
             </Link>
           </div>
@@ -143,9 +143,9 @@ export default function Home() {
         <div className="retro-grid absolute inset-0 opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">91 LEGENDARY STAMPS</h2>
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.stamps.title}</h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-kevin-mint font-terminal">Preview of the legendary stamp collection</p>
+            <p className="text-kevin-mint font-terminal">{t.stamps.subtitle}</p>
           </div>
 
           <StampsGallery showAll={false} itemsPerPage={16} />
@@ -153,7 +153,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link href="/stamps">
               <div className="pixel-btn px-8 py-4 text-black font-bold cursor-pointer">
-                🎯 VIEW ALL 91 STAMPS
+                🎯 {t.stamps.title}
               </div>
             </Link>
           </div>
@@ -164,9 +164,9 @@ export default function Home() {
         <div className="scanlines absolute inset-0 opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">EPIC COMMUNITY GALLERY</h2>
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.community.title}</h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-kevin-mint font-terminal">Wild creativity from Kevin believers worldwide</p>
+            <p className="text-kevin-mint font-terminal">{t.community.subtitle}</p>
           </div>
 
           <CommunityGallery showAll={false} itemsPerPage={16} />
@@ -174,7 +174,7 @@ export default function Home() {
           <div className="text-center mt-12">
             <Link href="/community">
               <div className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-neon border-kevin-neon cursor-pointer">
-                🎨 EXPLORE ALL MEMES
+                🎨 {t.community.title}
               </div>
             </Link>
           </div>
@@ -185,7 +185,7 @@ export default function Home() {
         <div className="retro-grid absolute inset-0 opacity-10"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">KEVIN TOKEN</h2>
+            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.token.title}</h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
           </div>
 
@@ -213,7 +213,7 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/token">
                 <div className="pixel-btn px-8 py-4 text-black font-bold cursor-pointer">
-                  📊 TOKEN DETAILS
+                  📊 {t.token.title}
                 </div>
               </Link>
               <a 

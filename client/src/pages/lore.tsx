@@ -1,33 +1,30 @@
 import { Link } from "wouter";
+import { useLanguage } from "../lib/language-context";
 
 export default function LorePage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-kevin-green font-mono relative z-10">
       {/* Header */}
       <div className="container mx-auto px-4 pt-12 pb-8 relative z-20">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 pixel-text animate-pixel-glow leading-tight">
-            THE KEVIN SAGA
+            {t.lore.title}
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-kevin-orange animate-pulse">
-            Origins • Mystery • Legend
+            {t.lore.subtitle}
           </p>
         </div>
 
         {/* Origins Section */}
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-kevin-orange border-b-2 border-kevin-orange pb-2">
-            🌟 ORIGINS: THE BIRTH OF BITCOIN ART
+            {t.lore.origins.title}
           </h2>
 
           <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg mb-8">
             <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
-              Bitcoin Stamps emerged from the Counterparty protocol, where many
-              of the original Bitcoin pioneers gathered from 2016 onwards to
-              create art and tokens on Bitcoin. The first person to create a
-              wallet capable of holding what would become Rare Pepes and then
-              NFTs was Joe Looney, who went on to be called the "Godfather of
-              NFTs."
+              {t.lore.origins.description}
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -71,7 +68,7 @@ export default function LorePage() {
         {/* The Ghost in the Machine */}
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-kevin-orange border-b-2 border-kevin-orange pb-2">
-            👻 THE GHOST IN THE MACHINE
+            {t.lore.ghostMachine.title}
           </h2>
 
           <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg">
@@ -86,7 +83,7 @@ export default function LorePage() {
 
               <div className="flex-1">
                 <h3 className="text-2xl font-bold text-kevin-orange mb-4">
-                  Stamp #4258: The Original
+                  {t.lore.ghostMachine.original}
                 </h3>
                 <p className="text-lg leading-relaxed mb-4 text-white font-semibold">
                   When stampchain.io was launched and things were going well,

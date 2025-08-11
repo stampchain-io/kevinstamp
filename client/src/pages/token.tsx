@@ -1,8 +1,10 @@
 import TerminalText from "../components/terminal-text";
 import { useQuery } from "@tanstack/react-query";
 import { TokenData } from "../../shared/schema";
+import { useLanguage } from "../lib/language-context";
 
 export default function Token() {
+  const { t } = useLanguage();
   const { data: tokenData, isLoading, error } = useQuery<TokenData>({
     queryKey: ["/api/token"],
     refetchInterval: 30000, // Refresh every 30 seconds for live updates
@@ -85,11 +87,11 @@ export default function Token() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h1 className="font-pixel font-black text-6xl text-kevin-orange mb-4">
-              KEVIN TOKEN
+              {t.token.title}
             </h1>
             <div className="w-32 h-1 bg-kevin-orange mx-auto mb-8"></div>
             <p className="text-xl text-kevin-mint font-terminal mb-8">
-              First SRC-20 token ever deployed on Bitcoin Stamps
+              {t.token.subtitle}
             </p>
             
             <TerminalText 

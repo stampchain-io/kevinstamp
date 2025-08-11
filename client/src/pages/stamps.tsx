@@ -1,7 +1,9 @@
 import StampsGallery from "../components/stamps-gallery";
 import TerminalText from "../components/terminal-text";
+import { useLanguage } from "../lib/language-context";
 
 export default function Stamps() {
+  const { t } = useLanguage();
   const terminalLines = [
     "> SCANNING BITCOIN BLOCKCHAIN...",
     "Searching for Kevin signatures...", 
@@ -18,11 +20,11 @@ export default function Stamps() {
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <h1 className="font-pixel font-black text-6xl text-kevin-orange mb-4">
-              91 KEVIN STAMPS
+              {t.stamps.title}
             </h1>
             <div className="w-32 h-1 bg-kevin-orange mx-auto mb-8"></div>
             <p className="text-xl text-kevin-mint font-terminal mb-8">
-              The complete collection of mysterious self-replicating stamps
+              {t.stamps.subtitle}
             </p>
             
             <TerminalText 
