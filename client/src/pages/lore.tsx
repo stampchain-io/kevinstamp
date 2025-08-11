@@ -2,9 +2,9 @@ import { Link } from "wouter";
 
 export default function LorePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-kevin-green font-mono">
+    <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-kevin-green font-mono relative z-10">
       {/* Header */}
-      <div className="container mx-auto px-4 pt-12 pb-8">
+      <div className="container mx-auto px-4 pt-12 pb-8 relative z-20">
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 pixel-text animate-pixel-glow leading-tight">
             THE KEVIN SAGA
