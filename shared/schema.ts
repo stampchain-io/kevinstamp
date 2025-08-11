@@ -28,6 +28,13 @@ export const insertKevinInquirySchema = createInsertSchema(kevinInquiries).pick(
   email: true,
   motivation: true,
   budgetRange: true,
+}).extend({
+  name: z.string().min(1, "Name is required").max(100, "Name too long"),
+  email: z.string().email("Valid email is required"),
+  motivation: z.string().min(10, "Please provide at least 10 characters explaining your interest"),
+  budgetRange: z.enum(["1-2", "2-5", "5-10", "10+"], {
+    errorMap: () => ({ message: "Please select a valid budget range" })
+  }),
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
