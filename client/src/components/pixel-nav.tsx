@@ -49,7 +49,7 @@ export default function PixelNav() {
             {/* Lazy Kevins Coming Soon Button */}
             <div className="pixel-btn px-3 py-2 text-xs lazy-kevin-flash border-kevin-magenta cursor-pointer hover:animate-none relative overflow-hidden">
               <div className="relative z-10 font-bold">
-                🚀 LAZY KEVINS
+                🚀 LAZY KEVINS SOON
               </div>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function PixelNav() {
               {/* Mobile Lazy Kevins Button */}
               <div className="px-4 py-2 font-pixel text-xs">
                 <div className="lazy-kevin-flash px-2 py-1 inline-block relative overflow-hidden">
-                  <span className="relative z-10 font-bold">🚀 LAZY KEVINS</span>
+                  <span className="relative z-10 font-bold">🚀 LAZY KEVINS SOON</span>
                 </div>
               </div>
             </div>
