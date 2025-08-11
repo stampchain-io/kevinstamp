@@ -99,12 +99,12 @@ export default function PixelHero() {
             </div>
           </Link>
           <a 
-            href="https://openstamp.io/market/src20/trading?ticker=KEVIN" 
+            href="https://www.superex.com/trade/KEVIN_USDT" 
             target="_blank" 
             rel="noopener noreferrer"
             className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-neon border-kevin-neon"
           >
-            TRADE KEVIN
+            TRADE KEVIN SRC TOKEN
           </a>
         </div>
 
