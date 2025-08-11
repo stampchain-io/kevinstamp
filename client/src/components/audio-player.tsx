@@ -127,10 +127,9 @@ export default function AudioPlayer({ className = '' }: AudioPlayerProps) {
         onLoadStart={() => console.log('Audio loading started')}
         onCanPlay={() => console.log('Audio can play')}
       >
-        <source src="/Music/Clubbed to Death - Matrix.mid" type="audio/midi" />
-        <source src="/Music/Clubbed to Death - Matrix.mid" type="audio/mid" />
-        {/* Note: MIDI files may not work in all browsers - consider converting to MP3/OGG */}
-        Your browser does not support MIDI playback.
+        <source src="/Music/clubbed-to-death-matrix.mp3" type="audio/mpeg" />
+        <source src="/Music/clubbed-to-death-matrix.wav" type="audio/wav" />
+        Your browser does not support audio playback.
       </audio>
     </div>
   );
