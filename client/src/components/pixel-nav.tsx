@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
+import { useLanguage } from "../lib/language-context";
+import LanguageToggle from "./language-toggle";
 
 export default function PixelNav() {
   const [location] = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const navItems = [
-    { path: "/", label: "HOME", icon: "🏠" },
-    { path: "/lore", label: "LORE", icon: "📖" },
-    { path: "/stamps", label: "STAMPS", icon: "📊" },
-    { path: "/community", label: "MEMES", icon: "🎨" },
-    { path: "/token", label: "TOKEN", icon: "💰" },
+    { path: "/", label: t.nav.home, icon: "🏠" },
+    { path: "/lore", label: t.nav.lore, icon: "📖" },
+    { path: "/stamps", label: t.nav.stamps, icon: "📊" },
+    { path: "/community", label: t.nav.community, icon: "🎨" },
+    { path: "/token", label: t.nav.token, icon: "💰" },
   ];
 
   return (
@@ -45,6 +48,9 @@ export default function PixelNav() {
                 </div>
               </Link>
             ))}
+            
+            {/* Language Toggle */}
+            <LanguageToggle />
             
             {/* Lazy Kevins Coming Soon Button */}
             <div className="pixel-btn px-3 py-2 text-xs lazy-kevin-flash border-kevin-magenta cursor-pointer hover:animate-none relative overflow-hidden">

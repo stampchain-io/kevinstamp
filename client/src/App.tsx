@@ -3,6 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LanguageProvider } from "./lib/language-context";
 import NotFound from "@/pages/not-found";
 import PixelNav from "./components/pixel-nav";
 import MatrixRain from "./components/matrix-rain";
@@ -35,10 +36,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="dark">
-          <Toaster />
-          <Router />
-        </div>
+        <LanguageProvider>
+          <div className="dark">
+            <Toaster />
+            <Router />
+          </div>
+        </LanguageProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

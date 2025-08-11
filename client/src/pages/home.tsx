@@ -4,8 +4,10 @@ import CommunityGallery from "../components/community-gallery";
 import { Link } from "wouter";
 import { useState } from "react";
 import { apiRequest } from "../lib/queryClient";
+import { useLanguage } from "../lib/language-context";
 
 export default function Home() {
+  const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
 
