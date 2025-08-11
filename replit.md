@@ -37,7 +37,7 @@ Preferred communication style: Simple, everyday language.
 - **Image Handling**: Direct integration with stampchain.io API for stamp images
 
 ### Page Structure
-- **Home** (`/`): Hero section with Kevin saga overview, media appearances, and featured content
+- **Home** (`/`): Hero section with Kevin saga overview, media appearances, exclusive stamp inquiry form, and featured content
 - **Lore** (`/lore`): Comprehensive Kevin mythology, origins, the ghost in the machine story, and television appearances
 - **Stamps** (`/stamps`): Gallery of all 91 Kevin stamps with external links
 - **Community** (`/community`): User-generated memes and artwork gallery
@@ -56,6 +56,7 @@ Preferred communication style: Simple, everyday language.
 - **Neon Database**: Serverless PostgreSQL hosting
 - **Cloudflare Stream**: Video hosting for community content
 - **YouTube**: Kevin's media appearances and official "We Are All Kevin" channel integration
+- **GitHub**: Bitcoin Stamps repository (https://github.com/stampchain-io) for development resources
 
 ### Key Libraries
 - **UI Components**: Radix UI primitives for accessibility-compliant components

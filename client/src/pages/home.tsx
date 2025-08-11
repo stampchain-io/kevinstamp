@@ -261,6 +261,118 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Exclusive Kevin Stamp Inquiry */}
+      <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative">
+        <div className="scanlines absolute inset-0 opacity-30"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-pixel font-black text-4xl text-kevin-orange mb-4 animate-pixel-glow">COLLECT A KEVIN STAMP</h2>
+              <div className="w-24 h-1 bg-kevin-orange mx-auto mb-6"></div>
+              <p className="text-lg text-kevin-mint font-terminal mb-2">Exclusive • By Consultation Only • Next Generation Finance</p>
+              <p className="text-sm text-purple-300">Kevin stamps represent officially guided collateral for sophisticated collectors</p>
+            </div>
+
+            <div className="bg-black bg-opacity-80 border-2 border-kevin-orange p-8 rounded-lg">
+              <div className="mb-8">
+                <div className="terminal-window inline-block mb-4">
+                  <div className="font-pixel text-kevin-neon text-lg">
+                    &gt; EXCLUSIVE_ACCESS.REQUEST
+                  </div>
+                </div>
+                <p className="text-white leading-relaxed mb-6">
+                  Kevin stamps are not publicly traded commodities. They are curated investments 
+                  in Bitcoin history, available exclusively through private consultation. Each acquisition 
+                  is carefully considered and personally guided.
+                </p>
+              </div>
+
+              <form className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block font-pixel text-kevin-orange text-sm mb-2">
+                      COLLECTOR NAME *
+                    </label>
+                    <input 
+                      type="text" 
+                      className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-pixel text-kevin-orange text-sm mb-2">
+                      CONTACT METHOD *
+                    </label>
+                    <input 
+                      type="email" 
+                      className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
+                      placeholder="your@email.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block font-pixel text-kevin-orange text-sm mb-2">
+                    WHY DO YOU WANT A KEVIN STAMP? *
+                  </label>
+                  <textarea 
+                    className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none h-24 resize-none"
+                    placeholder="Describe your interest in Kevin stamps and your collecting philosophy..."
+                    required
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label className="block font-pixel text-kevin-orange text-sm mb-2">
+                    INVESTMENT RANGE (BTC) *
+                  </label>
+                  <select className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none">
+                    <option value="">Select your budget range</option>
+                    <option value="0.1-0.5">0.1 - 0.5 BTC</option>
+                    <option value="0.5-1">0.5 - 1 BTC</option>
+                    <option value="1-2">1 - 2 BTC</option>
+                    <option value="2-5">2 - 5 BTC</option>
+                    <option value="5+">5+ BTC (Serious Collector)</option>
+                  </select>
+                </div>
+
+                <div className="flex items-start space-x-3">
+                  <input 
+                    type="checkbox" 
+                    id="terms" 
+                    className="mt-1 bg-kevin-graphite border border-kevin-steel"
+                    required
+                  />
+                  <label htmlFor="terms" className="text-sm text-white leading-relaxed">
+                    I understand that Kevin stamps are exclusive collectibles available by 
+                    consultation only. This inquiry does not guarantee acquisition rights.
+                  </label>
+                </div>
+
+                <div className="text-center pt-4">
+                  <button 
+                    type="submit" 
+                    className="pixel-btn px-10 py-4 text-black font-bold text-lg bg-gradient-to-r from-kevin-orange to-purple-600 border-kevin-orange hover:from-purple-600 hover:to-kevin-orange transition-all"
+                  >
+                    🎯 SUBMIT RSVP REQUEST
+                  </button>
+                </div>
+              </form>
+
+              <div className="mt-8 pt-6 border-t border-kevin-graphite text-center">
+                <p className="text-xs text-kevin-steel">
+                  All inquiries are reviewed personally. Response time: 48-72 hours.
+                  <br />
+                  Not investment advice. Kevin collecting is for sophisticated enthusiasts only.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="bg-black border-t-2 border-kevin-orange py-12">
         <div className="container mx-auto px-4">
@@ -279,6 +391,7 @@ export default function Home() {
                 <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Stampchain.io</a>
                 <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Trade KEVIN</a>
                 <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Depot</a>
+                <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">GitHub - Bitcoin Stamps</a>
                 <Link href="/stamps"><div className="text-kevin-orange hover:text-white cursor-pointer">91 Stamps Gallery</div></Link>
               </div>
             </div>
