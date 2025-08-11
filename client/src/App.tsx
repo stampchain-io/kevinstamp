@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import PixelNav from "./components/pixel-nav";
+import MatrixRain from "./components/matrix-rain";
 import Home from "./pages/home";
 import Stamps from "./pages/stamps";
 import Community from "./pages/community";
@@ -14,6 +15,7 @@ import Lore from "./pages/lore";
 function Router() {
   return (
     <>
+      <MatrixRain />
       <PixelNav />
       <Switch>
         <Route path="/" component={Home} />
