@@ -23,11 +23,7 @@ export default function Home() {
     };
 
     try {
-      const response = await apiRequest("/api/kevin-inquiry", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(inquiryData),
-      });
+      const response = await apiRequest("POST", "/api/kevin-inquiry", inquiryData);
 
       if (response.ok) {
         const result = await response.json();
