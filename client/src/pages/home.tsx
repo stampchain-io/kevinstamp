@@ -58,13 +58,13 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
             <div className="order-2 md:order-1">
               <div className="terminal-window">
-                <h3 className="font-pixel text-2xl text-kevin-orange mb-4">&gt; ORIGIN_STORY.LOG</h3>
-                <p className="mb-4">When stampchain.io launched, Arwyn created Stamp #4258 - a portrait of Kevin as a commemorative gift.</p>
-                <p className="mb-4 text-kevin-orange">But the machine took on a mind of its own...</p>
-                <p className="mb-4">The stamping machine began printing Kevin repeatedly, creating 91 byte-perfect duplicates across stamps #4258 to #18430.</p>
-                <p className="text-kevin-neon">Nobody knows why it started. Nobody knows why it stopped.</p>
+                <h3 className="font-pixel text-2xl text-kevin-orange mb-4">&gt; {t.home.heroDescription}</h3>
+                <p className="mb-4">{t.home.originDescription}</p>
+                <p className="mb-4 text-kevin-orange">{t.home.machineEvolution}</p>
+                <p className="mb-4">{t.home.storyDetails}</p>
+                <p className="text-kevin-neon">{t.home.mysteryQuote}</p>
                 <div className="mt-6 text-kevin-magenta">
-                  &gt; THE GHOST IN THE MACHINE WAS BORN
+                  &gt; {t.home.ghostBorn}
                 </div>
               </div>
             </div>
@@ -75,21 +75,21 @@ export default function Home() {
                   <div className="w-8 h-8 bg-kevin-orange border-2 border-white pixel-perfect"></div>
                   <div>
                     <div className="font-pixel text-kevin-orange">STAMP #4258</div>
-                    <div className="text-sm">Original Kevin Created</div>
+                    <div className="text-sm">{t.lore.ghostMachine.original}</div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4 p-4 bg-black border-2 border-kevin-magenta">
                   <div className="w-8 h-8 bg-kevin-magenta border-2 border-white pixel-perfect animate-pixel-glitch"></div>
                   <div>
-                    <div className="font-pixel text-kevin-magenta">ANOMALY DETECTED</div>
-                    <div className="text-sm">Machine starts self-replicating</div>
+                    <div className="font-pixel text-kevin-magenta">{t.stamps.anomaly}</div>
+                    <div className="text-sm">{t.home.mysterySelfReplication}</div>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4 p-4 bg-black border-2 border-kevin-neon">
                   <div className="w-8 h-8 bg-kevin-neon border-2 border-white pixel-perfect"></div>
                   <div>
                     <div className="font-pixel text-kevin-neon">STAMP #18430</div>
-                    <div className="text-sm">Final Kevin - Anomaly ends</div>
+                    <div className="text-sm">{t.lore.legend.description}</div>
                   </div>
                 </div>
               </div>
@@ -102,29 +102,29 @@ export default function Home() {
         <div className="scanlines absolute inset-0 opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-6xl text-kevin-orange mb-4 animate-pixel-glow">THE KEVIN SAGA</h2>
+            <h2 className="font-pixel font-black text-6xl text-kevin-orange mb-4 animate-pixel-glow">{t.home.title}</h2>
             <div className="w-32 h-2 bg-gradient-to-r from-kevin-orange to-purple-600 mx-auto mb-8"></div>
-            <p className="text-xl text-kevin-mint font-terminal">Origins • Mystery • Legend</p>
+            <p className="text-xl text-kevin-mint font-terminal">{t.lore.subtitle}</p>
           </div>
 
           <div className="max-w-4xl mx-auto mb-12">
             <div className="grid md:grid-cols-3 gap-8">
               <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 text-center">
                 <div className="text-4xl mb-4">🌟</div>
-                <h3 className="font-pixel text-xl text-kevin-orange mb-3">ORIGINS</h3>
-                <p className="text-sm text-kevin-mint">From the secret cabals of Bitcoin art pioneers to the birth of immutable data storage</p>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.originsTitle}</h3>
+                <p className="text-sm text-kevin-mint">{t.home.originsSub}</p>
               </div>
               
               <div className="bg-black bg-opacity-50 border-2 border-kevin-orange p-6 text-center">
                 <div className="text-4xl mb-4">👻</div>
-                <h3 className="font-pixel text-xl text-kevin-orange mb-3">THE GHOST</h3>
-                <p className="text-sm text-kevin-mint">91 mysterious self-replicating stamps that appeared on Bitcoin without explanation</p>
+                <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.mysteryTitle}</h3>
+                <p className="text-sm text-kevin-mint">{t.home.mysterySub}</p>
               </div>
               
               <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center">
                 <div className="text-4xl mb-4">🪙</div>
                 <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.firstSrc20Token}</h3>
-                <p className="text-sm text-kevin-mint">KEVIN is the first Fully immutable fungible token on the UTXO of Bitcoin</p>
+                <p className="text-sm text-kevin-mint">{t.home.legendSub}</p>
               </div>
             </div>
           </div>
@@ -193,19 +193,19 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
             <div className="bg-black border-2 border-kevin-orange p-6 text-center">
               <div className="meme-counter text-3xl">690M</div>
-              <div className="font-pixel text-kevin-orange text-sm mt-2">TOTAL SUPPLY</div>
+              <div className="font-pixel text-kevin-orange text-sm mt-2">{t.token.description}</div>
             </div>
             <div className="bg-black border-2 border-kevin-neon p-6 text-center">
               <div className="meme-counter text-3xl">17.8</div>
-              <div className="font-pixel text-kevin-neon text-sm mt-2">BTC MARKET CAP</div>
+              <div className="font-pixel text-kevin-neon text-sm mt-2">{t.token.marketCap}</div>
             </div>
             <div className="bg-black border-2 border-kevin-magenta p-6 text-center">
               <div className="meme-counter text-3xl">2.1K</div>
-              <div className="font-pixel text-kevin-magenta text-sm mt-2">HOLDERS</div>
+              <div className="font-pixel text-kevin-magenta text-sm mt-2">{t.token.holders}</div>
             </div>
             <div className="bg-black border-2 border-kevin-cyan p-6 text-center">
               <div className="meme-counter text-3xl">269</div>
-              <div className="font-pixel text-kevin-cyan text-sm mt-2">TOTAL VOLUME</div>
+              <div className="font-pixel text-kevin-cyan text-sm mt-2">{t.token.volume}</div>
             </div>
           </div>
 
@@ -222,7 +222,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-orange border-kevin-orange"
               >
-                💰 TRADE KEVIN
+                💰 {t.token.title}
               </a>
             </div>
           </div>
