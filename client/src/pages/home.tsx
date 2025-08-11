@@ -460,21 +460,21 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className="font-pixel text-lg text-white mb-4">LINKS</div>
+              <div className="font-pixel text-xl text-white mb-4 font-bold bg-black bg-opacity-50 px-2 py-1 rounded">LINKS</div>
               <div className="space-y-2 text-sm">
-                <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Stampchain.io</a>
-                <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Trade KEVIN</a>
-                <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Depot</a>
-                <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Fan Site</a>
-                <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Twitter @stampchain</a>
-                <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Telegram @BitcoinStamps</a>
-                <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">GitHub - Bitcoin Stamps</a>
-                <Link href="/stamps"><div className="text-kevin-orange hover:text-white cursor-pointer">91 Stamps Gallery</div></Link>
+                <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Stampchain.io</a>
+                <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Trade KEVIN</a>
+                <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Kevin Depot</a>
+                <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Kevin Fan Site</a>
+                <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Twitter @stampchain</a>
+                <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Telegram @BitcoinStamps</a>
+                <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">GitHub - Bitcoin Stamps</a>
+                <Link href="/stamps"><div className="text-white hover:text-kevin-orange cursor-pointer font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">91 Stamps Gallery</div></Link>
               </div>
             </div>
             <div>
-              <div className="font-pixel text-lg text-white mb-4">LEGAL</div>
-              <div className="text-sm text-kevin-steel leading-relaxed">
+              <div className="font-pixel text-xl text-white mb-4 font-bold bg-black bg-opacity-50 px-2 py-1 rounded">LEGAL</div>
+              <div className="text-sm text-white leading-relaxed font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">
                 Not investment advice.<br />
                 Kevin is a meme.<br />
                 DYOR. Ghost responsibly.
@@ -483,11 +483,11 @@ export default function Home() {
           </div>
           
           <div className="border-t border-kevin-graphite mt-8 pt-8 text-center">
-            <div className="terminal-window inline-block">
-              <div className="font-pixel text-kevin-neon">
+            <div className="terminal-window inline-block bg-black bg-opacity-70 px-4 py-3 rounded border border-kevin-orange">
+              <div className="font-pixel text-kevin-neon font-bold">
                 &gt; KEVIN@BITCOIN:~$ echo "FEATURE_NOT_BUG" | hash256
               </div>
-              <div className="text-white mt-2">
+              <div className="text-white mt-2 font-semibold">
                 0x4b6576696e20697320746865206768... [HASH_CONTINUES_FOREVER]
               </div>
             </div>
