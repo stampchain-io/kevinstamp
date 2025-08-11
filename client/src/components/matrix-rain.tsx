@@ -80,10 +80,10 @@ export default function MatrixRain({ className = '' }: MatrixRainProps) {
   return (
     <canvas 
       ref={canvasRef}
-      className={`fixed inset-0 pointer-events-none z-0 ${className}`}
+      className={`fixed inset-0 pointer-events-none z-10 ${className}`}
       style={{ 
         background: 'transparent',
-        opacity: 0.6 // Reduced opacity to not interfere with content
+        opacity: 0.7 // Slightly higher opacity for better visibility
       }}
     />
   );
