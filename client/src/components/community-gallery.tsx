@@ -170,7 +170,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
               rel="noopener noreferrer"
               className="text-center"
             >
-              <div className="font-pixel text-kevin-neon text-xl">+60</div>
+              <div className="font-pixel text-kevin-neon text-xl">+50</div>
               <div className="font-pixel text-xs text-white">MORE</div>
               <div className="font-pixel text-xs text-kevin-neon mt-2">VISIT DEPOT</div>
             </a>

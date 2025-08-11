@@ -167,7 +167,7 @@ export default function Home() {
             <p className="text-kevin-mint font-terminal">Wild creativity from Kevin believers worldwide</p>
           </div>
 
-          <CommunityGallery showAll={false} itemsPerPage={8} />
+          <CommunityGallery showAll={false} itemsPerPage={16} />
 
           <div className="text-center mt-12">
             <Link href="/community">
