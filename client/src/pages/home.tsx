@@ -460,16 +460,16 @@ export default function Home() {
               </div>
             </div>
             <div>
-              <div className="font-pixel text-xl text-white mb-4 font-bold bg-black bg-opacity-50 px-2 py-1 rounded">LINKS</div>
+              <div className="font-pixel text-xl text-white mb-4 font-bold bg-black bg-opacity-80 px-2 py-1 rounded">LINKS</div>
               <div className="space-y-2 text-sm">
-                <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Stampchain.io</a>
-                <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Trade KEVIN</a>
-                <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Kevin Depot</a>
-                <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Kevin Fan Site</a>
-                <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Twitter @stampchain</a>
-                <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">Telegram @BitcoinStamps</a>
-                <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">GitHub - Bitcoin Stamps</a>
-                <Link href="/stamps"><div className="text-white hover:text-kevin-orange cursor-pointer font-semibold bg-black bg-opacity-30 px-2 py-1 rounded">91 Stamps Gallery</div></Link>
+                <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Stampchain.io</a>
+                <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Trade KEVIN</a>
+                <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Kevin Depot</a>
+                <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Kevin Fan Site</a>
+                <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Twitter @stampchain</a>
+                <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Telegram @BitcoinStamps</a>
+                <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">GitHub - Bitcoin Stamps</a>
+                <Link href="/stamps"><div className="text-white hover:text-kevin-orange cursor-pointer font-bold bg-black bg-opacity-70 px-2 py-1 rounded">91 Stamps Gallery</div></Link>
               </div>
             </div>
             <div>

@@ -20,7 +20,7 @@ export default function LorePage() {
             🌟 ORIGINS: THE BIRTH OF BITCOIN ART
           </h2>
 
-          <div className="bg-black bg-opacity-95 border-2 border-kevin-green p-6 md:p-8 rounded-lg mb-8 backdrop-blur-sm">
+          <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg mb-8">
             <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
               Bitcoin Stamps emerged from the Counterparty protocol, where many
               of the original Bitcoin pioneers gathered from 2016 onwards to
@@ -74,7 +74,7 @@ export default function LorePage() {
             👻 THE GHOST IN THE MACHINE
           </h2>
 
-          <div className="bg-black bg-opacity-95 border-2 border-kevin-green p-6 md:p-8 rounded-lg backdrop-blur-sm">
+          <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg">
             <div className="flex flex-col md:flex-row items-center gap-8 mb-8">
               <div className="flex-shrink-0">
                 <img
@@ -145,7 +145,7 @@ export default function LorePage() {
             🪙 KEVIN: THE FIRST SRC-20 TOKEN
           </h2>
 
-          <div className="bg-black bg-opacity-95 border-2 border-kevin-green p-6 md:p-8 rounded-lg backdrop-blur-sm">
+          <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg">
             <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
               When development began on the SRC-20 protocol, creating tokens
               wasn't initially a priority. The team was merely investigating the
@@ -232,7 +232,7 @@ export default function LorePage() {
             🎬 THE LEGEND CONTINUES
           </h2>
 
-          <div className="bg-black bg-opacity-95 border-2 border-kevin-green p-6 md:p-8 rounded-lg backdrop-blur-sm">
+          <div className="bg-black border-2 border-kevin-green p-6 md:p-8 rounded-lg">
             <p className="text-lg leading-relaxed mb-6 text-white font-semibold">
               KEVIN has evolved into a global meme. A digital celebrity was
               created - one who embodies the best of what we can all be, that
