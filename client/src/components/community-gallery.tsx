@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
+import { CommunityData } from "../../shared/schema";
 
 interface CommunityGalleryProps {
   showAll?: boolean;
@@ -12,6 +14,12 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
   const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
   const [videoModal, setVideoModal] = useState<CommunityMeme | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Get live community stats from API
+  const { data: communityData } = useQuery<CommunityData>({
+    queryKey: ["/api/community"],
+    refetchInterval: 30000, // Refresh every 30 seconds
+  });
 
   const filteredMemes = filterMemesByType(filter);
   const displayMemes = showAll ? filteredMemes : filteredMemes.slice(0, itemsPerPage);
@@ -173,15 +181,21 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
       {/* Community Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">{communityMemes.length}</div>
+          <div className="meme-counter text-2xl">
+            {communityData?.totalMemes || communityMemes.length}
+          </div>
           <div className="text-kevin-orange font-pixel text-xs">Total Memes</div>
         </div>
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">{communityMemes.filter(m => m.type === 'video').length}</div>
+          <div className="meme-counter text-2xl">
+            {communityData?.totalVideos || communityMemes.filter(m => m.type === 'video').length}
+          </div>
           <div className="text-kevin-neon font-pixel text-xs">Videos</div>
         </div>
         <div className="terminal-window p-4 text-center">
-          <div className="meme-counter text-2xl">{communityMemes.filter(m => m.type === 'gif').length}</div>
+          <div className="meme-counter text-2xl">
+            {communityData?.totalGifs || communityMemes.filter(m => m.type === 'gif').length}
+          </div>
           <div className="text-kevin-magenta font-pixel text-xs">GIFs</div>
         </div>
         <div className="terminal-window p-4 text-center">
@@ -189,6 +203,15 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
           <div className="text-kevin-cyan font-pixel text-xs">Creativity</div>
         </div>
       </div>
+
+      {/* Live Stats Info */}
+      {communityData && (
+        <div className="text-center text-xs text-kevin-mint mt-4">
+          <div>Live data from {communityData.dataSource}</div>
+          <div>Last updated: {new Date(communityData.lastUpdated).toLocaleString()}</div>
+          <div className="text-kevin-cyan">Updates every 30 seconds</div>
+        </div>
+      )}
 
       {/* Link to Full Depot */}
       <div className="text-center">

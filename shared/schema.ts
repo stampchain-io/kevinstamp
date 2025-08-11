@@ -63,3 +63,24 @@ export interface TokenData {
   lastUpdated: string;
   dataSource: string;
 }
+
+// Community data type for API responses
+export interface CommunityData {
+  totalMemes: number;
+  totalVideos: number;
+  totalGifs: number;
+  totalImages: number;
+  totalViews: number;
+  totalArtists: number;
+  depotUrl: string;
+  lastUpdated: string;
+  dataSource: string;
+  featured?: Array<{
+    id: string;
+    title: string;
+    type: string;
+    imageUrl: string;
+    description: string;
+    category: string;
+  }>;
+}
