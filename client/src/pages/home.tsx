@@ -48,7 +48,6 @@ export default function Home() {
     <div className="min-h-screen bg-kevin-charcoal text-white">
       {/* Hero Section */}
       <PixelHero />
-
       {/* Kevin Saga Section */}
       <section className="py-20 bg-kevin-graphite relative">
         <div className="scanlines absolute inset-0 opacity-30"></div>
@@ -62,7 +61,7 @@ export default function Home() {
             <div className="order-2 md:order-1">
               <div className="terminal-window">
                 <h3 className="font-pixel text-2xl text-kevin-orange mb-4">&gt; ORIGIN_STORY.LOG</h3>
-                <p className="mb-4">When stampchain.io launched, Mike in Space created Stamp #4258 - a portrait of Kevin as a commemorative gift.</p>
+                <p className="mb-4">When stampchain.io launched, Arwyn created Stamp #4258 - a portrait of Kevin as a commemorative gift.</p>
                 <p className="mb-4 text-kevin-orange">But the machine took on a mind of its own...</p>
                 <p className="mb-4">The stamping machine began printing Kevin repeatedly, creating 91 byte-perfect duplicates across stamps #4258 to #18430.</p>
                 <p className="text-kevin-neon">Nobody knows why it started. Nobody knows why it stopped.</p>
@@ -100,7 +99,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* LORE Section - New Epic Feature */}
       <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative">
         <div className="scanlines absolute inset-0 opacity-30"></div>
@@ -142,7 +140,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Preview: 91 Kevin Stamps */}
       <section className="py-20 bg-kevin-charcoal relative">
         <div className="retro-grid absolute inset-0 opacity-20"></div>
@@ -164,7 +161,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Preview: Community Gallery */}
       <section className="py-20 bg-kevin-graphite relative">
         <div className="scanlines absolute inset-0 opacity-20"></div>
@@ -186,7 +182,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Token Preview */}
       <section className="py-20 bg-kevin-charcoal relative">
         <div className="retro-grid absolute inset-0 opacity-10"></div>
@@ -235,7 +230,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Kevin in Media Section */}
       <section className="py-20 bg-black relative">
         <div className="scanlines absolute inset-0 opacity-40"></div>
@@ -329,7 +323,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Exclusive Kevin Stamp Inquiry */}
       <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative">
         <div className="scanlines absolute inset-0 opacity-30"></div>
@@ -458,7 +451,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-black border-t-2 border-kevin-orange py-12">
         <div className="container mx-auto px-4">
