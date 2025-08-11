@@ -118,14 +118,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 8 }: 
                 style={{ imageRendering: 'pixelated' }}
               />
               
-              {/* Video Play Icon */}
-              {meme.type === 'video' && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-12 h-12 bg-kevin-cyan border-2 border-white flex items-center justify-center animate-pulse">
-                    <div className="w-0 h-0 border-l-6 border-l-black border-y-3 border-y-transparent ml-1"></div>
-                  </div>
-                </div>
-              )}
+
 
               {/* GIF Play Icon */}
               {meme.type === 'gif' && (
