@@ -76,18 +76,18 @@ export default function PixelHero() {
         </div>
 
         {/* Stats Counter */}
-        <div className="grid grid-cols-3 gap-8 mb-12 max-w-2xl mx-auto">
-          <div className="text-center border-2 border-kevin-orange bg-black p-4">
-            <div className="meme-counter text-4xl">91</div>
-            <div className="text-kevin-orange font-pixel text-sm">STAMPS</div>
+        <div className="grid grid-cols-3 gap-4 sm:gap-8 mb-12 max-w-2xl mx-auto">
+          <div className="text-center border-2 border-kevin-orange bg-black p-3 sm:p-4">
+            <div className="meme-counter text-3xl sm:text-4xl">91</div>
+            <div className="text-kevin-orange font-pixel text-xs sm:text-sm">STAMPS</div>
           </div>
-          <div className="text-center border-2 border-kevin-neon bg-black p-4">
-            <div className="meme-counter text-4xl">67</div>
-            <div className="text-kevin-neon font-pixel text-sm">MEMES</div>
+          <div className="text-center border-2 border-kevin-neon bg-black p-3 sm:p-4">
+            <div className="meme-counter text-3xl sm:text-4xl">67</div>
+            <div className="text-kevin-neon font-pixel text-xs sm:text-sm">MEMES</div>
           </div>
-          <div className="text-center border-2 border-kevin-magenta bg-black p-4">
-            <div className="meme-counter text-4xl">690M</div>
-            <div className="text-kevin-magenta font-pixel text-sm">SUPPLY</div>
+          <div className="text-center border-2 border-kevin-magenta bg-black p-3 sm:p-4">
+            <div className="meme-counter text-2xl sm:text-3xl">690M</div>
+            <div className="text-kevin-magenta font-pixel text-xs sm:text-sm">SUPPLY</div>
           </div>
         </div>
 
