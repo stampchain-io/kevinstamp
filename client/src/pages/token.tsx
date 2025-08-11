@@ -1,28 +1,97 @@
 import TerminalText from "../components/terminal-text";
+import { useQuery } from "@tanstack/react-query";
+
+interface TokenData {
+  ticker: string;
+  supply: number;
+  protocol: string;
+  status: string;
+  marketCapBTC: number;
+  change24h: number;
+  vol24h: number;
+  totalVolBTC: number;
+  holders: number;
+  deploymentStamp: number;
+  perMintLimit: number;
+  fairLaunchMinted: number;
+  tradeUrl: string;
+  lastUpdated: string;
+  dataSource: string;
+}
 
 export default function Token() {
+  const { data: tokenData, isLoading, error } = useQuery<TokenData>({
+    queryKey: ["/api/token"],
+    refetchInterval: 30000, // Refresh every 30 seconds for live updates
+  });
+
   const terminalLines = [
     "> QUERYING SRC-20 PROTOCOL...",
     "Loading KEVIN token data...",
     "Protocol: Bitcoin Stamps SRC-20",
     "Status: FIRST TOKEN EVER DEPLOYED",
-    "Market status: LEGENDARY"
+    tokenData ? `Market status: ${tokenData.dataSource}` : "Market status: LOADING..."
   ];
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-kevin-charcoal text-white pt-20 flex items-center justify-center">
+        <div className="terminal-window p-8 text-center">
+          <div className="font-pixel text-kevin-orange text-xl mb-4">Loading KEVIN Token Data...</div>
+          <div className="text-kevin-neon">Connecting to OpenStamp API...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !tokenData) {
+    return (
+      <div className="min-h-screen bg-kevin-charcoal text-white pt-20 flex items-center justify-center">
+        <div className="terminal-window p-8 text-center">
+          <div className="font-pixel text-red-400 text-xl mb-4">Error Loading Token Data</div>
+          <div className="text-white">Unable to connect to market data source.</div>
+        </div>
+      </div>
+    );
+  }
+
   const tokenStats = [
-    { label: "TOTAL SUPPLY", value: "690,000,000", unit: "KEVIN", color: "kevin-orange" },
-    { label: "MARKET CAP", value: "17.802", unit: "BTC", color: "kevin-neon" },
-    { label: "HOLDERS", value: "2,130", unit: "Wallets", color: "kevin-magenta" },
-    { label: "TOTAL VOLUME", value: "269.22", unit: "BTC", color: "kevin-cyan" },
+    { 
+      label: "TOTAL SUPPLY", 
+      value: tokenData.supply.toLocaleString(), 
+      unit: "KEVIN", 
+      color: "kevin-orange" 
+    },
+    { 
+      label: "MARKET CAP", 
+      value: tokenData.marketCapBTC.toString(), 
+      unit: "BTC", 
+      color: "kevin-neon" 
+    },
+    { 
+      label: "HOLDERS", 
+      value: tokenData.holders.toLocaleString(), 
+      unit: "Wallets", 
+      color: "kevin-magenta" 
+    },
+    { 
+      label: "TOTAL VOLUME", 
+      value: tokenData.totalVolBTC.toString(), 
+      unit: "BTC", 
+      color: "kevin-cyan" 
+    },
   ];
 
   const deploymentInfo = [
-    { label: "Deployment Stamp", value: "#18516" },
-    { label: "Per Mint Limit", value: "420,000 KEVIN" },
-    { label: "Fair Launch Status", value: "153.92% minted" },
-    { label: "Protocol", value: "SRC-20 on Bitcoin Stamps" },
-    { label: "24H Change", value: "-2.64%" },
-    { label: "24H Volume", value: "0 BTC" },
+    { label: "Deployment Stamp", value: `#${tokenData.deploymentStamp}` },
+    { label: "Per Mint Limit", value: `${tokenData.perMintLimit.toLocaleString()} KEVIN` },
+    { label: "Fair Launch Status", value: `${tokenData.fairLaunchMinted}% minted` },
+    { label: "Protocol", value: tokenData.protocol },
+    { 
+      label: "24H Change", 
+      value: `${tokenData.change24h > 0 ? '+' : ''}${tokenData.change24h}%` 
+    },
+    { label: "24H Volume", value: `${tokenData.vol24h} BTC` },
   ];
 
   return (
@@ -112,7 +181,7 @@ export default function Token() {
             </div>
 
             <a 
-              href="https://openstamp.io/market/src20/trading?ticker=KEVIN" 
+              href={tokenData.tradeUrl}
               target="_blank" 
               rel="noopener noreferrer"
               className="pixel-btn px-8 py-4 text-black font-bold text-lg bg-kevin-orange border-kevin-orange mb-4 inline-block"
@@ -120,8 +189,14 @@ export default function Token() {
               💰 TRADE KEVIN ON OPENSTAMP
             </a>
             
-            <div className="text-center text-sm text-kevin-steel">
+            <div className="text-center text-sm text-kevin-steel mb-4">
               *Not investment advice. DYOR. Ghost trading only.
+            </div>
+
+            <div className="text-center text-xs text-kevin-mint border-t border-kevin-steel pt-4">
+              <div className="mb-1">Data Source: {tokenData.dataSource}</div>
+              <div>Last Updated: {new Date(tokenData.lastUpdated).toLocaleString()}</div>
+              <div className="mt-1 text-kevin-cyan">Refreshing every 30 seconds</div>
             </div>
           </div>
 

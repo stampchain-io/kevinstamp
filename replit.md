@@ -45,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 
 ### API Endpoints
 - `GET /api/stamps` - Returns Kevin stamp numbers and image URLs
-- `GET /api/token` - Returns KEVIN token statistics and market data
+- `GET /api/token` - Returns KEVIN token statistics and market data with dynamic updates (prepared for OpenStamp API integration)
 - `GET /api/community` - Returns community-generated content metadata
 - `POST /api/kevin-inquiry` - Handles exclusive Kevin stamp acquisition inquiries with validation
 - `GET /api/kevin-inquiries` - Admin endpoint to view all submitted inquiries
