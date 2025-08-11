@@ -1,5 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { insertKevinInquirySchema } from "@shared/schema";
+import { storage } from "./storage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API route for Kevin stamp data
@@ -80,6 +82,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       ]
     });
+  });
+
+  // API route for Kevin stamp inquiries
+  app.post("/api/kevin-inquiry", async (req, res) => {
+    try {
+      const validatedData = insertKevinInquirySchema.parse(req.body);
+      const inquiry = await storage.createKevinInquiry(validatedData);
+      
+      // In a real app, you'd send an email here
+      console.log("New Kevin stamp inquiry received:", {
+        name: inquiry.name,
+        email: inquiry.email,
+        budgetRange: inquiry.budgetRange,
+        timestamp: inquiry.createdAt
+      });
+      
+      res.status(201).json({ 
+        success: true, 
+        message: "Inquiry submitted successfully. We'll review your request within 48-72 hours.",
+        id: inquiry.id
+      });
+    } catch (error) {
+      console.error("Error submitting Kevin inquiry:", error);
+      res.status(400).json({ 
+        success: false, 
+        message: "Invalid form data. Please check all required fields." 
+      });
+    }
+  });
+
+  // API route to get all inquiries (for admin use)
+  app.get("/api/kevin-inquiries", async (req, res) => {
+    try {
+      const inquiries = await storage.getKevinInquiries();
+      res.json({
+        total: inquiries.length,
+        inquiries: inquiries.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+      });
+    } catch (error) {
+      console.error("Error fetching inquiries:", error);
+      res.status(500).json({ success: false, message: "Error fetching inquiries" });
+    }
   });
 
   const httpServer = createServer(app);

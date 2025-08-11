@@ -2,8 +2,48 @@ import PixelHero from "../components/pixel-hero";
 import StampsGallery from "../components/stamps-gallery";
 import CommunityGallery from "../components/community-gallery";
 import { Link } from "wouter";
+import { useState } from "react";
+import { apiRequest } from "../lib/queryClient";
 
 export default function Home() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+
+  const handleInquirySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    const inquiryData = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      motivation: formData.get("motivation") as string,
+      budgetRange: formData.get("budgetRange") as string,
+    };
+
+    try {
+      const response = await apiRequest("/api/kevin-inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(inquiryData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setSubmitMessage("✓ " + result.message);
+        (e.target as HTMLFormElement).reset();
+      } else {
+        const error = await response.json();
+        setSubmitMessage("✗ " + error.message);
+      }
+    } catch (error) {
+      setSubmitMessage("✗ Error submitting form. Please try again.");
+      console.error("Form submission error:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-kevin-charcoal text-white">
       {/* Hero Section */}
@@ -287,14 +327,15 @@ export default function Home() {
                 </p>
               </div>
 
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleInquirySubmit}>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block font-pixel text-kevin-orange text-sm mb-2">
                       COLLECTOR NAME *
                     </label>
                     <input 
-                      type="text" 
+                      type="text"
+                      name="name"
                       className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
                       placeholder="Enter your name"
                       required
@@ -305,7 +346,8 @@ export default function Home() {
                       CONTACT METHOD *
                     </label>
                     <input 
-                      type="email" 
+                      type="email"
+                      name="email"
                       className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none"
                       placeholder="your@email.com"
                       required
@@ -318,6 +360,7 @@ export default function Home() {
                     WHY DO YOU WANT A KEVIN STAMP? *
                   </label>
                   <textarea 
+                    name="motivation"
                     className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none h-24 resize-none"
                     placeholder="Describe your interest in Kevin stamps and your collecting philosophy..."
                     required
@@ -328,7 +371,7 @@ export default function Home() {
                   <label className="block font-pixel text-kevin-orange text-sm mb-2">
                     INVESTMENT RANGE (BTC) *
                   </label>
-                  <select className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none">
+                  <select name="budgetRange" className="w-full bg-kevin-graphite border border-kevin-steel px-4 py-3 text-white font-mono focus:border-kevin-orange focus:outline-none" required>
                     <option value="">Select your budget range</option>
                     <option value="1-2">1 - 2 BTC</option>
                     <option value="2-5">2 - 5 BTC</option>
@@ -350,12 +393,27 @@ export default function Home() {
                   </label>
                 </div>
 
+                {submitMessage && (
+                  <div className={`text-center p-4 rounded border ${
+                    submitMessage.startsWith('✓') 
+                      ? 'bg-green-900 border-green-500 text-green-100' 
+                      : 'bg-red-900 border-red-500 text-red-100'
+                  }`}>
+                    {submitMessage}
+                  </div>
+                )}
+
                 <div className="text-center pt-4">
                   <button 
-                    type="submit" 
-                    className="pixel-btn px-10 py-4 text-black font-bold text-lg bg-gradient-to-r from-kevin-orange to-purple-600 border-kevin-orange hover:from-purple-600 hover:to-kevin-orange transition-all"
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`pixel-btn px-10 py-4 text-black font-bold text-lg transition-all ${
+                      isSubmitting 
+                        ? 'bg-gray-500 border-gray-500 cursor-not-allowed' 
+                        : 'bg-gradient-to-r from-kevin-orange to-purple-600 border-kevin-orange hover:from-purple-600 hover:to-kevin-orange'
+                    }`}
                   >
-                    🎯 SUBMIT RSVP REQUEST
+                    {isSubmitting ? "🔄 SUBMITTING..." : "🎯 SUBMIT RSVP REQUEST"}
                   </button>
                 </div>
               </form>
