@@ -470,6 +470,7 @@ export default function Home() {
                 <a href="https://openstamp.io/market/src20/trading?ticker=KEVIN" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Trade KEVIN</a>
                 <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Depot</a>
                 <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Kevin Fan Site</a>
+                <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Twitter @stampchain</a>
                 <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">Telegram @BitcoinStamps</a>
                 <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-kevin-orange hover:text-white block">GitHub - Bitcoin Stamps</a>
                 <Link href="/stamps"><div className="text-kevin-orange hover:text-white cursor-pointer">91 Stamps Gallery</div></Link>
