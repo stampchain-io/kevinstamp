@@ -7,7 +7,7 @@ export default function Stamps() {
   const terminalLines = [
     "> SCANNING BITCOIN BLOCKCHAIN...",
     "Searching for Kevin signatures...", 
-    "Found 91 matching stamps",
+    "Found 104 matching stamps",
     "Range: #4258 to #18430",
     "Status: LEGENDARY COLLECTION COMPLETE"
   ];
@@ -50,7 +50,7 @@ export default function Stamps() {
               <div>
                 <div className="text-kevin-neon mb-2">Original Stamp: #4258</div>
                 <div className="text-white mb-2">Final Stamp: #18430</div>
-                <div className="text-white mb-2">Total Count: 91 stamps</div>
+                <div className="text-white mb-2">Total Count: 104 stamps</div>
                 <div className="text-kevin-orange mb-2">Status: Byte-perfect duplicates</div>
               </div>
               <div>

@@ -106,7 +106,7 @@ export const translations: Record<Language, Translation> = {
     home: {
       title: "THE KEVIN SAGA",
       subtitle: "Ghost in the Machine • Bitcoin Legend • First SRC-20 Token",
-      heroDescription: "Kevin is not just a meme - he's a digital legend born from the Bitcoin blockchain itself. When a simple portrait stamp began self-replicating across 91 mysterious duplicates, it sparked the creation of the first SRC-20 token and became the stuff of crypto folklore.",
+      heroDescription: "Kevin is not just a meme - he's a digital legend born from the Bitcoin blockchain itself. When a simple portrait stamp began self-replicating across 104 mysterious duplicates, it sparked the creation of the first SRC-20 token and became the stuff of crypto folklore.",
       featuresTitle: "THE LEGEND",
       mysterySelfReplication: "Mystery Self-Replication",
       firstSrc20Token: "First SRC-20 Token",
@@ -189,13 +189,13 @@ export const translations: Record<Language, Translation> = {
       heroDescription: "起源故事.LOG",
       originDescription: "当stampchain.io推出时，Arwyn创建了邮票#4258 - 一幅凯文的肖像作为纪念礼品。",
       machineEvolution: "但机器有了自己的想法...",
-      storyDetails: "邮票机开始重复打印凯文，在邮票#4258到#18430之间创建了91个字节完美的副本。",
+      storyDetails: "邮票机开始重复打印凯文，在邮票#4258到#18430之间创建了104个字节完美的副本。",
       mysteryQuote: "没有人知道它为什么开始。没有人知道它为什么停止。",
       ghostBorn: "机器中的幽灵诞生了",
       originsTitle: "起源",
       originsSub: "从比特币艺术先驱的秘密组织到不可变数据存储的诞生",
       mysteryTitle: "神秘",
-      mysterySub: "91个自我复制的邮票，没有解释，只有传说",
+      mysterySub: "104个自我复制的邮票，没有解释，只有传说",
       legendTitle: "传说",
       legendSub: "第一个SRC-20代币，全球模因，数字名人",
       featuresTitle: "传说",
@@ -231,11 +231,11 @@ export const translations: Record<Language, Translation> = {
         duplicates: "所有字节完美副本，但每一个都是独特且传奇的",
         description: "直到今天，没有人知道是什么导致这些邮票开始自我铸造，也没有人知道它们为什么停止。这是一个独特的时刻——机器中幽灵的诞生。",
         quote: "凯文是一个功能，不是错误。凯文是机器中的幽灵。",
-        storyTitle: "神秘的91个",
-        storyDesc: "在比特币区块链上记录的91个神秘自我复制凯文邮票的完整故事。",
+        storyTitle: "神秘的104个",
+        storyDesc: "在比特币区块链上记录的104个神秘自我复制凯文邮票的完整故事。",
         stamps1: "邮票 #4258 - 原始凯文",
         stamps2: "机器开始自我复制",
-        stamps3: "91个字节完美的副本",
+        stamps3: "104个字节完美的副本",
         stamps4: "邮票 #18430 - 最后一个凯文"
       },
       token: {
@@ -255,9 +255,9 @@ export const translations: Record<Language, Translation> = {
       }
     },
     stamps: {
-      title: "91个凯文邮票",
+      title: "104个凯文邮票",
       subtitle: "神秘自我复制邮票的完整收藏",
-      description: "在邮票#4258和#18430之间，凯文在比特币区块链上显现了91次。",
+      description: "在邮票#4258和#18430之间，凯文在比特币区块链上显现了104次。",
       anomaly: "> 异常现象.DAT"
     },
     community: {
