@@ -15,6 +15,16 @@ export interface Translation {
     title: string;
     subtitle: string;
     heroDescription: string;
+    originDescription: string;
+    machineEvolution: string;
+    storyDetails: string;
+    mysteryQuote: string;
+    ghostBorn: string;
+    originsTitle: string;
+    originsSub: string;
+    mysteryTitle: string;
+    mysterySub: string;
+    legendSub: string;
     featuresTitle: string;
     mysterySelfReplication: string;
     firstSrc20Token: string;
@@ -84,6 +94,9 @@ export interface Translation {
     title: string;
     subtitle: string;
     description: string;
+    marketCap: string;
+    holders: string;
+    volume: string;
   };
   
   // Footer
@@ -106,7 +119,17 @@ export const translations: Record<Language, Translation> = {
     home: {
       title: "THE KEVIN SAGA",
       subtitle: "Ghost in the Machine • Bitcoin Legend • First SRC-20 Token",
-      heroDescription: "Kevin is not just a meme - he's a digital legend born from the Bitcoin blockchain itself. When a simple portrait stamp began self-replicating across 104 mysterious duplicates, it sparked the creation of the first SRC-20 token and became the stuff of crypto folklore.",
+      heroDescription: "ORIGIN_STORY.LOG",
+      originDescription: "When stampchain.io launched, Arwyn created stamp #4258 - a portrait of Kevin as a commemorative gift.",
+      machineEvolution: "But the machine had other ideas...",
+      storyDetails: "The stamp machine began printing Kevin repeatedly, creating 104 byte-perfect duplicates between stamps #4258 to #18430.",
+      mysteryQuote: "No one knows why it started. No one knows why it stopped.",
+      ghostBorn: "> GHOST_IN_THE_MACHINE.EXE",
+      originsTitle: "Origins",
+      originsSub: "From secret cabal of Bitcoin art pioneers to immutable data storage birth",
+      mysteryTitle: "Mystery",
+      mysterySub: "104 self-replicating stamps, no explanation, only legend",
+      legendSub: "First SRC-20 token, global meme, digital celebrity",
       featuresTitle: "THE LEGEND",
       mysterySelfReplication: "Mystery Self-Replication",
       firstSrc20Token: "First SRC-20 Token",
@@ -167,7 +190,10 @@ export const translations: Record<Language, Translation> = {
     token: {
       title: "凯文代币",
       subtitle: "比特币上的首个 SRC-20 代币",
-      description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。"
+      description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。",
+      marketCap: "BTC市值",
+      holders: "持有者",
+      volume: "总交易量"
     },
     footer: {
       tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",
@@ -186,7 +212,17 @@ export const translations: Record<Language, Translation> = {
     home: {
       title: "凯文传奇",
       subtitle: "机器中的幽灵 • 比特币传说 • 首个 SRC-20 代币",
-      heroDescription: "凯文不仅仅是一个表情包 - 他是从比特币区块链本身诞生的数字传说。当一个简单的肖像邮票开始在104个神秘副本中自我复制时，它引发了第一个SRC-20代币的创建，并成为了加密传说。",
+      heroDescription: "起源故事.LOG",
+      originDescription: "当stampchain.io推出时，Arwyn创建了邮票#4258 - 一幅凯文的肖像作为纪念礼品。",
+      machineEvolution: "但机器有了自己的想法...",
+      storyDetails: "邮票机开始重复打印凯文，在邮票#4258到#18430之间创建了104个字节完美的副本。",
+      mysteryQuote: "没有人知道它为什么开始。没有人知道它为什么停止。",
+      ghostBorn: "机器中的幽灵诞生了",
+      originsTitle: "起源",
+      originsSub: "从比特币艺术先驱的秘密组织到不可变数据存储的诞生",
+      mysteryTitle: "神秘",
+      mysterySub: "104个自我复制的邮票，没有解释，只有传说",
+      legendSub: "第一个SRC-20代币，全球模因，数字名人",
       featuresTitle: "传说",
       mysterySelfReplication: "神秘自我复制",
       firstSrc20Token: "首个 SRC-20 代币",
@@ -247,7 +283,10 @@ export const translations: Record<Language, Translation> = {
     token: {
       title: "凯文代币",
       subtitle: "比特币上首个SRC-20代币",
-      description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。"
+      description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。",
+      marketCap: "BTC市值",
+      holders: "持有者",
+      volume: "总交易量"
     },
     footer: {
       tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",
