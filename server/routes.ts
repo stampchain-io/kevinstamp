@@ -97,71 +97,139 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // API route for community memes
-  app.get("/api/community", (req, res) => {
-    // Dynamic community stats (simulate growth from actual Kevin Depot)
-    const currentTime = Date.now();
-    const hoursSinceEpoch = Math.floor(currentTime / 3600000); // Hours since epoch
-    const minutesSinceEpoch = Math.floor(currentTime / 60000); // Minutes since epoch
-    
-    // Base stats from actual Kevin Depot
-    const baseViews = 727;
-    const baseMemes = 67;
-    const baseVideos = 14;
-    const baseGifs = 8;
-    const baseImages = 45;
-    const baseArtists = 12;
-    
-    // Dynamic fluctuations and growth
-    const viewsFluctuation = Math.floor(Math.sin(currentTime / 200000) * 15 + Math.cos(currentTime / 150000) * 8); // More noticeable view changes
-    const memesGrowth = Math.floor(hoursSinceEpoch * 0.001); // Slow but steady growth over time
-    const videosFluctuation = Math.floor(Math.sin(currentTime / 300000) * 2); // Occasional video count changes
-    const gifsFluctuation = Math.floor(Math.cos(currentTime / 400000) * 1); // Occasional gif count changes
-    const artistsFluctuation = Math.floor(Math.random() * 3); // Random artist count variation
-    
-    // Ensure no negative values
-    const totalMemes = Math.max(baseMemes + memesGrowth, baseMemes);
-    const totalViews = Math.max(baseViews + viewsFluctuation, baseViews);
-    const totalVideos = Math.max(baseVideos + videosFluctuation, baseVideos);
-    const totalGifs = Math.max(baseGifs + gifsFluctuation, baseGifs);
-    const totalArtists = Math.max(baseArtists + artistsFluctuation, baseArtists);
-    
-    res.json({
-      totalMemes,
-      totalVideos,
-      totalGifs,
-      totalImages: baseImages, // Keep images stable for now
-      totalViews,
-      totalArtists,
-      depotUrl: "https://memedepot.com/d/kevin-depot",
-      lastUpdated: new Date().toISOString(),
-      dataSource: "Kevin Depot (live stats)",
-      featured: [
-        {
-          id: "kevin-president",
-          title: "KEVIN 4 PRESIDENT",
+  app.get("/api/community", async (req, res) => {
+    try {
+      // Fetch live data from Kevin Depot
+      const response = await fetch('https://memedepot.com/d/kevin-depot');
+      const html = await response.text();
+      
+      // Parse the actual stats from the page
+      let totalMemes = 133; // Default fallback
+      let totalViews = 904; // Default fallback
+      
+      // Extract meme count from the HTML
+      const memeCountMatch = html.match(/(\d+)\s*Memes/);
+      if (memeCountMatch) {
+        totalMemes = parseInt(memeCountMatch[1]);
+      }
+      
+      // Extract view count from the HTML
+      const viewCountMatch = html.match(/(\d+)\s*Views/);
+      if (viewCountMatch) {
+        totalViews = parseInt(viewCountMatch[1]);
+      }
+      
+      // Parse recent memes from the page
+      const imageMatches = html.match(/https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"]+\/width=3840/g) || [];
+      const videoMatches = html.match(/https:\/\/customer-hls7a0n7rbjgz9uk\.cloudflarestream\.com\/[^"]+\/thumbnails\/thumbnail\.jpg/g) || [];
+      
+      // Count GIFs specifically (filenames ending in .gif)
+      const gifMatches = imageMatches.filter(url => url.includes('.gif'));
+      
+      // Count different media types
+      const totalImages = Math.max(0, imageMatches.length - gifMatches.length); // Images excluding GIFs
+      const totalVideos = videoMatches.length;
+      const totalGifs = gifMatches.length;
+      
+      // Extract featured content (mix of images and videos)
+      const featured = [];
+      
+      // Get recent images (exclude GIFs for featured, take first 2)
+      const recentImages = imageMatches
+        .filter(url => !url.includes('.gif'))
+        .slice(0, 2)
+        .map((url, index) => ({
+          id: `recent-image-${Date.now()}-${index}`,
+          title: `KEVIN ARTWORK #${index + 1}`,
           type: "image",
-          imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/0914e9a8-d29b-423b-a633-38b5c1bc3700/width=400",
-          description: "Political Campaign",
-          category: "Politics"
-        },
-        {
-          id: "kevsurf",
-          title: "KEVSURF", 
-          type: "image",
-          imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f07d3377-921a-49ea-9a99-6f50e2505200/width=400",
-          description: "Radical Surfing",
-          category: "Sports"
-        },
-        {
-          id: "james-bond-kevin",
-          title: "AGENT 007 KEVIN",
-          type: "image", 
-          imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/56c35540-04c1-4cbf-8e20-34297ca43b00/width=400",
-          description: "Secret Agent",
-          category: "Movies"
-        }
-      ]
-    });
+          imageUrl: url.replace('/width=3840', '/width=400'),
+          description: "Latest from Kevin Depot",
+          category: "Community"
+        }));
+      
+      // Get a recent video if available
+      if (videoMatches.length > 0) {
+        const recentVideo = {
+          id: `recent-video-${Date.now()}`,
+          title: "KEVIN VIDEO",
+          type: "video",
+          imageUrl: videoMatches[0], // Use thumbnail
+          videoUrl: videoMatches[0].match(/([a-f0-9-]+)\/thumbnails/)?.[1] || "", // Extract video ID
+          description: "Latest video from Kevin Depot",
+          category: "Community"
+        };
+        featured.push(recentVideo);
+      }
+      
+      featured.push(...recentImages);
+      
+      // Add a recent GIF if we have any
+      if (gifMatches.length > 0) {
+        const recentGif = {
+          id: `recent-gif-${Date.now()}`,
+          title: "KEVIN GIF",
+          type: "gif",
+          imageUrl: gifMatches[0].replace('/width=3840', '/width=400'),
+          description: "Latest GIF from Kevin Depot",
+          category: "Community"
+        };
+        featured.push(recentGif);
+      }
+      
+      res.json({
+        totalMemes,
+        totalVideos,
+        totalGifs,
+        totalImages,
+        totalViews,
+        totalArtists: 1, // Based on the depot owner
+        depotUrl: "https://memedepot.com/d/kevin-depot",
+        lastUpdated: new Date().toISOString(),
+        dataSource: "Kevin Depot (live data)",
+        featured
+      });
+    } catch (error) {
+      console.error("Error fetching Kevin Depot data:", error);
+      
+      // Fallback to static data if scraping fails
+      res.json({
+        totalMemes: 133,
+        totalVideos: 14,
+        totalGifs: 8,
+        totalImages: 45,
+        totalViews: 904,
+        totalArtists: 1,
+        depotUrl: "https://memedepot.com/d/kevin-depot",
+        lastUpdated: new Date().toISOString(),
+        dataSource: "Kevin Depot (cached fallback)",
+        featured: [
+          {
+            id: "kevin-president",
+            title: "KEVIN 4 PRESIDENT",
+            type: "image",
+            imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/0914e9a8-d29b-423b-a633-38b5c1bc3700/width=400",
+            description: "Political Campaign",
+            category: "Politics"
+          },
+          {
+            id: "kevsurf",
+            title: "KEVSURF", 
+            type: "image",
+            imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f07d3377-921a-49ea-9a99-6f50e2505200/width=400",
+            description: "Radical Surfing",
+            category: "Sports"
+          },
+          {
+            id: "james-bond-kevin",
+            title: "AGENT 007 KEVIN",
+            type: "image", 
+            imageUrl: "https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/56c35540-04c1-4cbf-8e20-34297ca43b00/width=400",
+            description: "Secret Agent",
+            category: "Movies"
+          }
+        ]
+      });
+    }
   });
 
   // API route for Kevin stamp inquiries
