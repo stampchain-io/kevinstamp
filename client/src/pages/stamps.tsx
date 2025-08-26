@@ -9,7 +9,7 @@ export default function Stamps() {
     "Searching for Kevin signatures...", 
     "Found 104 matching stamps",
     "Range: #4258 to #18430",
-    "Status: LEGENDARY COLLECTION COMPLETE"
+    t.buttons.legendaryComplete
   ];
 
   return (
@@ -81,7 +81,7 @@ export default function Stamps() {
                   rel="noopener noreferrer"
                   className="pixel-btn px-8 py-4 text-black font-bold"
                 >
-                  🎯 VIEW ORIGINAL #4258
+                  {t.buttons.viewOriginal}
                 </a>
                 <a 
                   href="https://openstamp.io/market/src20/trading?ticker=KEVIN" 
@@ -89,7 +89,7 @@ export default function Stamps() {
                   rel="noopener noreferrer"
                   className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-neon border-kevin-neon"
                 >
-                  💰 TRADE KEVIN TOKEN
+                  {t.buttons.tradeToken}
                 </a>
               </div>
             </div>

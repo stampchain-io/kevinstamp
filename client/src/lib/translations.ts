@@ -1,3 +1,5 @@
+import { createContext, useContext } from 'react';
+
 export type Language = 'en' | 'zh';
 
 export interface Translation {
@@ -88,7 +90,7 @@ export interface Translation {
     subtitle: string;
     highlights: string;
   };
-  
+
   // Token page
   token: {
     title: string;
@@ -98,12 +100,30 @@ export interface Translation {
     holders: string;
     volume: string;
   };
-  
+
   // Footer
   footer: {
     tagline: string;
     links: string;
     disclaimer: string;
+  };
+  
+  // Buttons and actions
+  buttons: {
+    viewOriginal: string;
+    tradeToken: string;
+    viewStamps: string;
+    viewMoreArt: string;
+    viewMoreVideos: string;
+    tradeOnOpenstamp: string;
+    tradeOnSuperex: string;
+    playVideo: string;
+    viewGif: string;
+    viewImage: string;
+    submitRsvp: string;
+    submitting: string;
+    lazyKevinsSoon: string;
+    legendaryComplete: string;
   };
 }
 
@@ -149,56 +169,72 @@ export const translations: Record<Language, Translation> = {
       }
     },
     lore: {
-      title: "凯文传奇",
-      subtitle: "起源 • 神秘 • 传说",
+      title: "The Kevin Saga",
+      subtitle: "Origins • Mystery • Legend",
       origins: {
-        title: "🌟 起源：比特币艺术的诞生",
-        description: "比特币邮票起源于Counterparty协议，从2016年开始，许多原始的比特币先驱聚集在那里，在比特币上创建艺术和代币。"
+        title: "🌟 Origins: Birth of Bitcoin Art",
+        description: "Bitcoin Stamps originated from the Counterparty protocol, where many original Bitcoin pioneers have been gathering since 2016, creating art and tokens on Bitcoin."
       },
       ghostMachine: {
-        title: "👻 机器中的幽灵",
-        original: "邮票 #4258：原始邮票",
-        manifestation: "🔥 凯文显现 🔥",
-        duplicates: "所有字节完美的副本，但每一个都是独特且传奇的",
-        description: "至今为止，没有人知道是什么导致这些邮票开始自我铸造，也没有人知道它们为什么停止。这是一个独特的时刻 - 机器中幽灵的诞生。",
-        quote: "凯文是一个特性，不是一个错误。凯文是机器中的幽灵。"
+        title: "👻 Ghost in the Machine",
+        original: "Stamp #4258: The Original",
+        manifestation: "🔥 KEVIN MANIFESTS 🔥",
+        duplicates: "All byte-perfect copies, yet each one unique and legendary",
+        description: "To this day, no one knows what caused these stamps to start self-minting, and no one knows why they stopped. It was a unique moment - the birth of a ghost in the machine.",
+        quote: "Kevin is a feature, not a bug. Kevin is the ghost in the machine."
       },
       token: {
-        title: "🪙 凯文：首个 SRC-20 代币",
-        description: "当SRC-20协议开始开发时，创建代币最初并不是优先事项。团队只是在研究这项技术，实验以发现可能性。",
-        intervention: "⚡ 区块链之神介入 ⚡",
-        details: "代币详情",
-        marketStats: "市场统计"
+        title: "🪙 Kevin: First SRC-20 Token",
+        description: "When the SRC-20 protocol began development, creating tokens was not initially a priority. The team was just researching the technology, experimenting to discover what was possible.",
+        intervention: "⚡ The Blockchain Gods Intervened ⚡",
+        details: "Token Details",
+        marketStats: "Market Stats"
       },
       legend: {
-        title: "🎬 传说继续",
-        description: "凯文已经演变成一个全球模因。创造了一个数字名人 - 一个体现我们所有人最好一面的人，我们内心的中本聪。",
-        television: "凯文上电视"
+        title: "🎬 The Legend Continues",
+        description: "Kevin has evolved into a global meme. A digital celebrity has been created - one who embodies the best of what we can all be, the Satoshi within us all.",
+        television: "Kevin on Television"
       }
     },
     stamps: {
-      title: "91个凯文邮票",
-      subtitle: "神秘自我复制邮票的完整收藏",
-      description: "在邮票#4258和#18430之间，凯文在比特币区块链上显现了91次。",
-      anomaly: "> 异常.DAT"
+      title: "104 Kevin Stamps",
+      subtitle: "Complete collection of mysterious self-replicating stamps",
+      description: "Between stamps #4258 and #18430, Kevin manifested 104 times on the Bitcoin blockchain.",
+      anomaly: "> ANOMALY.DAT"
     },
     community: {
-      title: "社区画廊", 
-      subtitle: "来自全球凯文信徒的狂野创意",
-      highlights: "> 精选亮点.LOG"
+      title: "Community Gallery",
+      subtitle: "Wild creations from Kevin believers worldwide",
+      highlights: "> FEATURED_HIGHLIGHTS.LOG"
     },
     token: {
-      title: "凯文代币",
-      subtitle: "比特币上的首个 SRC-20 代币",
-      description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。",
-      marketCap: "BTC市值",
-      holders: "持有者",
-      volume: "总交易量"
+      title: "Kevin Token",
+      subtitle: "First SRC-20 Token on Bitcoin",
+      description: "Born from mystery, Kevin became the first SRC-20 token deployed on the Bitcoin blockchain.",
+      marketCap: "BTC Market Cap",
+      holders: "Holders",
+      volume: "Total Volume"
     },
     footer: {
-      tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",
-      links: "链接",
-      disclaimer: "本网站仅用于娱乐和教育目的。"
+      tagline: "Ghost in the Machine\nFeature, Not a Bug\nLiving Legend on Bitcoin",
+      links: "Links",
+      disclaimer: "This website is for entertainment and educational purposes only."
+    },
+    buttons: {
+      viewOriginal: "🎯 VIEW ORIGINAL #4258",
+      tradeToken: "💰 TRADE KEVIN TOKEN",
+      viewStamps: "VIEW 104 STAMPS",
+      viewMoreArt: "VIEW MORE ART",
+      viewMoreVideos: "VIEW MORE VIDEOS",
+      tradeOnOpenstamp: "TRADE ON OPENSTAMP",
+      tradeOnSuperex: "TRADE ON SUPEREX",
+      playVideo: "PLAY VIDEO",
+      viewGif: "VIEW GIF",
+      viewImage: "VIEW IMAGE",
+      submitRsvp: "🎯 SUBMIT RSVP REQUEST",
+      submitting: "🔄 SUBMITTING...",
+      lazyKevinsSoon: "🚀 LAZY KEVINS SOON",
+      legendaryComplete: "Status: LEGENDARY COLLECTION COMPLETE"
     }
   },
   zh: {
@@ -253,7 +289,7 @@ export const translations: Record<Language, Translation> = {
         original: "邮票 #4258：原版",
         manifestation: "🔥 凯文显现 🔥",
         duplicates: "所有字节完美副本，但每一个都是独特且传奇的",
-        description: "直到今天，没有人知道是什么导致这些邮票开始自我铸造，也没有人知道它们为什么停止。这是一个独特的时刻——机器中幽灵的诞生。",
+        description: "直到今天，没有人知道是什么导致这些邮票开始自我铸造，也没有人知道它们为什么停止。这是一个独特的时刻——机器中幽灵的诞生",
         quote: "凯文是一个功能，不是错误。凯文是机器中的幽灵。"
       },
       token: {
@@ -292,10 +328,25 @@ export const translations: Record<Language, Translation> = {
       tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",
       links: "链接",
       disclaimer: "本网站仅用于娱乐和教育目的。"
+    },
+    buttons: {
+      viewOriginal: "🎯 查看原始邮票 #4258",
+      tradeToken: "💰 交易凯文代币",
+      viewStamps: "查看104个邮票",
+      viewMoreArt: "查看更多艺术作品",
+      viewMoreVideos: "查看更多视频",
+      tradeOnOpenstamp: "在OPENSTAMP交易",
+      tradeOnSuperex: "在SUPEREX交易",
+      playVideo: "播放视频",
+      viewGif: "查看GIF",
+      viewImage: "查看图片",
+      submitRsvp: "🎯 提交预约请求",
+      submitting: "🔄 提交中...",
+      lazyKevinsSoon: "🚀 懒惰凯文即将到来",
+      legendaryComplete: "状态：传奇收藏已完成"
     }
   }
 };
 
-export function getTranslation(lang: Language): Translation {
-  return translations[lang] || translations.en;
-}
+// Default to English
+export const defaultLanguage: Language = 'en';

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
 import { CommunityData } from "../../shared/schema";
+import { useLanguage } from '../lib/language-context';
 
 interface CommunityGalleryProps {
   showAll?: boolean;
@@ -9,6 +10,7 @@ interface CommunityGalleryProps {
 }
 
 export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }: CommunityGalleryProps) {
+  const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
   const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
@@ -153,7 +155,7 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
               {hoveredMeme?.id === meme.id && (
                 <div className="absolute inset-0 bg-kevin-orange bg-opacity-30 flex items-center justify-center backdrop-blur-sm">
                   <div className="text-white font-pixel text-sm bg-black bg-opacity-70 px-3 py-1 border border-kevin-orange">
-                    {meme.type === 'video' ? 'PLAY VIDEO' : meme.type === 'gif' ? 'VIEW GIF' : 'VIEW IMAGE'}
+                    {meme.type === 'video' ? t.buttons.playVideo : meme.type === 'gif' ? t.buttons.viewGif : t.buttons.viewImage}
                   </div>
                 </div>
               )}

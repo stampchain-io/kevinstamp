@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { Language, getTranslation, Translation } from './translations';
+import { Language, translations, Translation, defaultLanguage } from './translations';
 
 interface LanguageContextType {
   language: Language;
@@ -10,8 +10,8 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
-  const t = getTranslation(language);
+  const [language, setLanguage] = useState<Language>(defaultLanguage);
+  const t = translations[language];
 
   const handleSetLanguage = (lang: Language) => {
     console.log('Language context updating from', language, 'to', lang);

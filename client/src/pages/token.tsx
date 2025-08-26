@@ -153,7 +153,7 @@ export default function Token() {
           {/* Trading Section */}
           <div className="bg-black border-2 border-kevin-orange p-8 max-w-4xl mx-auto text-center">
             <h3 className="font-pixel text-2xl text-kevin-orange mb-6">
-              TRADE KEVIN TOKEN
+              {t.buttons.tradeToken}
             </h3>
             <p className="text-white mb-8">
               KEVIN token is available for trading on multiple platforms with different trading pairs.
@@ -172,7 +172,7 @@ export default function Token() {
                   rel="noopener noreferrer"
                   className="pixel-btn px-6 py-3 text-black font-bold bg-kevin-orange border-kevin-orange inline-block"
                 >
-                  TRADE ON OPENSTAMP
+                  {t.buttons.tradeOnOpenstamp}
                 </a>
               </div>
 
@@ -193,7 +193,7 @@ export default function Token() {
                   rel="noopener noreferrer"
                   className="pixel-btn px-6 py-3 text-black font-bold bg-kevin-cyan border-kevin-cyan inline-block"
                 >
-                  TRADE ON SUPEREX
+                  {t.buttons.tradeOnSuperex}
                 </a>
               </div>
             </div>

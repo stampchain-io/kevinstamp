@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
+import { useLanguage } from '../lib/language-context';
 
 export default function PixelHero() {
+  const { t } = useLanguage();
   const [glitchActive, setGlitchActive] = useState(false);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function PixelHero() {
         {/* Stats Counter */}
         <div className="grid grid-cols-3 gap-4 sm:gap-8 mb-12 max-w-2xl mx-auto">
           <div className="text-center border-2 border-kevin-orange bg-black p-3 sm:p-4">
-            <div className="meme-counter text-3xl sm:text-4xl">91</div>
+            <div className="meme-counter text-3xl sm:text-4xl">104</div>
             <div className="text-kevin-orange font-pixel text-xs sm:text-sm">STAMPS</div>
           </div>
           <div className="text-center border-2 border-kevin-neon bg-black p-3 sm:p-4">
@@ -95,7 +97,7 @@ export default function PixelHero() {
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
           <Link href="/stamps">
             <div className="pixel-btn px-8 py-4 text-black font-bold cursor-pointer">
-              VIEW 91 STAMPS
+              {t.buttons.viewStamps}
             </div>
           </Link>
           <a 
@@ -104,7 +106,7 @@ export default function PixelHero() {
             rel="noopener noreferrer"
             className="pixel-btn px-8 py-4 text-black font-bold bg-kevin-neon border-kevin-neon"
           >
-            TRADE KEVIN SRC TOKEN
+            {t.buttons.tradeToken}
           </a>
         </div>
 
