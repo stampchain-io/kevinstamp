@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
-import { CommunityData } from "../../shared/schema";
+import { CommunityData } from "@shared/schema";
 import { useLanguage } from '../lib/language-context';
 
 interface CommunityGalleryProps {

@@ -102,9 +102,7 @@ export default function LorePage() {
               </h3>
               <div className="text-center space-y-2">
                 <p className="text-lg">From Stamp #4258 to Stamp #18430</p>
-                <p className="text-3xl font-bold text-kevin-orange">
-                  91 KEVIN STAMPS
-                </p>
+                <p className="text-3xl font-bold text-kevin-orange">104 KEVIN STAMPS</p>
                 <p className="text-lg">
                   All byte-perfect duplicates, yet each one unique and legendary
                 </p>
