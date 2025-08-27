@@ -23,20 +23,32 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
     refetchInterval: 30000, // Refresh every 30 seconds
   });
 
-  const filteredMemes = filterMemesByType(filter);
+  // Use live featured content from API when available, otherwise fallback to static data
+  const allMemes = communityData?.featured && communityData.featured.length > 0 
+    ? [...communityData.featured, ...communityMemes] // Put live content first
+    : communityMemes;
+  
+  const filteredMemes = allMemes.filter(meme => {
+    if (filter === 'all') return true;
+    return meme.type === filter;
+  });
+  
   const displayMemes = showAll ? filteredMemes : filteredMemes.slice(0, itemsPerPage);
   
   // Debug logging
   useEffect(() => {
     console.log('Community Gallery Debug:', {
-      totalMemes: communityMemes.length,
+      staticMemes: communityMemes.length,
+      liveFeatured: communityData?.featured?.length || 0,
+      totalAvailable: allMemes.length,
       filteredMemes: filteredMemes.length,
       displayMemes: displayMemes.length,
       showAll,
       itemsPerPage,
-      filter
+      filter,
+      dataSource: communityData?.dataSource || 'loading...'
     });
-  }, [filteredMemes.length, displayMemes.length, showAll, itemsPerPage, filter]);
+  }, [filteredMemes.length, displayMemes.length, showAll, itemsPerPage, filter, communityData, allMemes.length]);
 
   const filters = [
     { key: 'all', label: 'ALL', icon: '🎨' },

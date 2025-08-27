@@ -78,8 +78,9 @@ export interface CommunityData {
   featured?: Array<{
     id: string;
     title: string;
-    type: string;
+    type: "image" | "video" | "gif";
     imageUrl: string;
+    videoUrl?: string;
     description: string;
     category: string;
   }>;

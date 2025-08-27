@@ -119,9 +119,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         totalViews = parseInt(viewCountMatch[1]);
       }
       
-      // Parse recent memes from the page
-      const imageMatches = html.match(/https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"]+\/width=3840/g) || [];
-      const videoMatches = html.match(/https:\/\/customer-hls7a0n7rbjgz9uk\.cloudflarestream\.com\/[^"]+\/thumbnails\/thumbnail\.jpg/g) || [];
+      // Parse recent memes from the page - improved patterns
+      const imageMatches = html.match(/https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"]+/g) || [];
+      const videoMatches = html.match(/https:\/\/customer-hls7a0n7rbjgz9uk\.cloudflarestream\.com\/[^/]+\/thumbnails\/thumbnail\.jpg/g) || [];
       
       // Count GIFs specifically (filenames ending in .gif)
       const gifMatches = imageMatches.filter(url => url.includes('.gif'));
@@ -134,17 +134,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Extract featured content (mix of images and videos)
       const featured = [];
       
-      // Get recent images (exclude GIFs for featured, take first 2)
+      // Get recent images (exclude GIFs for featured, take first 4 for more visibility)
       const recentImages = imageMatches
         .filter(url => !url.includes('.gif'))
-        .slice(0, 2)
+        .slice(0, 4)
         .map((url, index) => ({
           id: `recent-image-${Date.now()}-${index}`,
-          title: `KEVIN ARTWORK #${index + 1}`,
+          title: `LIVE KEVIN #${index + 1}`,
           type: "image",
-          imageUrl: url.replace('/width=3840', '/width=400'),
-          description: "Latest from Kevin Depot",
-          category: "Community"
+          imageUrl: url.includes('/width=') ? url.replace(/\/width=\d+/, '/width=400') : `${url}/width=400`,
+          description: "Fresh from Kevin Depot",
+          category: "Live Update"
         }));
       
       // Get a recent video if available
@@ -154,7 +154,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           title: "KEVIN VIDEO",
           type: "video",
           imageUrl: videoMatches[0], // Use thumbnail
-          videoUrl: videoMatches[0].match(/([a-f0-9-]+)\/thumbnails/)?.[1] || "", // Extract video ID
+          videoUrl: videoMatches[0]?.match(/([a-f0-9-]+)\/thumbnails/)?.[1] || "", // Extract video ID
           description: "Latest video from Kevin Depot",
           category: "Community"
         };
