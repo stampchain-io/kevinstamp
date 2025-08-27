@@ -99,8 +99,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API route for community memes
   app.get("/api/community", async (req, res) => {
     try {
-      // Fetch live data from Kevin Depot
-      const response = await fetch('https://memedepot.com/d/kevin-depot');
+      // Fetch live data from Kevin Depot with timeout
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      
+      const response = await fetch('https://memedepot.com/d/kevin-depot', {
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; KevinBot/1.0)'
+        }
+      });
+      clearTimeout(timeoutId);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const html = await response.text();
       
       // Parse the actual stats from the page
@@ -198,8 +212,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         dataSource: "Kevin Depot (live data)",
         featured
       });
-    } catch (error) {
-      console.error("Error fetching Kevin Depot data:", error);
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorType = error instanceof Error ? error.constructor.name : 'Unknown';
+      console.error("Error fetching Kevin Depot data:", {
+        message: errorMessage,
+        type: errorType,
+        timestamp: new Date().toISOString()
+      });
       
       // Fallback to static data if scraping fails
       res.json({

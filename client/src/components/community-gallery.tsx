@@ -18,14 +18,22 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Get live community stats from API
-  const { data: communityData } = useQuery<CommunityData>({
+  const { data: communityData, isLoading, error } = useQuery<CommunityData>({
     queryKey: ["/api/community"],
     refetchInterval: 30000, // Refresh every 30 seconds
+    staleTime: 25000, // Consider data fresh for 25 seconds
+    retry: 3,
+    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
   // Use live featured content from API when available, otherwise fallback to static data
-  const allMemes = communityData?.featured && communityData.featured.length > 0 
-    ? [...communityData.featured, ...communityMemes] // Put live content first
+  // Prevent duplicates by filtering out any live content that matches static content IDs
+  const liveFeatured = communityData?.featured || [];
+  const staticMemesFiltered = communityMemes.filter(staticMeme => 
+    !liveFeatured.some(liveMeme => liveMeme.id === staticMeme.id)
+  );
+  const allMemes = liveFeatured.length > 0 
+    ? [...liveFeatured, ...staticMemesFiltered] // Put live content first, no duplicates
     : communityMemes;
   
   const filteredMemes = allMemes.filter(meme => {
@@ -96,6 +104,11 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
+  // Show error message if API fails
+  if (error) {
+    console.warn('Community API error:', error);
+  }
+
   return (
     <div className="space-y-8">
       {/* Filter Tabs */}
@@ -133,6 +146,27 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
         </div>
       )}
 
+      {/* Loading State */}
+      {isLoading && (
+        <div className="text-center py-8">
+          <div className="text-kevin-orange font-pixel text-lg mb-2">🔄 LOADING KEVIN DEPOT...</div>
+          <div className="text-kevin-mint text-sm">Fetching the latest community creations</div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="bg-kevin-charcoal border-2 border-kevin-orange p-6 text-center mb-8">
+          <div className="text-kevin-orange font-pixel text-lg mb-2">⚠️ CONNECTION ISSUE</div>
+          <div className="text-kevin-mint text-sm mb-4">
+            Unable to fetch live data from Kevin Depot. Showing static gallery.
+          </div>
+          <div className="text-xs text-kevin-cyan">
+            The gallery will retry automatically in 30 seconds.
+          </div>
+        </div>
+      )}
+
       {/* Gallery Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {displayMemes.map((meme) => (
@@ -152,7 +186,15 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
                 style={{ imageRendering: 'pixelated' }}
               />
               
-
+              {/* Video Play Icon */}
+              {meme.type === 'video' && (
+                <div className="absolute top-2 left-2">
+                  <div className="bg-black bg-opacity-70 border border-kevin-orange px-2 py-1 text-xs font-pixel flex items-center gap-1">
+                    <span className="text-kevin-orange">▶</span>
+                    VIDEO
+                  </div>
+                </div>
+              )}
 
               {/* GIF Play Icon */}
               {meme.type === 'gif' && (
@@ -209,19 +251,19 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
       <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
         <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">
-            {communityData?.totalMemes || communityMemes.length}
+            {isLoading ? '...' : (communityData?.totalMemes || allMemes.length)}
           </div>
           <div className="text-kevin-orange font-pixel text-xs">Total Memes</div>
         </div>
         <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">
-            {communityData?.totalVideos || communityMemes.filter(m => m.type === 'video').length}
+            {isLoading ? '...' : (communityData?.totalVideos || allMemes.filter(m => m.type === 'video').length)}
           </div>
           <div className="text-kevin-neon font-pixel text-xs">Videos</div>
         </div>
         <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">
-            {communityData?.totalGifs || communityMemes.filter(m => m.type === 'gif').length}
+            {isLoading ? '...' : (communityData?.totalGifs || allMemes.filter(m => m.type === 'gif').length)}
           </div>
           <div className="text-kevin-magenta font-pixel text-xs">GIFs</div>
         </div>
