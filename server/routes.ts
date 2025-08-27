@@ -119,31 +119,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
         totalViews = parseInt(viewCountMatch[1]);
       }
       
-      // Parse recent memes from the page - improved patterns
+      // Parse recent memes from the page - get unique image IDs
       const imageMatches = html.match(/https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"]+/g) || [];
       const videoMatches = html.match(/https:\/\/customer-hls7a0n7rbjgz9uk\.cloudflarestream\.com\/[^/]+\/thumbnails\/thumbnail\.jpg/g) || [];
       
-      // Count GIFs specifically (filenames ending in .gif)
+      // Get unique image IDs to avoid duplicates
+      const uniqueImages = Array.from(new Set(
+        imageMatches
+          .filter(url => !url.includes('.gif') && !url.includes('logo') && !url.includes('width=200')) // Filter out logos and small images
+          .map(url => {
+            const idMatch = url.match(/\/([a-f0-9-]+)\/(?:width|public)/);
+            return idMatch ? idMatch[1] : null;
+          })
+          .filter(Boolean)
+      ));
+      
+      // Count GIFs specifically
       const gifMatches = imageMatches.filter(url => url.includes('.gif'));
       
       // Count different media types
-      const totalImages = Math.max(0, imageMatches.length - gifMatches.length); // Images excluding GIFs
+      const totalImages = Math.max(0, uniqueImages.length);
       const totalVideos = videoMatches.length;
       const totalGifs = gifMatches.length;
       
       // Extract featured content (mix of images and videos)
       const featured = [];
       
-      // Get recent images (exclude GIFs for featured, take first 4 for more visibility)
-      const recentImages = imageMatches
-        .filter(url => !url.includes('.gif'))
-        .slice(0, 4)
-        .map((url, index) => ({
+      // Get recent images using unique IDs (take first 6 for more variety)
+      const recentImages = uniqueImages
+        .slice(0, 6)
+        .map((imageId, index) => ({
           id: `recent-image-${Date.now()}-${index}`,
-          title: `LIVE KEVIN #${index + 1}`,
-          type: "image",
-          imageUrl: url.includes('/width=') ? url.replace(/\/width=\d+/, '/width=400') : `${url}/width=400`,
-          description: "Fresh from Kevin Depot",
+          title: `🔴 FRESH KEVIN #${index + 1}`,
+          type: "image" as const,
+          imageUrl: `https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/${imageId}/width=400`,
+          description: "Live from Kevin Depot",
           category: "Live Update"
         }));
       

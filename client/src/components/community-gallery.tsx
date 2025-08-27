@@ -174,7 +174,8 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
             </div>
 
             <div className="p-2">
-              <div className="font-pixel text-xs text-kevin-orange truncate">
+              <div className="font-pixel text-xs text-kevin-orange truncate flex items-center gap-1">
+                {meme.category === "Live Update" && <span className="text-kevin-neon">🔴</span>}
                 {meme.title}
               </div>
               <div className="text-xs text-white truncate">
