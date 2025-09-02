@@ -7,8 +7,8 @@ export default function Community() {
   const terminalLines = [
     "> CONNECTING TO KEVIN DEPOT...",
     "Scanning community creations...",
-    "Found 67 memes across all formats",
-    "Artists detected: 12 creative minds",
+    "Found 137 memes across all formats",
+    "Artists detected: 1 creative mind",
     "Status: EPIC CREATIVITY LEVELS ACHIEVED"
   ];
 
@@ -81,8 +81,8 @@ export default function Community() {
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <div className="text-kevin-orange font-pixel">DEPOT STATS</div>
-                    <div className="text-white">67 Total Memes</div>
-                    <div className="text-white">727 Total Views</div>
+                    <div className="text-white">137 Total Memes</div>
+                    <div className="text-white">1.1K Total Views</div>
                   </div>
                   <div>
                     <div className="text-kevin-cyan font-pixel">CATEGORIES</div>

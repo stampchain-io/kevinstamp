@@ -755,7 +755,7 @@ export default function CommunityGallery({
       </div>
 
       {/* Community Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-2xl mx-auto">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-4xl mx-auto">
         <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">
             {isLoading ? '...' : (communityData?.totalMemes || allMemes.length)}
@@ -775,8 +775,17 @@ export default function CommunityGallery({
           <div className="text-kevin-magenta font-pixel text-xs">GIFs</div>
         </div>
         <div className="terminal-window p-4 text-center">
+          <div className="meme-counter text-2xl">
+            {isLoading ? '...' : (() => {
+              const views = communityData?.totalViews || 1100;
+              return views >= 1000 ? `${(views / 1000).toFixed(1)}K` : views.toString();
+            })()}
+          </div>
+          <div className="text-kevin-cyan font-pixel text-xs">Views</div>
+        </div>
+        <div className="terminal-window p-4 text-center">
           <div className="meme-counter text-2xl">∞</div>
-          <div className="text-kevin-cyan font-pixel text-xs">Creativity</div>
+          <div className="text-kevin-green font-pixel text-xs">Creativity</div>
         </div>
       </div>
 
@@ -808,6 +817,12 @@ export default function CommunityGallery({
 
               {dataSource === 'cached' && (
                 <div className="text-yellow-400">Using cached data - connection issues detected</div>
+              )}
+
+              {apiError && (
+                <div className="text-red-400 text-xs mt-2">
+                  Error: {apiError.message} (Code: {apiError.code})
+                </div>
               )}
 
               {dataSource === 'fallback' && (

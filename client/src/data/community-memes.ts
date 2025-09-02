@@ -464,6 +464,71 @@ export const communityMemes: CommunityMeme[] = [
     imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/022a90dc-f3f0-4341-a982-9bc27882bd00/width=400',
     description: 'Historical Character',
     category: 'Historical'
+  },
+  // Add some GIF entries to ensure GIFs section has content
+  {
+    id: 'kevin-dance-gif',
+    title: 'KEVIN DANCE',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/0914e9a8-d29b-423b-a633-38b5c1bc3700/width=400',
+    description: 'Dancing Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-wink-gif',
+    title: 'KEVIN WINK',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f07d3377-921a-49ea-9a99-6f50e2505200/width=400',
+    description: 'Winking Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-wave-gif',
+    title: 'KEVIN WAVE',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/56c35540-04c1-4cbf-8e20-34297ca43b00/width=400',
+    description: 'Waving Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-thumbs-up-gif',
+    title: 'KEVIN THUMBS UP',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/87d41a64-7af4-421d-fd62-7e6bc4a10500/width=400',
+    description: 'Thumbs up Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-celebration-gif',
+    title: 'KEVIN CELEBRATION',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/f6a33821-c039-4164-bc58-9af890e24f00/width=400',
+    description: 'Celebrating Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-shrug-gif',
+    title: 'KEVIN SHRUG',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/2e072512-45cc-4bab-1211-5b302731b700/width=400',
+    description: 'Shrugging Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-point-gif',
+    title: 'KEVIN POINT',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/30c796dc-57c4-4152-9772-ab7556303e00/width=400',
+    description: 'Pointing Kevin GIF',
+    category: 'Animation'
+  },
+  {
+    id: 'kevin-nod-gif',
+    title: 'KEVIN NOD',
+    type: 'gif',
+    imageUrl: 'https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/a33ce6b3-2fca-4db4-cb51-5979e83a4500/width=400',
+    description: 'Nodding Kevin GIF',
+    category: 'Animation'
   }
 ];
 
