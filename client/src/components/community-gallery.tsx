@@ -6,7 +6,8 @@ import { useCommunityData, useAPIHealth } from '../hooks/useCommunityData';
 import CommunityLoadingState, { GallerySkeleton } from './CommunityLoadingState';
 import CommunityErrorState, { NetworkErrorState, TimeoutErrorState } from './CommunityErrorState';
 import { GalleryLazyImage, default as LazyImage } from './LazyImage';
-import { Search, Filter, Grid3X3, List, SortAsc, SortDesc } from 'lucide-react';
+import { Search, Filter, Grid3X3, List, SortAsc, SortDesc, RefreshCw } from 'lucide-react';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface CommunityGalleryProps {
   showAll?: boolean;
@@ -24,6 +25,7 @@ export default function CommunityGallery({
   enableAdvancedFilters = true
 }: CommunityGalleryProps) {
   const { t } = useLanguage();
+  const isMobile = useIsMobile();
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
   const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
@@ -39,6 +41,13 @@ export default function CommunityGallery({
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const galleryRef = useRef<HTMLDivElement>(null);
+
+  // Mobile-specific state
+  const [pullRefreshDistance, setPullRefreshDistance] = useState(0);
+  const [isPullRefreshing, setIsPullRefreshing] = useState(false);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+  const [lastTapTime, setLastTapTime] = useState(0);
+  const [doubleTapTarget, setDoubleTapTarget] = useState<CommunityMeme | null>(null);
 
   // Use the new robust community data hook
   const {
@@ -173,6 +182,127 @@ export default function CommunityGallery({
       observer.disconnect();
     };
   }, [enableInfiniteScroll, displayMemes.length, processedMemes.length, loadMoreItems]);
+
+  // Mobile touch gesture handlers
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    if (!isMobile) return;
+    setTouchStartY(e.touches[0].clientY);
+  }, [isMobile]);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isMobile || touchStartY === null) return;
+
+    const currentY = e.touches[0].clientY;
+    const diff = currentY - touchStartY;
+
+    // Only handle pull-to-refresh when at the top of the gallery
+    if (diff > 0 && window.scrollY <= 10) {
+      e.preventDefault();
+      const distance = Math.min(diff * 0.5, 120); // Dampen the pull, max 120px
+      setPullRefreshDistance(distance);
+    }
+  }, [isMobile, touchStartY]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!isMobile) return;
+
+    if (pullRefreshDistance > 80) {
+      // Trigger refresh
+      setIsPullRefreshing(true);
+      setPullRefreshDistance(0);
+      setTimeout(() => {
+        retry();
+        setIsPullRefreshing(false);
+      }, 1000);
+    } else {
+      setPullRefreshDistance(0);
+    }
+
+    setTouchStartY(null);
+  }, [isMobile, pullRefreshDistance, retry]);
+
+  // Double tap to like/favorite (mobile gesture)
+  const handleDoubleTap = useCallback((meme: CommunityMeme) => {
+    const now = Date.now();
+    const timeDiff = now - lastTapTime;
+
+    if (timeDiff < 300 && doubleTapTarget?.id === meme.id) {
+      // Double tap detected - could trigger like/favorite
+      console.log('Double tap on:', meme.title);
+      // TODO: Implement favorite/like functionality
+      setLastTapTime(0);
+      setDoubleTapTarget(null);
+    } else {
+      setLastTapTime(now);
+      setDoubleTapTarget(meme);
+    }
+  }, [lastTapTime, doubleTapTarget]);
+
+  // Long press for context menu (mobile)
+  const handleLongPress = useCallback((meme: CommunityMeme) => {
+    if (!isMobile) return;
+
+    // Haptic feedback on supported devices
+    if ('vibrate' in navigator) {
+      navigator.vibrate(50);
+    }
+
+    // Could show mobile context menu with share, save, etc.
+    console.log('Long press on:', meme.title);
+    // TODO: Implement mobile context menu
+  }, [isMobile]);
+
+  // Mobile performance optimizations
+  useEffect(() => {
+    if (!isMobile) return;
+
+    // Reduce motion for battery saving on mobile
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      document.documentElement.style.setProperty('--animation-duration', '0s');
+    }
+
+    // Enable passive touch listeners for better performance
+    const handleTouchStart = () => {};
+    const handleTouchMove = () => {};
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+    };
+  }, [isMobile]);
+
+  // Mobile accessibility improvements
+  useEffect(() => {
+    if (!isMobile) return;
+
+    // Announce dynamic content changes to screen readers
+    const announceContentChange = (message: string) => {
+      const announcement = document.createElement('div');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.setAttribute('aria-atomic', 'true');
+      announcement.style.position = 'absolute';
+      announcement.style.left = '-10000px';
+      announcement.style.width = '1px';
+      announcement.style.height = '1px';
+      announcement.style.overflow = 'hidden';
+      announcement.textContent = message;
+
+      document.body.appendChild(announcement);
+      setTimeout(() => document.body.removeChild(announcement), 1000);
+    };
+
+    if (isLoadingMore) {
+      announceContentChange('Loading more KEVIN content');
+    }
+
+    if (isPullRefreshing) {
+      announceContentChange('Refreshing KEVIN content');
+    }
+  }, [isMobile, isLoadingMore, isPullRefreshing]);
   
   // Debug logging
   useEffect(() => {
@@ -274,9 +404,30 @@ export default function CommunityGallery({
 
   return (
     <div className="space-y-8">
+      {/* Mobile Pull-to-Refresh Indicator */}
+      {isMobile && (
+        <div
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            pullRefreshDistance > 0 ? 'translate-y-0' : '-translate-y-full'
+          }`}
+          style={{ transform: `translateY(${Math.max(-100, pullRefreshDistance - 100)}%)` }}
+        >
+          <div className="bg-kevin-orange text-black text-center py-4 flex items-center justify-center gap-3">
+            <RefreshCw className={`w-5 h-5 ${isPullRefreshing ? 'animate-spin' : ''}`} />
+            <span className="font-pixel text-sm">
+              {isPullRefreshing ? 'REFRESHING KEVIN...' : 'PULL TO REFRESH'}
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Enhanced Controls Section */}
-      <div className="bg-kevin-charcoal border-2 border-kevin-orange p-6 rounded-lg">
-        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+      <div className={`bg-kevin-charcoal border-2 border-kevin-orange rounded-lg ${
+        isMobile ? 'p-4 mx-2' : 'p-6'
+      }`}>
+        <div className={`flex flex-col gap-4 items-start justify-between ${
+          isMobile ? 'space-y-4' : 'lg:flex-row lg:items-center'
+        }`}>
           {/* Search Bar */}
           {enableSearch && (
             <div className="relative flex-1 max-w-md">
@@ -454,15 +605,26 @@ export default function CommunityGallery({
         }
         role="grid"
         aria-label="Community gallery"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        style={{
+          // Add padding top for pull-to-refresh on mobile
+          paddingTop: isMobile ? '20px' : undefined,
+          // Enable momentum scrolling on iOS
+          WebkitOverflowScrolling: 'touch',
+          // Prevent iOS bounce scroll
+          overscrollBehavior: 'contain'
+        }}
       >
         {displayMemes.map((meme, index) => (
           <div
             key={meme.id}
             className={`gallery-item bg-black border-2 border-kevin-orange cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20 focus-visible ${
               viewMode === 'list' ? 'flex gap-4 p-4' : 'p-2'
-            }`}
-            onMouseEnter={() => setHoveredMeme(meme)}
-            onMouseLeave={() => setHoveredMeme(null)}
+            } ${isMobile ? 'active:scale-95' : ''}`}
+            onMouseEnter={() => !isMobile && setHoveredMeme(meme)}
+            onMouseLeave={() => !isMobile && setHoveredMeme(null)}
             onClick={() => handleMemeClick(meme)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -470,10 +632,24 @@ export default function CommunityGallery({
                 handleMemeClick(meme);
               }
             }}
+            onTouchStart={() => isMobile && handleDoubleTap(meme)}
+            onTouchEnd={() => {
+              // Handle long press with timeout
+              if (isMobile) {
+                const timer = setTimeout(() => handleLongPress(meme), 500);
+                return () => clearTimeout(timer);
+              }
+            }}
             tabIndex={0}
             role="gridcell"
             aria-label={`${meme.title} - ${meme.type} from ${meme.category}`}
             aria-describedby={`meme-desc-${meme.id}`}
+            style={{
+              // Ensure minimum touch target size (44px)
+              minHeight: isMobile ? '44px' : undefined,
+              // Add subtle touch feedback
+              WebkitTapHighlightColor: 'rgba(255, 107, 53, 0.3)'
+            }}
           >
             <div className={`relative ${viewMode === 'list' ? 'w-32 h-24 flex-shrink-0' : ''}`}>
               <GalleryLazyImage
@@ -501,11 +677,12 @@ export default function CommunityGallery({
                 </div>
               )}
 
-              {/* Hover Overlay */}
-              {hoveredMeme?.id === meme.id && (
-                <div className="absolute inset-0 bg-kevin-orange bg-opacity-30 flex items-center justify-center backdrop-blur-sm">
-                  <div className="text-white font-pixel text-sm bg-black bg-opacity-70 px-3 py-1 border border-kevin-orange">
+              {/* Hover Overlay (Desktop) / Tap Overlay (Mobile) */}
+              {((!isMobile && hoveredMeme?.id === meme.id) || (isMobile && doubleTapTarget?.id === meme.id)) && (
+                <div className="absolute inset-0 bg-kevin-orange bg-opacity-30 flex items-center justify-center backdrop-blur-sm transition-all duration-200">
+                  <div className="text-white font-pixel text-sm bg-black bg-opacity-70 px-3 py-1 border border-kevin-orange animate-pulse">
                     {meme.type === 'video' ? '▶ PLAY' : meme.type === 'gif' ? '🎞️ VIEW' : '🖼️ VIEW'}
+                    {isMobile && <div className="text-xs mt-1 opacity-75">Double tap to favorite</div>}
                   </div>
                 </div>
               )}

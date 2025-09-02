@@ -413,3 +413,261 @@
   cursor: pointer;
   border: 1px solid #000;
 }
+
+/* ===== MOBILE OPTIMIZATIONS ===== */
+
+/* Mobile-first touch targets - minimum 44px */
+@media (max-width: 768px) {
+  /* Ensure all interactive elements meet minimum touch target size */
+  button, .pixel-btn, input[type="button"], input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Gallery items should be touch-friendly */
+  .gallery-item {
+    min-height: 120px;
+  }
+
+  /* Better spacing for mobile */
+  .space-y-8 > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 1rem;
+  }
+
+  /* Mobile-optimized text sizes */
+  .font-pixel {
+    font-size: 0.9rem;
+  }
+
+  /* Better mobile scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Mobile-optimized animations - reduce motion for performance */
+  * {
+    animation-duration: 0.2s !important;
+    transition-duration: 0.2s !important;
+  }
+
+  /* Disable hover effects on touch devices */
+  @media (hover: none) {
+    .gallery-item:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .gallery-item:hover::before {
+      display: none;
+    }
+
+    .pixel-btn:hover {
+      animation: none;
+      box-shadow:
+        inset -2px -2px 0 0 #C5741C,
+        inset 2px 2px 0 0 #FFB84D,
+        0 0 0 2px #000000;
+    }
+  }
+
+  /* Mobile tap highlights */
+  .gallery-item, .pixel-btn {
+    -webkit-tap-highlight-color: rgba(255, 107, 53, 0.3);
+    tap-highlight-color: rgba(255, 107, 53, 0.3);
+  }
+
+  /* Mobile-optimized form controls */
+  input, select, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    min-height: 44px;
+  }
+
+  /* Better mobile grid layout */
+  .grid {
+    gap: 0.75rem;
+  }
+
+  /* Mobile-specific pull-to-refresh styling */
+  .pull-refresh-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--kevin-orange);
+    color: black;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Orbitron', monospace;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .pull-refresh-indicator.visible {
+    transform: translateY(0);
+  }
+
+  /* Mobile-optimized loading states */
+  .mobile-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--kevin-mint);
+    border-top: 3px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  /* Better mobile modal handling */
+  .mobile-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    padding: 1rem;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Mobile keyboard optimizations */
+  .mobile-keyboard-friendly {
+    padding-bottom: env(keyboard-height, 0);
+  }
+
+  /* Mobile performance optimizations */
+  .mobile-performance-mode {
+    /* Reduce expensive CSS effects on mobile */
+    backdrop-filter: none;
+    box-shadow: none;
+    text-shadow: none;
+  }
+
+  .mobile-performance-mode .gallery-item {
+    transition: none;
+    transform: none;
+  }
+
+  .mobile-performance-mode .pixel-btn {
+    box-shadow: none;
+    transition: none;
+  }
+}
+
+/* iOS-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+  .ios-optimized {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* iOS momentum scrolling */
+  .ios-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* iOS safe area support */
+  .ios-safe-area {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Android-specific optimizations */
+@supports (-webkit-appearance: none) and (not (-webkit-touch-callout: none)) {
+  /* Android Chrome specific optimizations */
+  .android-optimized {
+    /* Android-specific touch feedback */
+    -webkit-tap-highlight-color: rgba(255, 107, 53, 0.3);
+  }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  .retina-optimized {
+    /* Higher quality images for retina displays */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Low-power mode detection */
+@media (prefers-reduced-motion: reduce) {
+  .power-saving-mode * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile landscape optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  .mobile-landscape {
+    /* Compact layout for landscape mobile */
+    .gallery-item {
+      min-height: 80px;
+    }
+
+    .controls-section {
+      padding: 0.5rem;
+    }
+  }
+}
+
+/* Mobile accessibility enhancements */
+@media (max-width: 768px) {
+  /* Larger focus indicators for touch */
+  .gallery-item:focus-visible {
+    outline: 3px solid var(--kevin-neon);
+    outline-offset: 4px;
+  }
+
+  /* Better contrast for mobile */
+  .mobile-high-contrast {
+    --kevin-orange: hsl(24, 100%, 60%);
+    --kevin-mint: hsl(120, 100%, 70%);
+  }
+
+  /* Screen reader optimizations */
+  .sr-only-mobile {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* VoiceOver/iOS accessibility */
+  .accessibility-mobile {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* Performance monitoring for mobile */
+@media (max-width: 768px) {
+  .performance-monitor {
+    /* Disable expensive effects on slow devices */
+    will-change: auto;
+    contain: layout style paint;
+  }
+
+  .performance-monitor .gallery-item {
+    contain: layout style paint;
+    will-change: auto;
+  }
+}
