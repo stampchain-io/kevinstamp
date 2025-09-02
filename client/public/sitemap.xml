@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>https://kevinstamp.io/</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://kevinstamp.io/kevin-original.png</image:loc>
+      <image:title>KEVIN - The Ghost in the Machine</image:title>
+      <image:caption>Original KEVIN stamp #4258 that started the phenomenon</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/lore</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png</image:loc>
+      <image:title>KEVIN Lore - Origins and Mysteries</image:title>
+      <image:caption>The legendary story of KEVIN's manifestation</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/stamps</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://kevinstamp.io/kevin-original.png</image:loc>
+      <image:title>104 KEVIN Stamps Collection</image:title>
+      <image:caption>Complete collection of self-replicating KEVIN stamps</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/community</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kevinstamp.io/kevin-original.png</image:loc>
+      <image:title>KEVIN Community Gallery</image:title>
+      <image:caption>OG memes and digital artifacts from KEVIN believers</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/token</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://kevinstamp.io/kevin-original.png</image:loc>
+      <image:title>KEVIN Token - First SRC-20</image:title>
+      <image:caption>Live market data for the legendary KEVIN token</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Dynamic Stamp Pages (First 10 for SEO priority) -->
+  <url>
+    <loc>https://kevinstamp.io/stamps/4258</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png</image:loc>
+      <image:title>KEVIN Stamp #4258 - The Original</image:title>
+      <image:caption>The first KEVIN stamp that started the phenomenon</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/stamps/18430</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png</image:loc>
+      <image:title>KEVIN Stamp #18430 - The Legend</image:title>
+      <image:caption>The final KEVIN stamp in the mysterious sequence</image:caption>
+    </image:image>
+  </url>
+
+  <!-- News/Updates Section -->
+  <url>
+    <loc>https://kevinstamp.io/news/kevin-television-appearance</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <news:news>
+      <news:publication>
+        <news:name>KEVIN Stamp Saga</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2024-12-19</news:publication_date>
+      <news:title>KEVIN Makes Television Debut</news:title>
+    </news:news>
+  </url>
+
+  <!-- API Endpoints for Search Engines -->
+  <url>
+    <loc>https://kevinstamp.io/api/stamps</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://kevinstamp.io/api/token</loc>
+    <lastmod>2024-12-19</lastmod>
+    <changefreq>hourly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>

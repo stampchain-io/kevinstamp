@@ -1,8 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
 import { CommunityData } from "@shared/schema";
 import { useLanguage } from '../lib/language-context';
+import { useCommunityData, useAPIHealth } from '../hooks/useCommunityData';
+import CommunityLoadingState, { GallerySkeleton } from './CommunityLoadingState';
+import CommunityErrorState, { NetworkErrorState, TimeoutErrorState } from './CommunityErrorState';
+import { GalleryLazyImage, default as LazyImage } from './LazyImage';
 
 interface CommunityGalleryProps {
   showAll?: boolean;
@@ -17,14 +20,24 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
   const [videoModal, setVideoModal] = useState<CommunityMeme | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Get live community stats from API
-  const { data: communityData, isLoading, error } = useQuery<CommunityData>({
-    queryKey: ["/api/community"],
-    refetchInterval: 30000, // Refresh every 30 seconds
-    staleTime: 25000, // Consider data fresh for 25 seconds
-    retry: 3,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+  // Use the new robust community data hook
+  const {
+    data: communityData,
+    error: apiError,
+    isLoading,
+    dataSource,
+    lastUpdated,
+    retry,
+    clearCache
+  } = useCommunityData({
+    refetchInterval: 5 * 60 * 1000, // 5 minutes instead of 30 seconds
+    onError: (error) => {
+      console.warn('Community gallery error:', error);
+    }
   });
+
+  // Monitor API health
+  const { isOnline } = useAPIHealth();
 
   // Use live featured content from API when available, otherwise fallback to static data
   // Prevent duplicates by filtering out any live content that matches static content IDs
@@ -93,45 +106,83 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
     }
   };
 
-  // Close modal on escape key
+  // Enhanced keyboard navigation
   useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Escape key closes modals
       if (e.key === 'Escape') {
         closeAllModals();
+        return;
+      }
+
+      // Arrow key navigation (when no modal is open)
+      if (!selectedMeme && !videoModal && displayMemes.length > 0) {
+        const currentIndex = hoveredMeme ? displayMemes.findIndex(m => m.id === hoveredMeme.id) : -1;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+            e.preventDefault();
+            const nextIndex = Math.min(currentIndex + 1, displayMemes.length - 1);
+            setHoveredMeme(displayMemes[nextIndex]);
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+            e.preventDefault();
+            const prevIndex = Math.max(currentIndex - 1, 0);
+            setHoveredMeme(displayMemes[prevIndex]);
+            break;
+          case 'Enter':
+          case ' ':
+            e.preventDefault();
+            if (hoveredMeme) {
+              handleMemeClick(hoveredMeme);
+            } else if (displayMemes.length > 0) {
+              handleMemeClick(displayMemes[0]);
+            }
+            break;
+        }
       }
     };
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, []);
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [hoveredMeme, selectedMeme, videoModal, displayMemes]);
 
   // Show error message if API fails
-  if (error) {
-    console.warn('Community API error:', error);
+  if (apiError) {
+    console.warn('Community API error:', apiError);
   }
 
   return (
     <div className="space-y-8">
       {/* Filter Tabs */}
-      <div className="flex justify-center">
-        <div className="flex flex-wrap gap-4">
-          {filters.map((filterOption) => (
-            <button
-              key={filterOption.key}
-              className={`
-                pixel-btn px-6 py-2 text-sm transition-all cursor-pointer
-                ${filter === filterOption.key
-                  ? 'bg-kevin-orange text-black border-kevin-orange'
-                  : 'bg-kevin-graphite text-white border-kevin-steel hover:bg-kevin-neon hover:text-black'
-                }
-              `}
-              onClick={() => setFilter(filterOption.key)}
-            >
-              <span className="mr-2">{filterOption.icon}</span>
-              {filterOption.label}
-            </button>
-          ))}
+              <div className="flex justify-center">
+          <div
+            className="flex flex-wrap gap-4"
+            role="group"
+            aria-label="Filter community content"
+          >
+            {filters.map((filterOption) => (
+              <button
+                key={filterOption.key}
+                className={`
+                  pixel-btn px-6 py-2 text-sm transition-all cursor-pointer focus-visible
+                  ${filter === filterOption.key
+                    ? 'bg-kevin-orange text-black border-kevin-orange'
+                    : 'bg-kevin-graphite text-white border-kevin-steel hover:bg-kevin-neon hover:text-black'
+                  }
+                `}
+                onClick={() => setFilter(filterOption.key)}
+                aria-pressed={filter === filterOption.key}
+                aria-label={`Filter by ${filterOption.label.toLowerCase()}`}
+              >
+                <span className="mr-2" aria-hidden="true">{filterOption.icon}</span>
+                {filterOption.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
 
       {/* Video Section Message */}
       {filter === 'video' && (
@@ -148,42 +199,61 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
 
       {/* Loading State */}
       {isLoading && (
-        <div className="text-center py-8">
-          <div className="text-kevin-orange font-pixel text-lg mb-2">🔄 LOADING KEVIN DEPOT...</div>
-          <div className="text-kevin-mint text-sm">Fetching the latest community creations</div>
-        </div>
+        <CommunityLoadingState
+          message="Loading Kevin Depot community..."
+          showProgress={true}
+          timeout={30}
+          onTimeout={retry}
+        />
       )}
 
       {/* Error State */}
-      {error && (
-        <div className="bg-kevin-charcoal border-2 border-kevin-orange p-6 text-center mb-8">
-          <div className="text-kevin-orange font-pixel text-lg mb-2">⚠️ CONNECTION ISSUE</div>
-          <div className="text-kevin-mint text-sm mb-4">
-            Unable to fetch live data from Kevin Depot. Showing static gallery.
-          </div>
-          <div className="text-xs text-kevin-cyan">
-            The gallery will retry automatically in 30 seconds.
+      {apiError && (
+        <CommunityErrorState
+          error={apiError}
+          onRetry={retry}
+          className="mb-8"
+        />
+      )}
+
+      {/* Network Offline Warning */}
+      {!isOnline && (
+        <div className="bg-yellow-900/30 border-2 border-yellow-500 p-4 text-center mb-8">
+          <div className="text-yellow-200 font-pixel text-lg mb-2">🌐 OFFLINE MODE</div>
+          <div className="text-yellow-100 text-sm">
+            You're currently offline. Showing cached community content.
           </div>
         </div>
       )}
 
       {/* Gallery Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {displayMemes.map((meme) => (
+      <div
+        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        role="grid"
+        aria-label="Community gallery"
+      >
+        {displayMemes.map((meme, index) => (
           <div
             key={meme.id}
-            className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20"
+            className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20 focus-visible"
             onMouseEnter={() => setHoveredMeme(meme)}
             onMouseLeave={() => setHoveredMeme(null)}
             onClick={() => handleMemeClick(meme)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleMemeClick(meme);
+              }
+            }}
+            tabIndex={0}
+            role="gridcell"
+            aria-label={`${meme.title} - ${meme.type} from ${meme.category}`}
+            aria-describedby={`meme-desc-${meme.id}`}
           >
             <div className="relative">
-              <img 
+              <GalleryLazyImage
                 src={meme.imageUrl}
                 alt={meme.title}
-                className="w-full h-32 object-contain pixel-perfect transition-transform duration-200 hover:scale-105 bg-kevin-charcoal"
-                loading="lazy"
-                style={{ imageRendering: 'pixelated' }}
               />
               
               {/* Video Play Icon */}
@@ -232,12 +302,13 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
 
         {/* Load More / Visit Depot Button */}
         {!showAll && displayMemes.length >= itemsPerPage && (
-          <div className="gallery-item bg-kevin-graphite border-2 border-kevin-neon p-4 cursor-pointer flex items-center justify-center">
-            <a 
-              href="https://memedepot.com/d/kevin-depot" 
-              target="_blank" 
+          <div className="gallery-item bg-kevin-graphite border-2 border-kevin-neon p-4 cursor-pointer flex items-center justify-center focus-visible">
+            <a
+              href="https://memedepot.com/d/kevin-depot"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-center"
+              aria-label="View more KEVIN content on Kevin Depot (opens in new tab)"
             >
               <div className="font-pixel text-kevin-neon text-xl">+50</div>
               <div className="font-pixel text-xs text-white">MORE</div>
@@ -273,12 +344,59 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
         </div>
       </div>
 
-      {/* Live Stats Info */}
-      {communityData && (
-        <div className="text-center text-xs text-kevin-mint mt-4">
-          <div>Live data from {communityData.dataSource}</div>
-          <div>Last updated: {new Date(communityData.lastUpdated).toLocaleString()}</div>
-          <div className="text-kevin-cyan">Updates every 30 seconds</div>
+      {/* Data Source & Status Info */}
+      {(communityData || dataSource) && (
+        <div className="text-center mt-8">
+          <div className="terminal-window p-4 max-w-md mx-auto">
+            <div className="text-xs text-kevin-mint space-y-1">
+              <div className="flex items-center justify-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${
+                  dataSource === 'live' ? 'bg-green-400 animate-pulse' :
+                  dataSource === 'cached' ? 'bg-yellow-400' :
+                  'bg-gray-400'
+                }`}></span>
+                <span>
+                  {dataSource === 'live' ? '🔴 LIVE DATA' :
+                   dataSource === 'cached' ? '🟡 CACHED DATA' :
+                   '⚪ STATIC DATA'}
+                </span>
+              </div>
+
+              {lastUpdated && (
+                <div>Last updated: {lastUpdated.toLocaleString()}</div>
+              )}
+
+              {dataSource === 'live' && (
+                <div className="text-kevin-cyan">Updates every 5 minutes</div>
+              )}
+
+              {dataSource === 'cached' && (
+                <div className="text-yellow-400">Using cached data - connection issues detected</div>
+              )}
+
+              {dataSource === 'fallback' && (
+                <div className="text-gray-400">Using static fallback data</div>
+              )}
+            </div>
+
+            {/* Manual Controls */}
+            <div className="flex gap-2 justify-center mt-3">
+              <button
+                onClick={retry}
+                className="pixel-btn px-3 py-1 text-xs text-black bg-kevin-orange border-kevin-orange"
+                disabled={isLoading}
+              >
+                {isLoading ? '🔄' : '🔄'} REFRESH
+              </button>
+
+              <button
+                onClick={clearCache}
+                className="pixel-btn px-3 py-1 text-xs text-black bg-kevin-magenta border-kevin-magenta"
+              >
+                🗑️ CLEAR CACHE
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -314,11 +432,12 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
 
             {/* Image Display */}
             <div className="p-4 flex justify-center">
-              <img
+              <LazyImage
                 src={selectedMeme.imageUrl}
                 alt={selectedMeme.title}
                 className="max-w-full max-h-96 object-contain pixel-perfect border-2 border-kevin-green"
-                style={{ imageRendering: 'pixelated' }}
+                showLoadingIndicator={true}
+                containerClassName="min-h-48 flex items-center justify-center"
               />
             </div>
             

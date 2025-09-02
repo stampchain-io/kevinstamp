@@ -1,0 +1,120 @@
+# KEVIN STAMP WEBSITE - Cursor Rules & Project Guidelines
+
+## Project Overview
+This is a full-stack React/TypeScript website dedicated to the KEVIN Bitcoin Stamp phenomenon. Features include:
+- Mysterious self-replicating Bitcoin stamps (#4258-#18430)
+- Live KEVIN token data from multiple exchanges
+- Community meme gallery from Kevin Depot
+- Matrix rain effects and cyberpunk styling
+- Multi-language support (English/Chinese)
+- Replit-compatible deployment structure
+
+## Development Workflow
+1. **Local Development**: `npm run dev` (starts on port 5000)
+2. **Production Build**: `npm run build` (outputs to dist/)
+3. **Git Workflow**: Push to GitHub → Pull in Replit → Deploy
+4. **Database**: Uses Neon PostgreSQL with Drizzle ORM
+
+## Code Standards & Practices
+
+### TypeScript/React Best Practices
+- Use functional components with hooks
+- Strict TypeScript with proper type definitions
+- Path aliases: `@/` for client/src, `@shared/` for shared/
+- Always use the shared schema types for API consistency
+- Follow React Query patterns for data fetching
+
+### Styling Guidelines
+- Tailwind CSS with custom Kevin theme colors
+- Pixel-perfect design with cyberpunk aesthetics
+- Use shadcn/ui components for consistency
+- Custom CSS animations for Matrix effects
+- Responsive design with mobile-first approach
+
+### API & Data Handling
+- External APIs: Stampchain, Kevin Depot, SuperEX
+- Error handling with fallbacks for external services
+- Real-time data updates with React Query
+- Form validation using Zod schemas
+- Database operations through shared schema
+
+### Replit Compatibility
+- Keep code structure compatible with Replit environment
+- Avoid platform-specific dependencies
+- Use standard Node.js/Express patterns
+- Ensure all build outputs work in Replit deployment
+
+## File Structure Guidelines
+
+### Client Side (`client/src/`)
+- `pages/`: Route components (Home, Stamps, Community, Token, Lore)
+- `components/`: Reusable UI components (pixel-hero, matrix-rain, etc.)
+- `lib/`: Utilities, contexts, and configurations
+- `data/`: Static data files (stamps, community memes)
+- `hooks/`: Custom React hooks
+
+### Server Side (`server/`)
+- `index.ts`: Main server entry point
+- `routes.ts`: API route definitions
+- `storage.ts`: Database operations
+- `vite.ts`: Development server setup
+
+### Shared (`shared/`)
+- `schema.ts`: Database schema and API types
+- Keep all shared types and interfaces here
+
+## Common Issues & Solutions
+
+### Build Errors
+- Always check `npm run check` for TypeScript errors
+- Ensure Tailwind dependencies are installed
+- Verify path aliases in tsconfig.json
+
+### API Issues
+- External APIs may fail - always have fallbacks
+- Kevin Depot scraping may break - monitor logs
+- Token data sources may be unavailable
+
+### Deployment
+- Test build locally before pushing to GitHub
+- Ensure environment variables are set in Replit
+- Check that all assets load correctly
+
+## Cursor-Specific Settings
+
+### File Associations
+- `.tsx` files: React TypeScript
+- `.ts` files: TypeScript (server/shared)
+- `.css` files: Tailwind CSS
+
+### Code Actions
+- Auto-import from shared schema
+- Format on save with Prettier
+- TypeScript strict mode enabled
+- ESLint integration active
+
+### Git Integration
+- Auto-commit on save (optional)
+- Branch protection for main
+- Pre-commit hooks for linting
+
+## Performance Considerations
+- Lazy load images from external sources
+- Implement proper error boundaries
+- Cache API responses appropriately
+- Optimize bundle size with code splitting
+
+## Security Notes
+- Input validation on all forms
+- Sanitize external API data
+- No sensitive data in client-side code
+- CORS properly configured for Replit deployment
+
+## Documentation Requirements
+- Comment complex business logic
+- Document API endpoints and data structures
+- Keep README updated with deployment instructions
+- Note any external dependencies or requirements
+
+Remember: KEVIN is a feature, not a bug! 🎯
+

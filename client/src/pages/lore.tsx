@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { useLanguage } from "../lib/language-context";
+import BreadcrumbNav, { useBreadcrumbs } from "../components/breadcrumb-nav";
 
 export default function LorePage() {
   const { t } = useLanguage();
@@ -7,6 +8,9 @@ export default function LorePage() {
     <div className="min-h-screen bg-gradient-to-b from-black via-purple-950 to-black text-kevin-green font-mono relative z-10">
       {/* Header */}
       <div className="container mx-auto px-4 pt-12 pb-8 relative z-20">
+        {/* Breadcrumb Navigation */}
+        <BreadcrumbNav items={[{ label: 'Lore', href: '/lore', current: true }]} className="mb-8" />
+
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 pixel-text animate-pixel-glow leading-tight">
             {t.lore.title}
@@ -207,6 +211,7 @@ export default function LorePage() {
                     <Link
                       href="/token"
                       className="text-kevin-orange hover:text-white underline"
+                      aria-label="View live KEVIN token statistics and market data"
                     >
                       View Live Stats →
                     </Link>
@@ -281,9 +286,9 @@ export default function LorePage() {
               >
                 🎭 Arwyn & Friends
               </a>
-              <a 
-                href="https://www.youtube.com/@weareallkevin" 
-                target="_blank" 
+              <a
+                href="https://www.youtube.com/@thekevinstamp"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="bg-purple-600 text-white px-4 py-3 rounded-lg font-bold text-center hover:bg-purple-700 transition-colors"
               >
@@ -304,31 +309,48 @@ export default function LorePage() {
 
         {/* Navigation */}
         <div className="text-center">
-          <div className="flex flex-wrap justify-center gap-4">
+          <h2 className="text-2xl font-bold text-kevin-orange mb-6">Explore More KEVIN Content</h2>
+          <div className="flex flex-wrap justify-center gap-4" role="navigation" aria-label="KEVIN ecosystem navigation">
             <Link
               href="/stamps"
-              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors"
+              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-kevin-orange"
+              aria-label="View the complete collection of 104 self-replicating KEVIN stamps"
             >
-              View The 91 Stamps
+              🎯 View The 104 Stamps
             </Link>
             <Link
               href="/community"
-              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors"
+              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-kevin-orange"
+              aria-label="Explore KEVIN community memes and digital artifacts"
             >
-              Community Gallery
+              🎨 Community Gallery
             </Link>
             <Link
               href="/token"
-              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors"
+              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-kevin-orange"
+              aria-label="Check live KEVIN token statistics and market data"
             >
-              KEVIN Token Stats
+              📊 KEVIN Token Stats
             </Link>
             <Link
               href="/"
-              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors"
+              className="bg-purple-900 text-kevin-green px-6 py-3 rounded border border-kevin-green hover:bg-kevin-green hover:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-kevin-orange"
+              aria-label="Return to KEVIN Stamp Saga homepage"
             >
-              Back to Home
+              🏠 Back to Home
             </Link>
+          </div>
+
+          {/* Additional SEO-friendly links */}
+          <div className="mt-8 text-sm text-kevin-mint">
+            <p className="mb-2">Related Topics:</p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Link href="/stamps" className="hover:text-kevin-orange underline">Bitcoin Stamps</Link> |
+              <Link href="/community" className="hover:text-kevin-orange underline">OG Memes</Link> |
+              <Link href="/token" className="hover:text-kevin-orange underline">SRC-20 Protocol</Link> |
+              <a href="https://stampchain.io" target="_blank" rel="noopener noreferrer" className="hover:text-kevin-orange underline">Stampchain.io</a> |
+              <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="hover:text-kevin-orange underline">Kevin Depot</a>
+            </div>
           </div>
         </div>
       </div>

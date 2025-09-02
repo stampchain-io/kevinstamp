@@ -50,10 +50,11 @@ export interface Translation {
   lore: {
     title: string;
     subtitle: string;
-    origins: {
-      title: string;
-      description: string;
-    };
+          origins: {
+        title: string;
+        description: string;
+        secretCabal: string;
+      };
     ghostMachine: {
       title: string;
       original: string;
@@ -99,6 +100,25 @@ export interface Translation {
     marketCap: string;
     holders: string;
     volume: string;
+    queryProtocol: string;
+    loadingData: string;
+    protocolStatus: string;
+    deployStatus: string;
+    marketStatus: string;
+    loading: string;
+    connecting: string;
+    error: string;
+    errorDesc: string;
+    totalSupply: string;
+    marketCapLabel: string;
+    holdersLabel: string;
+    wallets: string;
+    totalVolumeLabel: string;
+    deploymentStamp: string;
+    perMintLimit: string;
+    fairLaunchStatus: string;
+    minted: string;
+    protocol: string;
   };
 
   // Footer
@@ -173,7 +193,8 @@ export const translations: Record<Language, Translation> = {
       subtitle: "Origins • Mystery • Legend",
       origins: {
         title: "🌟 Origins: Birth of Bitcoin Art",
-        description: "Bitcoin Stamps originated from the Counterparty protocol, where many original Bitcoin pioneers have been gathering since 2016, creating art and tokens on Bitcoin."
+        description: "Bitcoin Stamps originated from the Counterparty protocol, where many original Bitcoin pioneers have been gathering since 2016, creating art and tokens on Bitcoin.",
+        secretCabal: "Secret cabal of Bitcoin art pioneers"
       },
       ghostMachine: {
         title: "👻 Ghost in the Machine",
@@ -213,7 +234,26 @@ export const translations: Record<Language, Translation> = {
       description: "Born from mystery, Kevin became the first SRC-20 token deployed on the Bitcoin blockchain.",
       marketCap: "BTC Market Cap",
       holders: "Holders",
-      volume: "Total Volume"
+      volume: "Total Volume",
+      queryProtocol: "Querying Protocol...",
+      loadingData: "Loading market data...",
+      protocolStatus: "Protocol Status",
+      deployStatus: "Deployment Status",
+      marketStatus: "Market Status",
+      loading: "LOADING...",
+      connecting: "Connecting to Bitcoin network...",
+      error: "ERROR",
+      errorDesc: "Unable to load token data",
+      totalSupply: "Total Supply",
+      marketCapLabel: "Market Cap",
+      holdersLabel: "Holders",
+      wallets: "Wallets",
+      totalVolumeLabel: "Total Volume",
+      deploymentStamp: "Deployment Stamp",
+      perMintLimit: "Per Mint Limit",
+      fairLaunchStatus: "Fair Launch Status",
+      minted: "Minted",
+      protocol: "Protocol"
     },
     footer: {
       tagline: "Ghost in the Machine\nFeature, Not a Bug\nLiving Legend on Bitcoin",
@@ -282,7 +322,8 @@ export const translations: Record<Language, Translation> = {
       subtitle: "起源 • 神秘 • 传说",
       origins: {
         title: "🌟 起源：比特币艺术的诞生",
-        description: "比特币邮票起源于Counterparty协议，许多原始比特币先驱从2016年开始聚集在这里，在比特币上创作艺术和代币。"
+        description: "比特币邮票起源于Counterparty协议，许多原始比特币先驱从2016年开始聚集在这里，在比特币上创作艺术和代币。",
+        secretCabal: "比特币艺术先驱的秘密组织"
       },
       ghostMachine: {
         title: "👻 机器中的幽灵",
@@ -322,7 +363,26 @@ export const translations: Record<Language, Translation> = {
       description: "诞生于神秘之中，凯文成为了部署在比特币区块链上的第一个SRC-20代币。",
       marketCap: "BTC市值",
       holders: "持有者",
-      volume: "总交易量"
+      volume: "总交易量",
+      queryProtocol: "查询协议中...",
+      loadingData: "加载市场数据...",
+      protocolStatus: "协议状态",
+      deployStatus: "部署状态",
+      marketStatus: "市场状态",
+      loading: "加载中...",
+      connecting: "连接比特币网络...",
+      error: "错误",
+      errorDesc: "无法加载代币数据",
+      totalSupply: "总供应量",
+      marketCapLabel: "市值",
+      holdersLabel: "持有者",
+      wallets: "钱包",
+      totalVolumeLabel: "总交易量",
+      deploymentStamp: "部署邮票",
+      perMintLimit: "每次铸造限制",
+      fairLaunchStatus: "公平启动状态",
+      minted: "已铸造",
+      protocol: "协议"
     },
     footer: {
       tagline: "机器中的幽灵\n功能，不是错误\n比特币上的活传说",

@@ -1,6 +1,6 @@
 import TerminalText from "../components/terminal-text";
 import { useQuery } from "@tanstack/react-query";
-import { TokenData } from "../../shared/schema";
+import { TokenData } from "@shared/schema";
 import { useLanguage } from "../lib/language-context";
 
 export default function Token() {

@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { insertKevinInquirySchema } from "@shared/schema";
 import { storage } from "./storage";
+import { sendInquiryEmail } from "./email.js";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API route for Kevin stamp data
@@ -334,25 +335,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const validatedData = insertKevinInquirySchema.parse(req.body);
       const inquiry = await storage.createKevinInquiry(validatedData);
-      
-      // In a real app, you'd send an email here
+
+      // Send email notification to enquiries@stampchain.io
+      const emailSent = await sendInquiryEmail(inquiry);
+
       console.log("New Kevin stamp inquiry received:", {
         name: inquiry.name,
         email: inquiry.email,
         budgetRange: inquiry.budgetRange,
-        timestamp: inquiry.createdAt
+        timestamp: inquiry.createdAt,
+        emailSent: emailSent
       });
-      
-      res.status(201).json({ 
-        success: true, 
-        message: "Inquiry submitted successfully. We'll review your request within 48-72 hours.",
-        id: inquiry.id
+
+      res.status(201).json({
+        success: true,
+        message: emailSent
+          ? "Inquiry submitted successfully. Email sent to enquiries@stampchain.io - we'll review your request within 48-72 hours."
+          : "Inquiry submitted successfully. We'll review your request within 48-72 hours.",
+        id: inquiry.id,
+        emailSent: emailSent
       });
     } catch (error) {
       console.error("Error submitting Kevin inquiry:", error);
-      res.status(400).json({ 
-        success: false, 
-        message: "Invalid form data. Please check all required fields." 
+      res.status(400).json({
+        success: false,
+        message: "Invalid form data. Please check all required fields."
       });
     }
   });
@@ -368,6 +375,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching inquiries:", error);
       res.status(500).json({ success: false, message: "Error fetching inquiries" });
+    }
+  });
+
+  // API route to test email configuration (development only)
+  app.post("/api/test-email", async (req, res) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(403).json({ success: false, message: "Test endpoint not available in production" });
+    }
+
+    try {
+      // Create a test inquiry
+      const testInquiry = {
+        id: 'test-' + Date.now(),
+        name: 'Test User',
+        email: 'test@example.com',
+        motivation: 'This is a test email to verify the email configuration is working correctly.',
+        budgetRange: '1-2' as const,
+        createdAt: new Date()
+      };
+
+      const emailSent = await sendInquiryEmail(testInquiry);
+
+      res.json({
+        success: true,
+        message: emailSent ? 'Test email sent successfully!' : 'Test email failed to send.',
+        emailSent,
+        recipient: 'enquiries@stampchain.io'
+      });
+    } catch (error) {
+      console.error("Error testing email:", error);
+      res.status(500).json({
+        success: false,
+        message: "Error testing email configuration"
+      });
     }
   });
 

@@ -1,0 +1,54 @@
+{
+  "name": "KEVIN Stamp Website",
+  "version": "1.0.0",
+  "description": "Composer workflow for KEVIN Bitcoin Stamp website development",
+  "workflows": [
+    {
+      "name": "New Component",
+      "description": "Create a new React component with proper structure",
+      "steps": [
+        {
+          "type": "prompt",
+          "message": "Component name (PascalCase):",
+          "variable": "componentName"
+        },
+        {
+          "type": "create_file",
+          "path": "client/src/components/{{componentName}}.tsx",
+          "content": "import React from 'react';\n\nimport { cn } from '@/lib/utils';\n\ninterface {{componentName}}Props {\n  className?: string;\n}\n\nexport default function {{componentName}}({ className }: {{componentName}}Props) {\n  return (\n    <div className={cn('{{componentName | kebab_case}}', className)}>\n      {/* TODO: Implement {{componentName}} component */}\n      <h3>{{componentName}} Component</h3>\n    </div>\n  );\n}"
+        },
+        {
+          "type": "create_file",
+          "path": "client/src/components/{{componentName}}.stories.tsx",
+          "content": "import type { Meta, StoryObj } from '@storybook/react';\nimport {{componentName}} from './{{componentName}}';\n\nconst meta: Meta<typeof {{componentName}}> = {\n  title: 'Components/{{componentName}}',\n  component: {{componentName}},\n  parameters: {\n    layout: 'centered',\n  },\n  tags: ['autodocs'],\n};\n\nexport default meta;\ntype Story = StoryObj<typeof meta>;\n\nexport const Default: Story = {\n  args: {},\n};\n\nexport const WithCustomClass: Story = {\n  args: {\n    className: 'custom-class',\n  },\n};"
+        }
+      ]
+    },
+    {
+      "name": "New Page",
+      "description": "Create a new page component with routing",
+      "steps": [
+        {
+          "type": "prompt",
+          "message": "Page name (PascalCase):",
+          "variable": "pageName"
+        },
+        {
+          "type": "prompt",
+          "message": "Route path (e.g., /new-page):",
+          "variable": "routePath"
+        },
+        {
+          "type": "create_file",
+          "path": "client/src/pages/{{pageName | kebab_case}}.tsx",
+          "content": "import { useLanguage } from '../lib/language-context';\n\nexport default function {{pageName}}() {\n  const { t } = useLanguage();\n\n  return (\n    <div className=\"min-h-screen bg-kevin-charcoal text-white\">\n      <div className=\"container mx-auto px-4 py-20\">\n        <div className=\"text-center mb-16\">\n          <h1 className=\"font-pixel font-black text-5xl text-kevin-orange mb-4\">\n            {{pageName}}\n          </h1>\n          <div className=\"w-24 h-1 bg-kevin-orange mx-auto mb-8\"></div>\n        </div>\n\n        <div className=\"max-w-4xl mx-auto\">\n          {/* TODO: Implement {{pageName}} page content */}\n          <div className=\"terminal-window\">\n            <div className=\"font-pixel text-kevin-neon mb-4\">&gt; {{pageName | kebab_case}}.exe</div>\n            <p className=\"text-white\">{{pageName}} page content goes here...</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}"
+        },
+        {
+          "type": "read_file",
+          "path": "client/src/App.tsx"
+        },
+        {
+          "type": "replace_in_file",
+          "path": "client/src/App.tsx",
+          "old_string": "import { Link } from \"wouter\";\nimport NotFound from \"@/pages/not-found\";
+

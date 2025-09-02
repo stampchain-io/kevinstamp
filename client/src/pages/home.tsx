@@ -47,12 +47,16 @@ export default function Home() {
       {/* Hero Section */}
       <PixelHero />
       {/* Kevin Saga Section */}
-      <section className="py-20 bg-kevin-graphite relative">
+      <section className="py-20 bg-kevin-graphite relative" aria-labelledby="kevin-saga-heading">
         <div className="scanlines absolute inset-0 opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.home.title}</h2>
+            <h1 id="kevin-saga-heading" className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.home.title}</h1>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
+            <p className="text-xl text-kevin-mint max-w-3xl mx-auto">
+              Discover the <strong>ultimate Bitcoin mystery</strong> - 104 self-replicating stamps that created a <strong>digital legend</strong>.
+              From <strong>blockchain phenomena</strong> to global <strong>OG memes</strong>, KEVIN represents the pinnacle of <strong>Bitcoin lore</strong>.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
@@ -98,33 +102,43 @@ export default function Home() {
         </div>
       </section>
       {/* LORE Section - New Epic Feature */}
-      <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative">
+      <section className="py-20 bg-gradient-to-b from-purple-950 via-black to-purple-950 relative" aria-labelledby="lore-section-heading">
         <div className="scanlines absolute inset-0 opacity-30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-6xl text-kevin-orange mb-4 animate-pixel-glow">{t.home.title}</h2>
+            <h2 id="lore-section-heading" className="font-pixel font-black text-6xl text-kevin-orange mb-4 animate-pixel-glow">
+              KEVIN <span className="text-purple-400">LORE</span> - The Ultimate <strong>Bitcoin Mystery</strong>
+            </h2>
             <div className="w-32 h-2 bg-gradient-to-r from-kevin-orange to-purple-600 mx-auto mb-8"></div>
-            <p className="text-xl text-kevin-mint font-terminal">{t.lore.subtitle}</p>
+            <p className="text-xl text-kevin-mint font-terminal max-w-4xl mx-auto">
+              {t.lore.subtitle} - Uncover the <strong>blockchain phenomena</strong> that created a <strong>digital legend</strong> and birthed the first <strong>SRC-20 token</strong>
+            </p>
           </div>
 
           <div className="max-w-4xl mx-auto mb-12">
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 text-center">
-                <div className="text-4xl mb-4">🌟</div>
+            <div className="grid md:grid-cols-3 gap-8" role="list">
+              <div className="bg-black bg-opacity-50 border-2 border-kevin-green p-6 text-center" role="listitem">
+                <div className="text-4xl mb-4" aria-hidden="true">🌟</div>
                 <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.originsTitle}</h3>
-                <p className="text-sm text-kevin-mint">{t.home.originsSub}</p>
+                <p className="text-sm text-kevin-mint">
+                  {t.home.originsSub} - Birth of <strong>digital artifacts</strong> on the <strong>Bitcoin blockchain</strong>
+                </p>
               </div>
-              
-              <div className="bg-black bg-opacity-50 border-2 border-kevin-orange p-6 text-center">
-                <div className="text-4xl mb-4">👻</div>
+
+              <div className="bg-black bg-opacity-50 border-2 border-kevin-orange p-6 text-center" role="listitem">
+                <div className="text-4xl mb-4" aria-hidden="true">👻</div>
                 <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.mysteryTitle}</h3>
-                <p className="text-sm text-kevin-mint">{t.home.mysterySub}</p>
+                <p className="text-sm text-kevin-mint">
+                  {t.home.mysterySub} - The ultimate <strong>blockchain mystery</strong> that created a <strong>digital legend</strong>
+                </p>
               </div>
-              
-              <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center">
-                <div className="text-4xl mb-4">🪙</div>
+
+              <div className="bg-black bg-opacity-50 border-2 border-purple-500 p-6 text-center" role="listitem">
+                <div className="text-4xl mb-4" aria-hidden="true">🪙</div>
                 <h3 className="font-pixel text-xl text-kevin-orange mb-3">{t.home.firstSrc20Token}</h3>
-                <p className="text-sm text-kevin-mint">{t.home.legendSub}</p>
+                <p className="text-sm text-kevin-mint">
+                  {t.home.legendSub} - Pioneering <strong>SRC-20 protocol</strong> and <strong>meme token</strong> innovation
+                </p>
               </div>
             </div>
           </div>
@@ -139,13 +153,17 @@ export default function Home() {
         </div>
       </section>
       {/* Preview: 91 Kevin Stamps */}
-      <section className="py-20 bg-kevin-charcoal relative">
+      <section className="py-20 bg-kevin-charcoal relative" aria-labelledby="stamps-gallery-heading">
         <div className="retro-grid absolute inset-0 opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.stamps.title}</h2>
+            <h2 id="stamps-gallery-heading" className="font-pixel font-black text-5xl text-kevin-orange mb-4">
+              104 <strong>KEVIN Stamps</strong> - Self-Replicating <strong>Digital Artifacts</strong>
+            </h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-kevin-mint font-terminal">{t.stamps.subtitle}</p>
+            <p className="text-kevin-mint font-terminal max-w-2xl mx-auto">
+              {t.stamps.subtitle} - Witness the <strong>blockchain phenomenon</strong> that created 104 identical yet legendary <strong>Bitcoin stamps</strong>
+            </p>
           </div>
 
           <StampsGallery showAll={false} itemsPerPage={16} />
@@ -160,13 +178,17 @@ export default function Home() {
         </div>
       </section>
       {/* Preview: Community Gallery */}
-      <section className="py-20 bg-kevin-graphite relative">
+      <section className="py-20 bg-kevin-graphite relative" aria-labelledby="community-gallery-heading">
         <div className="scanlines absolute inset-0 opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4">{t.community.title}</h2>
+            <h2 id="community-gallery-heading" className="font-pixel font-black text-5xl text-kevin-orange mb-4">
+              <strong>KEVIN Community</strong> - Global <strong>OG Memes</strong> & <strong>Digital Artifacts</strong>
+            </h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-kevin-mint font-terminal">{t.community.subtitle}</p>
+            <p className="text-kevin-mint font-terminal max-w-2xl mx-auto">
+              {t.community.subtitle} - Explore the wildest <strong>KEVIN creations</strong> from believers worldwide, featuring legendary <strong>meme culture</strong> and <strong>digital art</strong>
+            </p>
           </div>
 
           <CommunityGallery showAll={false} itemsPerPage={16} />
@@ -190,21 +212,21 @@ export default function Home() {
           </div>
 
           {/* Token Stats Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12">
-            <div className="bg-black border-2 border-kevin-orange p-6 text-center">
-              <div className="meme-counter text-3xl">690M</div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto mb-12" role="list" aria-label="KEVIN token statistics">
+            <div className="bg-black border-2 border-kevin-orange p-6 text-center" role="listitem">
+              <div className="meme-counter text-3xl" aria-label="690 million total supply">690M</div>
               <div className="font-pixel text-kevin-orange text-sm mt-2">{t.token.description}</div>
             </div>
-            <div className="bg-black border-2 border-kevin-neon p-6 text-center">
-              <div className="meme-counter text-3xl">17.8</div>
+            <div className="bg-black border-2 border-kevin-neon p-6 text-center" role="listitem">
+              <div className="meme-counter text-3xl" aria-label="17.8 BTC market capitalization">17.8</div>
               <div className="font-pixel text-kevin-neon text-sm mt-2">{t.token.marketCap}</div>
             </div>
-            <div className="bg-black border-2 border-kevin-magenta p-6 text-center">
-              <div className="meme-counter text-3xl">2.1K</div>
+            <div className="bg-black border-2 border-kevin-magenta p-6 text-center" role="listitem">
+              <div className="meme-counter text-3xl" aria-label="2.1 thousand token holders">2.1K</div>
               <div className="font-pixel text-kevin-magenta text-sm mt-2">{t.token.holders}</div>
             </div>
-            <div className="bg-black border-2 border-kevin-cyan p-6 text-center">
-              <div className="meme-counter text-3xl">269</div>
+            <div className="bg-black border-2 border-kevin-cyan p-6 text-center" role="listitem">
+              <div className="meme-counter text-3xl" aria-label="269 BTC trading volume">269</div>
               <div className="font-pixel text-kevin-cyan text-sm mt-2">{t.token.volume}</div>
             </div>
           </div>
@@ -229,13 +251,17 @@ export default function Home() {
         </div>
       </section>
       {/* Kevin in Media Section */}
-      <section className="py-20 bg-black relative">
+      <section className="py-20 bg-black relative" aria-labelledby="kevin-media-heading">
         <div className="scanlines absolute inset-0 opacity-40"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="font-pixel font-black text-5xl text-kevin-orange mb-4 animate-pixel-glow">KEVIN IN MEDIA</h2>
+            <h2 id="kevin-media-heading" className="font-pixel font-black text-5xl text-kevin-orange mb-4 animate-pixel-glow">
+              KEVIN IN MEDIA - From <strong>Blockchain Mystery</strong> to <strong>Digital Legend</strong>
+            </h2>
             <div className="w-24 h-1 bg-kevin-orange mx-auto mb-8"></div>
-            <p className="text-xl text-kevin-mint font-terminal">Kevin's legendary television appearances</p>
+            <p className="text-xl text-kevin-mint font-terminal max-w-3xl mx-auto">
+              KEVIN transcends the blockchain - Witness the <strong>ghost in the machine</strong> making legendary television appearances and becoming a global <strong>digital celebrity</strong>
+            </p>
           </div>
 
           <div className="max-w-6xl mx-auto">
@@ -272,9 +298,9 @@ export default function Home() {
                 <div className="text-5xl mb-4">📺</div>
                 <h3 className="font-pixel text-xl text-white mb-3">KEVIN TV</h3>
                 <p className="text-sm text-purple-100 mb-4">"We Are All Kevin" - Official YouTube channel for all Kevin content</p>
-                <a 
-                  href="https://www.youtube.com/@weareallkevin" 
-                  target="_blank" 
+                <a
+                  href="https://www.youtube.com/@thekevinstamp"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="pixel-btn px-4 py-2 text-black font-bold bg-white border-white hover:bg-purple-100 transition-colors"
                 >
@@ -469,7 +495,7 @@ export default function Home() {
                 <a href="https://memedepot.com/d/kevin-depot" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Kevin Depot</a>
                 <a href="https://kevin6942.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Kevin Fan Site</a>
                 <a href="https://twitter.com/stampchain" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Twitter @stampchain</a>
-                <a href="https://t.me/BitcoinStamps" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Telegram @BitcoinStamps</a>
+                <a href="https://t.me/thekevinstamp" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">Telegram @thekevinstamp</a>
                 <a href="https://github.com/stampchain-io" target="_blank" rel="noopener noreferrer" className="text-white hover:text-kevin-orange block font-bold bg-black bg-opacity-70 px-2 py-1 rounded">GitHub - Bitcoin Stamps</a>
                 <Link href="/stamps"><div className="text-white hover:text-kevin-orange cursor-pointer font-bold bg-black bg-opacity-70 px-2 py-1 rounded">91 Stamps Gallery</div></Link>
               </div>

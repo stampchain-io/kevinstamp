@@ -29,9 +29,12 @@ export default defineConfig({
     emptyOutDir: true,
   },
   server: {
+    host: true, // Allow external connections
+    port: 5173, // Vite's default port
+    strictPort: false,
     fs: {
-      strict: true,
-      deny: ["**/.*"],
+      strict: false, // Allow serving files outside root
+      deny: [],
     },
   },
 });

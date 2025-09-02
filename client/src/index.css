@@ -51,6 +51,106 @@
   --radius: 0;
 }
 
+/* Enhanced animations and accessibility for KEVIN Gallery */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 107, 53, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.8), 0 0 30px rgba(255, 107, 53, 0.4); }
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Utility classes */
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s infinite;
+}
+
+.animate-glow {
+  animation: glow 3s infinite;
+}
+
+.loading-skeleton {
+  background: linear-gradient(90deg,
+    hsl(210, 20%, 17%) 25%,
+    hsl(210, 25%, 7.8%) 50%,
+    hsl(210, 20%, 17%) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+/* Accessibility improvements */
+.focus-visible {
+  outline: 2px solid hsl(120, 100%, 50%);
+  outline-offset: 2px;
+}
+
+.gallery-item:focus-visible {
+  outline: 2px solid hsl(120, 100%, 50%);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer,
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-gentle,
+  .animate-glow,
+  .loading-skeleton {
+    animation: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .gallery-item {
+    border-width: 3px;
+  }
+
+  .pixel-btn {
+    border-width: 3px;
+  }
+}
+
 .dark {
   --background: hsl(210, 25%, 7.8%);
   --foreground: hsl(0, 0%, 100%);

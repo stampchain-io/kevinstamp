@@ -1,0 +1,30 @@
+{
+  "pre-commit": [
+    {
+      "name": "type-check",
+      "command": "npm run check",
+      "description": "Run TypeScript type checking"
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "description": "Run ESLint",
+      "optional": true
+    }
+  ],
+  "pre-push": [
+    {
+      "name": "build-check",
+      "command": "npm run build",
+      "description": "Ensure production build works"
+    }
+  ],
+  "post-merge": [
+    {
+      "name": "install-deps",
+      "command": "npm install",
+      "description": "Install any new dependencies"
+    }
+  ]
+}
+
