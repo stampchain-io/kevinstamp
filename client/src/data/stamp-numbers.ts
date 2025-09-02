@@ -12,11 +12,11 @@ export const kevinStampNumbers = [
   18426, 18428, 18430
 ];
 
-// Using the original Kevin image for all stamps since they are byte-perfect duplicates
+// FIXED: Using the correct stampchain.io API endpoint for stamp images
 export const getStampImageUrl = (stampNumber: number) => {
-  // All Kevin stamps are byte-perfect duplicates of the original, so we use the same image
-  // The original Kevin image hash from stamp #4258
-  return "https://stampchain.io/content/6c7ff116f4ac8fe76d763946e9d917ca270f3b95c3b3949a478635fa617324ca.png";
+  // All Kevin stamps are byte-perfect duplicates, but we use the proper API endpoint
+  // This ensures we get the correct image format and caching
+  return `https://stampchain.io/api/v2/stamp/${stampNumber}/preview`;
 };
 
 export const getStampUrl = (stampNumber: number) => 

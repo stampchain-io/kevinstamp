@@ -73,13 +73,16 @@ export class CommunityAPIClient {
     const timeoutId = setTimeout(() => controller.abort(), this.config.TIMEOUT);
 
     try {
+      // FIXED: Use a CORS proxy or handle CORS issues gracefully
+      // Since direct scraping from browser will likely fail due to CORS,
+      // we'll implement a more robust fallback strategy
       const response = await fetch(this.config.BASE_URL, {
         signal: controller.signal,
+        mode: 'cors', // Explicitly set CORS mode
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; KevinGallery/2.0)',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'en-US,en;q=0.5',
-          'Accept-Encoding': 'gzip, deflate',
           'Cache-Control': 'no-cache',
           'Pragma': 'no-cache'
         },
@@ -88,6 +91,13 @@ export class CommunityAPIClient {
       });
 
       return response;
+    } catch (error) {
+      // FIXED: Handle CORS and network errors more gracefully
+      if (error instanceof TypeError && error.message.includes('CORS')) {
+        console.warn('CORS error detected, falling back to static data');
+        throw new Error('CORS_ERROR: Direct scraping blocked by browser security');
+      }
+      throw error;
     } finally {
       clearTimeout(timeoutId);
     }
@@ -411,6 +421,11 @@ export class CommunityAPIClient {
       code = 'TIMEOUT';
       message = 'Request timed out';
       retryable = true;
+    } else if (error.message?.includes('CORS_ERROR')) {
+      // FIXED: Handle CORS errors specifically
+      code = 'CORS_ERROR';
+      message = 'Cross-origin request blocked by browser security';
+      retryable = false; // Don't retry CORS errors
     } else if (error.message?.includes('HTTP')) {
       const statusMatch = error.message.match(/HTTP (\d+)/);
       if (statusMatch) {

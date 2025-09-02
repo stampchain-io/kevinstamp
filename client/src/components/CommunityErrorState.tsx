@@ -53,6 +53,15 @@ export default function CommunityErrorState({
           severity: 'info' as const
         };
 
+      case 'CORS_ERROR':
+        return {
+          icon: '🔒',
+          title: 'Browser Security Block',
+          message: 'Your browser blocked the connection to Kevin Depot for security reasons.',
+          suggestion: 'Using static community content instead',
+          severity: 'info' as const
+        };
+
       default:
         return {
           icon: '⚠️',
