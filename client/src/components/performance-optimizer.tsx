@@ -172,29 +172,46 @@ export default function PerformanceOptimizer() {
 // Performance monitoring hook
 export function usePerformanceMonitor() {
   useEffect(() => {
+    let observer: PerformanceObserver | null = null;
+
     // Monitor Largest Contentful Paint (LCP)
-    const observer = new PerformanceObserver((list) => {
-      const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
+    const initObserver = () => {
+      try {
+        observer = new PerformanceObserver((list) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
 
-      // Report LCP to analytics
-      if (typeof window !== 'undefined' && (window as any).gtag) {
-        (window as any).gtag('event', 'web_vitals', {
-          event_category: 'Web Vitals',
-          event_label: 'LCP',
-          value: Math.round(lastEntry.startTime),
-          custom_map: { metric_value: lastEntry.startTime }
+          // Report LCP to analytics
+          if (typeof window !== 'undefined' && (window as any).gtag) {
+            (window as any).gtag('event', 'web_vitals', {
+              event_category: 'Web Vitals',
+              event_label: 'LCP',
+              value: Math.round(lastEntry.startTime),
+              custom_map: { metric_value: lastEntry.startTime }
+            });
+          }
         });
+
+        observer.observe({ entryTypes: ['largest-contentful-paint'] });
+      } catch (e) {
+        // Fallback for browsers that don't support LCP
+        console.debug('LCP monitoring not supported:', e);
       }
-    });
+    };
 
-    try {
-      observer.observe({ entryTypes: ['largest-contentful-paint'] });
-    } catch (e) {
-      // Fallback for browsers that don't support LCP
-    }
+    // Initialize observer
+    initObserver();
 
-    return () => observer.disconnect();
+    return () => {
+      // Safely disconnect observer
+      if (observer && typeof observer.disconnect === 'function') {
+        try {
+          observer.disconnect();
+        } catch (e) {
+          console.debug('Error disconnecting performance observer:', e);
+        }
+      }
+    };
   }, []);
 }
 

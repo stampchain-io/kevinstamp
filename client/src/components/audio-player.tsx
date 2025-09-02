@@ -25,7 +25,7 @@ export default function AudioPlayer({ className = '' }: AudioPlayerProps) {
         await audio.play();
         setIsPlaying(true);
       } catch (error) {
-        console.log('Autoplay was prevented by browser policy');
+        // Silently handle autoplay prevention - this is expected behavior
         setIsPlaying(false);
       }
     };
@@ -120,9 +120,13 @@ export default function AudioPlayer({ className = '' }: AudioPlayerProps) {
         onEnded={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
-        onError={(e) => console.error('Audio error:', e)}
-        onLoadStart={() => console.log('Audio loading started')}
-        onCanPlay={() => console.log('Audio can play')}
+        onError={(e) => {
+          // Only log actual errors, not network issues during development
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('Audio loading error:', e);
+          }
+          setIsPlaying(false);
+        }}
       >
         <source src="/Music/clubbed-to-death-matrix.mp3" type="audio/mpeg" />
         <source src="/Music/clubbed-to-death-matrix.wav" type="audio/wav" />

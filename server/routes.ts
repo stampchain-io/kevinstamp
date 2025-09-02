@@ -4,6 +4,379 @@ import { insertKevinInquirySchema } from "@shared/schema";
 import { storage } from "./storage";
 import { sendInquiryEmail } from "./email.js";
 
+// Enhanced HTML Parser for Kevin Depot
+interface ParsedDepotContent {
+  stats: {
+    totalMemes: number;
+    totalViews: number;
+    totalVideos: number;
+    totalGifs: number;
+    totalImages: number;
+    totalArtists: number;
+  };
+  content: {
+    images: Array<{ id: string; url: string; title?: string; }>;
+    videos: Array<{ id: string; url: string; thumbnailUrl: string; }>;
+    gifs: Array<{ id: string; url: string; }>;
+    featured: Array<{
+      id: string;
+      title: string;
+      type: 'image' | 'video' | 'gif';
+      imageUrl: string;
+      videoUrl?: string;
+      description: string;
+      category: string;
+    }>;
+  };
+}
+
+async function parseKevinDepotHTML(html: string): Promise<ParsedDepotContent> {
+  console.log('🔍 Starting comprehensive HTML parsing...');
+
+  // Initialize with defaults
+  const result: ParsedDepotContent = {
+    stats: {
+      totalMemes: 137, // From the search results, we know there are 137 memes
+      totalViews: 1100, // Approximate from available data
+      totalVideos: 0,
+      totalGifs: 0,
+      totalImages: 0,
+      totalArtists: 1
+    },
+    content: {
+      images: [],
+      videos: [],
+      gifs: [],
+      featured: []
+    }
+  };
+
+  try {
+    // Extract stats from multiple sources
+    result.stats = extractStats(html);
+
+    // Extract all content types
+    const allImages = extractAllImages(html);
+    const allVideos = extractAllVideos(html);
+    const allGifs = extractAllGifs(html);
+
+    result.content.images = allImages;
+    result.content.videos = allVideos;
+    result.content.gifs = allGifs;
+
+    // Update stats based on extracted content
+    result.stats.totalImages = allImages.length;
+    result.stats.totalVideos = allVideos.length;
+    result.stats.totalGifs = allGifs.length;
+    result.stats.totalMemes = result.stats.totalImages + result.stats.totalVideos + result.stats.totalGifs;
+
+    // Create featured content from all extracted items
+    result.content.featured = createFeaturedContent(allImages, allVideos, allGifs);
+
+    console.log('✅ HTML parsing completed successfully');
+
+  } catch (error) {
+    console.error('❌ HTML parsing failed:', error);
+    // Return fallback data
+  }
+
+  return result;
+}
+
+function extractStats(html: string) {
+  const stats = {
+    totalMemes: 137,
+    totalViews: 1100,
+    totalVideos: 0,
+    totalGifs: 0,
+    totalImages: 0,
+    totalArtists: 1
+  };
+
+  // Try multiple extraction methods for stats
+  const statPatterns = [
+    // Direct text matches
+    /(\d+)\s*Memes?/i,
+    /(\d+)\s*Views?/i,
+    // JSON-like data
+    /"totalMemes"\s*:\s*(\d+)/,
+    /"totalViews"\s*:\s*(\d+)/,
+    // HTML data attributes
+    /data-memes="(\d+)"/,
+    /data-views="(\d+)"/
+  ];
+
+  statPatterns.forEach((pattern, index) => {
+    const match = html.match(pattern);
+    if (match) {
+      const value = parseInt(match[1]);
+      if (index === 0) stats.totalMemes = value;
+      if (index === 1) stats.totalViews = value;
+    }
+  });
+
+  return stats;
+}
+
+function extractAllImages(html: string) {
+  const images: Array<{ id: string; url: string; title?: string; }> = [];
+  const seenIds = new Set<string>();
+
+  // Multiple patterns for image extraction
+  const imagePatterns = [
+    // Cloudflare Image Delivery URLs
+    /https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"'\s]+/g,
+    // Direct image URLs
+    /https:\/\/memedepot\.com\/[^"'\s]*\.(jpg|jpeg|png|webp)(?:\?[^"'\s]*)?/gi,
+    // Image URLs with quotes
+    /"https:\/\/memedepot\.com\/[^"]*\.(jpg|jpeg|png|webp)"/gi,
+    /'https:\/\/memedepot\.com\/[^']*\.(jpg|jpeg|png|webp)'/gi
+  ];
+
+  imagePatterns.forEach(pattern => {
+    const matches = html.match(pattern) || [];
+    matches.forEach(match => {
+      const url = match.replace(/^["']|["']$/g, ''); // Remove quotes
+
+      // Skip logos, avatars, icons, and small images
+      if (url.includes('logo') || url.includes('avatar') || url.includes('icon') ||
+          url.includes('width=100') || url.includes('width=200')) {
+        return;
+      }
+
+      const id = extractImageId(url);
+      if (id && !seenIds.has(id)) {
+        seenIds.add(id);
+        images.push({
+          id,
+          url: url.replace('/width=3840', '/width=400').replace('/width=1920', '/width=400'),
+          title: extractNearbyTitle(html, url)
+        });
+      }
+    });
+  });
+
+  return images;
+}
+
+function extractAllVideos(html: string) {
+  const videos: Array<{ id: string; url: string; thumbnailUrl: string; }> = [];
+  const seenIds = new Set<string>();
+
+  // Cloudflare Stream video patterns
+  const videoPatterns = [
+    /https:\/\/customer-[^"'\s]*\.cloudflarestream\.com\/[^"'\s]+\/thumbnails\/thumbnail\.jpg/gi,
+    /https:\/\/[^"'\s]*cloudflarestream[^"'\s]*\.mp4/gi,
+    /https:\/\/[^"'\s]*cloudflarestream[^"'\s]*\.webm/gi
+  ];
+
+  videoPatterns.forEach(pattern => {
+    const matches = html.match(pattern) || [];
+    matches.forEach(match => {
+      const url = match.replace(/^["']|["']$/g, '');
+      const videoId = extractVideoId(url);
+
+      if (videoId && !seenIds.has(videoId)) {
+        seenIds.add(videoId);
+        videos.push({
+          id: videoId,
+          url,
+          thumbnailUrl: url.includes('thumbnails') ? url : `${url}/thumbnails/thumbnail.jpg`
+        });
+      }
+    });
+  });
+
+  return videos;
+}
+
+function extractAllGifs(html: string) {
+  const gifs: Array<{ id: string; url: string; }> = [];
+  const seenIds = new Set<string>();
+
+  // Find GIF URLs specifically
+  const gifPatterns = [
+    /https:\/\/memedepot\.com\/[^"'\s]*\.gif/gi,
+    /"https:\/\/memedepot\.com\/[^"]*\.gif"/gi,
+    /'https:\/\/memedepot\.com\/[^']*\.gif'/gi
+  ];
+
+  gifPatterns.forEach(pattern => {
+    const matches = html.match(pattern) || [];
+    matches.forEach(match => {
+      const url = match.replace(/^["']|["']$/g, '');
+      const id = extractImageId(url);
+
+      if (id && !seenIds.has(id)) {
+        seenIds.add(id);
+        gifs.push({
+          id,
+          url: url.replace('/width=3840', '/width=400').replace('/width=1920', '/width=400')
+        });
+      }
+    });
+  });
+
+  return gifs;
+}
+
+function extractImageId(url: string): string {
+  // Multiple patterns to extract image IDs
+  const patterns = [
+    /\/([a-f0-9-]{8,})\/(?:width|public|$)/,
+    /\/([a-f0-9-]{8,})\.(jpg|jpeg|png|gif|webp)/i,
+    /\/([a-f0-9-]{32,})/, // Cloudflare image IDs are long
+    /\/([a-f0-9-]{8,})/  // Fallback for shorter IDs
+  ];
+
+  for (const pattern of patterns) {
+    const match = url.match(pattern);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+
+  // Fallback: create hash from URL
+  let hash = 0;
+  for (let i = 0; i < url.length; i++) {
+    hash = ((hash << 5) - hash) + url.charCodeAt(i);
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash).toString(16);
+}
+
+function extractVideoId(url: string): string {
+  const match = url.match(/([a-f0-9-]+)\/thumbnails/);
+  return match ? match[1] : url.split('/').pop()?.split('.')[0] || 'unknown';
+}
+
+function extractNearbyTitle(html: string, imageUrl: string): string | undefined {
+  try {
+    // Find text near the image URL to extract potential titles
+    const index = html.indexOf(imageUrl);
+    if (index === -1) return undefined;
+
+    // Look for text within 300 characters before the URL (increased range)
+    const beforeText = html.substring(Math.max(0, index - 300), index);
+
+    // Try multiple patterns for better title extraction
+    const patterns = [
+      // Alt text from img tags
+      /alt="([^"]+)"/i,
+      // Title text from img tags
+      /title="([^"]+)"/i,
+      // Nearby heading tags
+      /<h[1-6][^>]*>([^<]+)<\/h[1-6]>/i,
+      // Nearby link text
+      /<a[^>]*>([^<]+)<\/a>/i,
+      // Any meaningful text (not too short, not too long)
+      /([^<>]{12,60})(?:\s*<|$)/,
+      // Meme titles or descriptions
+      /(KEVIN|MEME|FUNNY|COOL|BEST)[^<>]{5,40}/i
+    ];
+
+    for (const pattern of patterns) {
+      const match = beforeText.match(pattern);
+      if (match && match[1]) {
+        const title = match[1].trim();
+        // Filter out unwanted content
+        if (!title.includes('meta') && !title.includes('property') && !title.includes('og:') &&
+            !title.startsWith('{') && !title.startsWith('"') && title.length > 5) {
+          return title;
+        }
+      }
+    }
+
+    return undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function createFeaturedContent(
+  images: Array<{ id: string; url: string; title?: string; }>,
+  videos: Array<{ id: string; url: string; thumbnailUrl: string; }>,
+  gifs: Array<{ id: string; url: string; }>
+) {
+  const featured: Array<{
+    id: string;
+    title: string;
+    type: 'image' | 'video' | 'gif';
+    imageUrl: string;
+    videoUrl?: string;
+    description: string;
+    category: string;
+  }> = [];
+
+  const timestamp = Date.now();
+
+  // Create rotation for variety
+  const rotationOffset = Math.floor(timestamp / (1000 * 60 * 5)); // Rotate every 5 minutes
+
+  // Add videos first (they're more engaging)
+  videos.slice(0, 3).forEach((video, index) => {
+    const titles = [
+      "🎬 LATEST KEVIN VIDEO",
+      "🎥 KEVIN IN ACTION",
+      "📹 FRESH KEVIN CLIP"
+    ];
+
+    featured.push({
+      id: `live-video-${timestamp}-${index}`,
+      title: titles[index] || `KEVIN VIDEO #${index + 1}`,
+      type: "video",
+      imageUrl: video.thumbnailUrl,
+      videoUrl: video.id,
+      description: "Live video from Kevin Depot",
+      category: "Community"
+    });
+  });
+
+  // Add images with rotation
+  const rotatedImages = [
+    ...images.slice(rotationOffset % images.length),
+    ...images.slice(0, rotationOffset % images.length)
+  ];
+
+  rotatedImages.slice(0, 10).forEach((image, index) => {
+    const titles = [
+      '🔴 LATEST KEVIN',
+      '🆕 FRESH UPLOAD',
+      '⚡ NEW KEVIN DROP',
+      '🎨 COMMUNITY PICK',
+      '🔥 HOT KEVIN',
+      '✨ KEVIN SPECIAL',
+      '🚀 TRENDING NOW',
+      '💎 KEVIN GEM',
+      '🎯 KEVIN TARGET',
+      '⭐ KEVIN STAR'
+    ];
+
+    featured.push({
+      id: `live-kevin-${timestamp}-${index}`,
+      title: image.title || `${titles[index % titles.length]} #${index + 1}`,
+      type: "image",
+      imageUrl: image.url,
+      description: "Live from Kevin Depot",
+      category: "Live Update"
+    });
+  });
+
+  // Add GIFs
+  gifs.slice(0, 3).forEach((gif, index) => {
+    featured.push({
+      id: `live-gif-${timestamp}-${index}`,
+      title: `🎞️ KEVIN GIF ${index + 1}`,
+      type: "gif",
+      imageUrl: gif.url,
+      description: "Live animated GIF from Kevin Depot",
+      category: "Community"
+    });
+  });
+
+  return featured;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // API route for Kevin stamp data
   app.get("/api/stamps", (req, res) => {
@@ -99,174 +472,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // API route for community memes
   app.get("/api/community", async (req, res) => {
+    // Add CORS headers for client-side requests
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
     try {
       // Fetch live data from Kevin Depot with timeout
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-      
+      const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout for better reliability
+
+      console.log('🔄 Fetching community data from memedepot.com...');
+
       const response = await fetch('https://memedepot.com/d/kevin-depot', {
         signal: controller.signal,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; KevinBot/1.0)'
+          'User-Agent': 'Mozilla/5.0 (compatible; KevinGallery/2.1)',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'en-US,en;q=0.5',
+          'Accept-Encoding': 'gzip, deflate',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache',
+          'Referer': 'https://memedepot.com/'
         }
       });
       clearTimeout(timeoutId);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      
+
       const html = await response.text();
+      console.log(`✅ Fetched HTML content: ${html.length} characters`);
       
-      // Parse the actual stats from the page
-      let totalMemes = 133; // Default fallback
-      let totalViews = 904; // Default fallback
-      
-      // Extract meme count from the HTML
-      const memeCountMatch = html.match(/(\d+)\s*Memes/);
-      if (memeCountMatch) {
-        totalMemes = parseInt(memeCountMatch[1]);
-      }
-      
-      // Extract view count from the HTML
-      const viewCountMatch = html.match(/(\d+)\s*Views/);
-      if (viewCountMatch) {
-        totalViews = parseInt(viewCountMatch[1]);
-      }
-      
-      // Parse recent memes from the page with more comprehensive patterns
-      // Look for all image delivery URLs
-      const imageMatches = html.match(/https:\/\/memedepot\.com\/cdn-cgi\/imagedelivery\/[^"\s<>]+/g) || [];
-      // Also look for direct image URLs that might be in different formats
-      const directImageMatches = html.match(/https:\/\/memedepot\.com\/[^"\s<>]*\.(jpg|jpeg|png|gif|webp)/gi) || [];
-      // Video thumbnails
-      const videoMatches = html.match(/https:\/\/customer-hls7a0n7rbjgz9uk\.cloudflarestream\.com\/[^/"\s<>]+\/thumbnails\/thumbnail\.jpg/g) || [];
-      // Alternative video patterns
-      const altVideoMatches = html.match(/https:\/\/[^"\s<>]*cloudflarestream[^"\s<>]*\.(mp4|webm|mov)/gi) || [];
-      
-      // Combine all image sources
-      const allImageMatches = [...imageMatches, ...directImageMatches];
-      
-      // Debug logging to see what we're actually finding
-      console.log('\n=== HTML PARSING DEBUG ===');
-      console.log('HTML length:', html.length);
-      console.log('Image delivery URLs found:', imageMatches.length);
-      console.log('Direct image URLs found:', directImageMatches.length);
-      console.log('Video thumbnail URLs found:', videoMatches.length);
-      console.log('Alt video URLs found:', altVideoMatches.length);
-      console.log('Sample images:', allImageMatches.slice(0, 5));
-      console.log('Sample videos:', videoMatches.slice(0, 3));
-      console.log('=========================\n');
-      
-      // Get unique image IDs to avoid duplicates - more flexible extraction
-      const uniqueImages = Array.from(new Set(
-        allImageMatches
-          .filter(url => {
-            // Filter out small images, logos, but be more inclusive
-            return !url.includes('logo') && 
-                   !url.includes('width=200') && 
-                   !url.includes('width=100') &&
-                   !url.includes('avatar') &&
-                   !url.includes('icon');
-          })
-          .map(url => {
-            // Try multiple patterns to extract image IDs
-            let idMatch = url.match(/\/([a-f0-9-]{8,})\/(?:width|public|$)/);
-            if (!idMatch) {
-              idMatch = url.match(/\/([a-f0-9-]{8,})\.(jpg|jpeg|png|gif|webp)/i);
-            }
-            if (!idMatch) {
-              idMatch = url.match(/\/([a-f0-9-]{8,})/); // Fallback - any long hex string
-            }
-            return idMatch ? idMatch[1] : null;
-          })
-          .filter(Boolean)
-      ));
-      
-      // Count GIFs specifically - look in all image sources
-      const gifMatches = allImageMatches.filter(url => url.includes('.gif'));
-      
-      // Count different media types
-      const totalImages = Math.max(0, uniqueImages.length);
-      const totalVideos = videoMatches.length;
-      const totalGifs = gifMatches.length;
-      
-      // Extract featured content (mix of images and videos)
-      const featured = [];
-      
-      // Debug what unique images we found
-      console.log('Unique images extracted:', {
-        totalUnique: uniqueImages.length,
-        allIds: uniqueImages
+      // Enhanced HTML parsing with comprehensive content extraction
+      const parseResult = await parseKevinDepotHTML(html);
+      console.log('📊 Parsing results:', {
+        stats: parseResult.stats,
+        contentCounts: {
+          images: parseResult.content.images.length,
+          videos: parseResult.content.videos.length,
+          gifs: parseResult.content.gifs.length,
+          total: parseResult.content.featured.length
+        }
       });
 
-      // Create rotation based on time to add variety even with same content
-      const timeRotation = Math.floor(Date.now() / (1000 * 60 * 5)); // Rotate every 5 minutes
-      const rotatedImages = [...uniqueImages.slice(timeRotation % uniqueImages.length), ...uniqueImages.slice(0, timeRotation % uniqueImages.length)];
-      
-      // Get recent images using unique IDs (take more for variety)
-      const recentImages = rotatedImages
-        .slice(0, 8) // Take more images
-        .map((imageId, index) => {
-          // Create more descriptive titles with rotation
-          const titles = [
-            '🔴 LATEST KEVIN',
-            '🆕 FRESH UPLOAD',
-            '⚡ NEW KEVIN DROP',
-            '🎨 COMMUNITY PICK',
-            '🔥 HOT KEVIN',
-            '✨ KEVIN SPECIAL',
-            '🚀 TRENDING NOW',
-            '💎 KEVIN GEM'
-          ];
-          
-          return {
-            id: `live-kevin-${Date.now()}-${index}`,
-            title: `${titles[index % titles.length]} #${index + 1}`,
-            type: "image" as const,
-            imageUrl: `https://memedepot.com/cdn-cgi/imagedelivery/naCPMwxXX46-hrE49eZovw/${imageId}/width=400`,
-            description: "Live from Kevin Depot",
-            category: "Live Update"
-          };
-        });
-      
-      // Get recent videos if available - take multiple videos
-      const recentVideos = videoMatches.slice(0, 3).map((videoUrl, index) => {
-        const videoId = videoUrl.match(/([a-f0-9-]+)\/thumbnails/)?.[1] || "";
-        const videoTitles = [
-          "🎬 LATEST KEVIN VIDEO",
-          "🎥 KEVIN IN ACTION", 
-          "📹 FRESH KEVIN CLIP"
-        ];
-        
-        return {
-          id: `live-video-${Date.now()}-${index}`,
-          title: videoTitles[index] || `KEVIN VIDEO #${index + 1}`,
-          type: "video" as const,
-          imageUrl: videoUrl, // Use thumbnail
-          videoUrl: videoId,
-          description: "Live video from Kevin Depot",
-          category: "Community"
-        };
-      });
-      
-      featured.push(...recentVideos);
-      
-      featured.push(...recentImages);
-      
-      // Add recent GIFs if we have any
-      const recentGifs = gifMatches.slice(0, 2).map((gifUrl, index) => {
-        return {
-          id: `live-gif-${Date.now()}-${index}`,
-          title: `🎞️ KEVIN GIF ${index + 1}`,
-          type: "gif" as const,
-          imageUrl: gifUrl.replace('/width=3840', '/width=400').replace('/width=1920', '/width=400'),
-          description: "Live GIF from Kevin Depot",
-          category: "Community"
-        };
-      });
-      
-      featured.push(...recentGifs);
+      const {
+        totalMemes,
+        totalViews,
+        totalVideos,
+        totalGifs,
+        totalImages
+      } = parseResult.stats;
+
+      const featured = parseResult.content.featured;
       
       res.json({
         totalMemes,

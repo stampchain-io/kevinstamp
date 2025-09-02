@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { communityMemes, filterMemesByType, type CommunityMeme } from "../data/community-memes";
 import { CommunityData } from "@shared/schema";
 import { useLanguage } from '../lib/language-context';
@@ -6,19 +6,39 @@ import { useCommunityData, useAPIHealth } from '../hooks/useCommunityData';
 import CommunityLoadingState, { GallerySkeleton } from './CommunityLoadingState';
 import CommunityErrorState, { NetworkErrorState, TimeoutErrorState } from './CommunityErrorState';
 import { GalleryLazyImage, default as LazyImage } from './LazyImage';
+import { Search, Filter, Grid3X3, List, SortAsc, SortDesc } from 'lucide-react';
 
 interface CommunityGalleryProps {
   showAll?: boolean;
   itemsPerPage?: number;
+  enableInfiniteScroll?: boolean;
+  enableSearch?: boolean;
+  enableAdvancedFilters?: boolean;
 }
 
-export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }: CommunityGalleryProps) {
+export default function CommunityGallery({
+  showAll = false,
+  itemsPerPage = 16,
+  enableInfiniteScroll = true,
+  enableSearch = true,
+  enableAdvancedFilters = true
+}: CommunityGalleryProps) {
   const { t } = useLanguage();
   const [filter, setFilter] = useState('all');
   const [selectedMeme, setSelectedMeme] = useState<CommunityMeme | null>(null);
   const [hoveredMeme, setHoveredMeme] = useState<CommunityMeme | null>(null);
   const [videoModal, setVideoModal] = useState<CommunityMeme | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Enhanced features state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'popular' | 'title'>('newest');
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loadedItems, setLoadedItems] = useState(itemsPerPage);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
   // Use the new robust community data hook
   const {
@@ -54,7 +74,105 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
     return meme.type === filter;
   });
   
-  const displayMemes = showAll ? filteredMemes : filteredMemes.slice(0, itemsPerPage);
+  // Enhanced filtering and sorting logic
+  const processedMemes = useMemo(() => {
+    let result = allMemes;
+
+    // Apply type filter
+    if (filter !== 'all') {
+      result = result.filter(meme => meme.type === filter);
+    }
+
+    // Apply search filter
+    if (searchTerm.trim()) {
+      const search = searchTerm.toLowerCase().trim();
+      result = result.filter(meme =>
+        meme.title.toLowerCase().includes(search) ||
+        meme.description.toLowerCase().includes(search) ||
+        meme.category.toLowerCase().includes(search)
+      );
+    }
+
+    // Apply category filter
+    if (selectedCategories.length > 0) {
+      result = result.filter(meme => selectedCategories.includes(meme.category));
+    }
+
+    // Apply sorting
+    result.sort((a, b) => {
+      switch (sortBy) {
+        case 'oldest':
+          return (a.id || '').localeCompare(b.id || '');
+        case 'popular':
+          // For now, use a simple heuristic based on title length and type
+          const aScore = (a.title.length * 0.3) + (a.type === 'video' ? 20 : a.type === 'gif' ? 15 : 10);
+          const bScore = (b.title.length * 0.3) + (b.type === 'video' ? 20 : b.type === 'gif' ? 15 : 10);
+          return bScore - aScore;
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'newest':
+        default:
+          return (b.id || '').localeCompare(a.id || '');
+      }
+    });
+
+    return result;
+  }, [allMemes, filter, searchTerm, selectedCategories, sortBy]);
+
+  // Pagination logic for infinite scroll
+  const displayMemes = useMemo(() => {
+    if (showAll || !enableInfiniteScroll) {
+      return processedMemes;
+    }
+    return processedMemes.slice(0, loadedItems);
+  }, [processedMemes, showAll, enableInfiniteScroll, loadedItems]);
+
+  // Extract unique categories for filtering
+  const availableCategories = useMemo(() => {
+    const categories = new Set(allMemes.map(meme => meme.category));
+    return Array.from(categories).sort();
+  }, [allMemes]);
+
+  // Infinite scroll handler
+  const loadMoreItems = useCallback(() => {
+    if (isLoadingMore || !enableInfiniteScroll || displayMemes.length >= processedMemes.length) {
+      return;
+    }
+
+    setIsLoadingMore(true);
+
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+      setLoadedItems(prev => Math.min(prev + itemsPerPage, processedMemes.length));
+      setIsLoadingMore(false);
+    }, 500);
+  }, [isLoadingMore, enableInfiniteScroll, displayMemes.length, processedMemes.length, itemsPerPage]);
+
+  // Intersection observer for infinite scroll
+  useEffect(() => {
+    if (!enableInfiniteScroll || !galleryRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && displayMemes.length < processedMemes.length) {
+          loadMoreItems();
+        }
+      },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+
+    const sentinel = document.createElement('div');
+    sentinel.style.height = '20px';
+    galleryRef.current.appendChild(sentinel);
+    observer.observe(sentinel);
+
+    return () => {
+      if (galleryRef.current && sentinel.parentNode) {
+        galleryRef.current.removeChild(sentinel);
+      }
+      observer.disconnect();
+    };
+  }, [enableInfiniteScroll, displayMemes.length, processedMemes.length, loadMoreItems]);
   
   // Debug logging
   useEffect(() => {
@@ -156,33 +274,133 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
 
   return (
     <div className="space-y-8">
-      {/* Filter Tabs */}
-              <div className="flex justify-center">
-          <div
-            className="flex flex-wrap gap-4"
-            role="group"
-            aria-label="Filter community content"
-          >
-            {filters.map((filterOption) => (
-              <button
-                key={filterOption.key}
-                className={`
-                  pixel-btn px-6 py-2 text-sm transition-all cursor-pointer focus-visible
-                  ${filter === filterOption.key
-                    ? 'bg-kevin-orange text-black border-kevin-orange'
-                    : 'bg-kevin-graphite text-white border-kevin-steel hover:bg-kevin-neon hover:text-black'
-                  }
-                `}
-                onClick={() => setFilter(filterOption.key)}
-                aria-pressed={filter === filterOption.key}
-                aria-label={`Filter by ${filterOption.label.toLowerCase()}`}
-              >
-                <span className="mr-2" aria-hidden="true">{filterOption.icon}</span>
-                {filterOption.label}
-              </button>
-            ))}
+      {/* Enhanced Controls Section */}
+      <div className="bg-kevin-charcoal border-2 border-kevin-orange p-6 rounded-lg">
+        <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
+          {/* Search Bar */}
+          {enableSearch && (
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-kevin-mint w-4 h-4" />
+              <input
+                type="text"
+                placeholder="Search KEVIN content..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 bg-kevin-graphite border border-kevin-steel text-white placeholder-kevin-mint focus:border-kevin-neon focus:outline-none"
+              />
+            </div>
+          )}
+
+          {/* View Mode Toggle */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`pixel-btn p-2 ${viewMode === 'grid' ? 'bg-kevin-orange text-black' : 'bg-kevin-graphite text-white'}`}
+              title="Grid View"
+            >
+              <Grid3X3 size={16} />
+            </button>
+            <button
+              onClick={() => setViewMode('list')}
+              className={`pixel-btn p-2 ${viewMode === 'list' ? 'bg-kevin-orange text-black' : 'bg-kevin-graphite text-white'}`}
+              title="List View"
+            >
+              <List size={16} />
+            </button>
+          </div>
+
+          {/* Sort Options */}
+          <div className="flex items-center gap-2">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+              className="pixel-btn bg-kevin-graphite text-white border-kevin-steel px-3 py-2"
+            >
+              <option value="newest">🆕 Newest</option>
+              <option value="oldest">📅 Oldest</option>
+              <option value="popular">🔥 Popular</option>
+              <option value="title">📝 Title</option>
+            </select>
           </div>
         </div>
+
+        {/* Advanced Filters */}
+        {enableAdvancedFilters && (
+          <div className="mt-4 pt-4 border-t border-kevin-steel">
+            <div className="flex flex-wrap gap-4 items-center">
+              {/* Type Filters */}
+              <div className="flex gap-2">
+                {filters.map((filterOption) => (
+                  <button
+                    key={filterOption.key}
+                    className={`
+                      pixel-btn px-4 py-2 text-sm transition-all cursor-pointer focus-visible
+                      ${filter === filterOption.key
+                        ? 'bg-kevin-orange text-black border-kevin-orange'
+                        : 'bg-kevin-graphite text-white border-kevin-steel hover:bg-kevin-neon hover:text-black'
+                      }
+                    `}
+                    onClick={() => setFilter(filterOption.key)}
+                    aria-pressed={filter === filterOption.key}
+                    aria-label={`Filter by ${filterOption.label.toLowerCase()}`}
+                  >
+                    <span className="mr-2" aria-hidden="true">{filterOption.icon}</span>
+                    {filterOption.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Category Filters */}
+              {availableCategories.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  <span className="text-kevin-mint text-sm font-pixel">Categories:</span>
+                  {availableCategories.map(category => (
+                    <button
+                      key={category}
+                      onClick={() => {
+                        setSelectedCategories(prev =>
+                          prev.includes(category)
+                            ? prev.filter(c => c !== category)
+                            : [...prev, category]
+                        );
+                      }}
+                      className={`pixel-btn px-3 py-1 text-xs ${
+                        selectedCategories.includes(category)
+                          ? 'bg-kevin-magenta text-white'
+                          : 'bg-kevin-graphite text-kevin-mint hover:bg-kevin-magenta hover:text-white'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {/* Clear Filters */}
+              {(searchTerm || selectedCategories.length > 0 || filter !== 'all') && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategories([]);
+                    setFilter('all');
+                    setSortBy('newest');
+                  }}
+                  className="pixel-btn px-3 py-1 text-xs bg-red-600 text-white hover:bg-red-700"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Results Summary */}
+        <div className="mt-4 text-sm text-kevin-mint">
+          Showing {displayMemes.length} of {processedMemes.length} items
+          {searchTerm && ` matching "${searchTerm}"`}
+          {selectedCategories.length > 0 && ` in categories: ${selectedCategories.join(', ')}`}
+        </div>
+      </div>
 
       {/* Video Section Message */}
       {filter === 'video' && (
@@ -226,16 +444,23 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
         </div>
       )}
 
-      {/* Gallery Grid */}
+      {/* Enhanced Gallery */}
       <div
-        className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+        ref={galleryRef}
+        className={
+          viewMode === 'grid'
+            ? "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+            : "space-y-4"
+        }
         role="grid"
         aria-label="Community gallery"
       >
         {displayMemes.map((meme, index) => (
           <div
             key={meme.id}
-            className="gallery-item bg-black border-2 border-kevin-orange p-2 cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20 focus-visible"
+            className={`gallery-item bg-black border-2 border-kevin-orange cursor-pointer transition-all duration-200 hover:border-kevin-neon hover:shadow-lg hover:shadow-kevin-orange/20 focus-visible ${
+              viewMode === 'list' ? 'flex gap-4 p-4' : 'p-2'
+            }`}
             onMouseEnter={() => setHoveredMeme(meme)}
             onMouseLeave={() => setHoveredMeme(null)}
             onClick={() => handleMemeClick(meme)}
@@ -250,18 +475,19 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
             aria-label={`${meme.title} - ${meme.type} from ${meme.category}`}
             aria-describedby={`meme-desc-${meme.id}`}
           >
-            <div className="relative">
+            <div className={`relative ${viewMode === 'list' ? 'w-32 h-24 flex-shrink-0' : ''}`}>
               <GalleryLazyImage
                 src={meme.imageUrl}
                 alt={meme.title}
+                className={viewMode === 'list' ? 'w-full h-full object-cover' : ''}
               />
-              
+
               {/* Video Play Icon */}
               {meme.type === 'video' && (
                 <div className="absolute top-2 left-2">
                   <div className="bg-black bg-opacity-70 border border-kevin-orange px-2 py-1 text-xs font-pixel flex items-center gap-1">
                     <span className="text-kevin-orange">▶</span>
-                    VIDEO
+                    <span className="hidden sm:inline">VIDEO</span>
                   </div>
                 </div>
               )}
@@ -279,30 +505,49 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
               {hoveredMeme?.id === meme.id && (
                 <div className="absolute inset-0 bg-kevin-orange bg-opacity-30 flex items-center justify-center backdrop-blur-sm">
                   <div className="text-white font-pixel text-sm bg-black bg-opacity-70 px-3 py-1 border border-kevin-orange">
-                    {meme.type === 'video' ? t.buttons.playVideo : meme.type === 'gif' ? t.buttons.viewGif : t.buttons.viewImage}
+                    {meme.type === 'video' ? '▶ PLAY' : meme.type === 'gif' ? '🎞️ VIEW' : '🖼️ VIEW'}
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="p-2">
-              <div className="font-pixel text-xs text-kevin-orange truncate flex items-center gap-1">
+            <div className={`${viewMode === 'list' ? 'flex-1 min-w-0' : 'p-2'}`}>
+              <div className="font-pixel text-xs text-kevin-orange truncate flex items-center gap-1 mb-1">
                 {meme.category === "Live Update" && <span className="text-kevin-neon">🔴</span>}
-                {meme.title}
+                <span className="font-bold">{meme.title}</span>
+                <span className="text-kevin-steel">•</span>
+                <span className="text-kevin-mint">{meme.type.toUpperCase()}</span>
               </div>
-              <div className="text-xs text-white truncate">
-                {meme.description}
+              <div className={`text-xs text-white ${viewMode === 'list' ? 'mb-2' : 'truncate'}`}>
+                {viewMode === 'list' ? meme.description : meme.description.length > 40 ? meme.description.substring(0, 40) + '...' : meme.description}
               </div>
-              <div className="text-xs text-kevin-mint">
-                {meme.category}
+              <div className="text-xs text-kevin-mint flex items-center justify-between">
+                <span>{meme.category}</span>
+                {meme.category === "Live Update" && (
+                  <span className="text-xs text-kevin-neon animate-pulse">● LIVE</span>
+                )}
               </div>
             </div>
           </div>
         ))}
 
+        {/* Infinite Scroll Loading Indicator */}
+        {isLoadingMore && (
+          <div className={`gallery-item bg-kevin-graphite border-2 border-kevin-steel p-4 flex items-center justify-center ${
+            viewMode === 'list' ? 'w-full' : ''
+          }`}>
+            <div className="text-center">
+              <div className="animate-spin w-8 h-8 border-2 border-kevin-orange border-t-transparent rounded-full mx-auto mb-2"></div>
+              <div className="text-kevin-mint font-pixel text-sm">Loading more KEVIN content...</div>
+            </div>
+          </div>
+        )}
+
         {/* Load More / Visit Depot Button */}
-        {!showAll && displayMemes.length >= itemsPerPage && (
-          <div className="gallery-item bg-kevin-graphite border-2 border-kevin-neon p-4 cursor-pointer flex items-center justify-center focus-visible">
+        {(!showAll && !enableInfiniteScroll && displayMemes.length >= itemsPerPage) && (
+          <div className={`gallery-item bg-kevin-graphite border-2 border-kevin-neon p-4 cursor-pointer flex items-center justify-center focus-visible ${
+            viewMode === 'list' ? 'w-full' : ''
+          }`}>
             <a
               href="https://memedepot.com/d/kevin-depot"
               target="_blank"
@@ -314,6 +559,20 @@ export default function CommunityGallery({ showAll = false, itemsPerPage = 16 }:
               <div className="font-pixel text-xs text-white">MORE</div>
               <div className="font-pixel text-xs text-kevin-neon mt-2">VISIT DEPOT</div>
             </a>
+          </div>
+        )}
+
+        {/* End of Results Message */}
+        {displayMemes.length >= processedMemes.length && processedMemes.length > 0 && (
+          <div className={`gallery-item bg-kevin-charcoal border-2 border-kevin-steel p-4 text-center ${
+            viewMode === 'list' ? 'w-full' : ''
+          }`}>
+            <div className="text-kevin-mint font-pixel text-sm">
+              🎯 You've reached the end of KEVIN content
+            </div>
+            <div className="text-kevin-steel text-xs mt-1">
+              Check back later for fresh uploads!
+            </div>
           </div>
         )}
       </div>
