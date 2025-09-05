@@ -16,7 +16,7 @@ const EMAIL_CONFIG = {
 
 // Create transporter
 const createTransporter = () => {
-  return nodemailer.createTransporter({
+  return nodemailer.createTransport({
     ...EMAIL_CONFIG,
     // Debug logging in development
     debug: process.env.NODE_ENV === 'development',
@@ -133,7 +133,7 @@ export const sendInquiryEmail = async (inquiry: KevinInquiry): Promise<boolean> 
       // Add reply-to for easy response
       replyTo: inquiry.email,
       // Priority for high-value inquiries
-      priority: inquiry.budgetRange === '10+' ? 'high' : 'normal',
+      priority: (inquiry.budgetRange === '10+' ? 'high' : 'normal') as 'high' | 'normal' | 'low',
       headers: {
         'X-Kevin-Inquiry-ID': inquiry.id,
         'X-Budget-Range': inquiry.budgetRange,
@@ -144,7 +144,7 @@ export const sendInquiryEmail = async (inquiry: KevinInquiry): Promise<boolean> 
     const info = await transporter.sendMail(mailOptions);
 
     console.log('✅ Email sent successfully:', {
-      messageId: info.messageId,
+      messageId: info && 'messageId' in info ? info.messageId : 'N/A',
       inquiryId: inquiry.id,
       recipient: 'enquiries@stampchain.io',
       budgetRange: inquiry.budgetRange

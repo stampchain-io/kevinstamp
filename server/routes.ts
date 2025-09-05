@@ -431,7 +431,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`⚠️ SuperEX returned ${superExResponse.status}, using simulated data`);
         }
       } catch (error) {
-        console.log("❌ SuperEX data unavailable, using simulated data:", error.message);
+        console.log("❌ SuperEX data unavailable, using simulated data:", error instanceof Error ? error.message : String(error));
       }
       
       // Simulate some dynamic values (in a real implementation, these would come from OpenStamp)
