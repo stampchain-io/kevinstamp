@@ -1,0 +1,247 @@
+import type { KevinInquiry } from '@shared/schema';
+
+// MailChannels REST API configuration
+const MAILCHANNELS_CONFIG = {
+  apiEndpoint: 'https://api.mailchannels.net/tx/v1/send',
+  apiKey: process.env.MAILCHANNELS_API_KEY,
+  fromEmail: process.env.FROM_EMAIL || 'noreply@kevinstamp.com',
+  fromName: 'Kevin Stamp Website',
+  recipientEmail: process.env.RECIPIENT_EMAIL || 'enquiries@stampchain.io'
+};
+
+// MailChannels API client
+const sendMailChannelsEmail = async (emailData: {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
+}): Promise<{ success: boolean; messageId?: string; error?: string }> => {
+  try {
+    const payload = {
+      personalizations: [
+        {
+          to: [{ email: emailData.to }],
+          ...(emailData.replyTo && { reply_to: { email: emailData.replyTo } })
+        }
+      ],
+      from: {
+        email: MAILCHANNELS_CONFIG.fromEmail,
+        name: MAILCHANNELS_CONFIG.fromName
+      },
+      subject: emailData.subject,
+      content: [
+        {
+          type: 'text/plain',
+          value: emailData.text
+        },
+        {
+          type: 'text/html',
+          value: emailData.html
+        }
+      ],
+      ...(emailData.headers && { headers: emailData.headers })
+    };
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    // Add API key if available (for authenticated sending)
+    if (MAILCHANNELS_CONFIG.apiKey) {
+      headers['Authorization'] = `Bearer ${MAILCHANNELS_CONFIG.apiKey}`;
+    }
+
+    const response = await fetch(MAILCHANNELS_CONFIG.apiEndpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`MailChannels API error: ${response.status} - ${errorText}`);
+    }
+
+    // MailChannels returns 202 for successful queue
+    const messageId = response.headers.get('x-message-id') || `mc_${Date.now()}`;
+    
+    return {
+      success: true,
+      messageId
+    };
+
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
+    };
+  }
+};
+
+// Email templates (preserved from original implementation)
+const createInquiryEmailHtml = (inquiry: KevinInquiry): string => {
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <style>
+        body { font-family: 'Courier New', monospace; background: #000; color: #fff; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: linear-gradient(45deg, #ff6b35, #8b5cf6); padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .content { background: #1a1a1a; padding: 20px; border: 2px solid #ff6b35; border-radius: 10px; }
+        .field { margin-bottom: 15px; }
+        .label { color: #ff6b35; font-weight: bold; font-family: 'Courier New', monospace; }
+        .value { background: #2a2a2a; padding: 10px; border-radius: 5px; margin-top: 5px; }
+        .footer { margin-top: 20px; padding-top: 20px; border-top: 1px solid #333; color: #666; }
+        .terminal { font-family: 'Courier New', monospace; background: #000; color: #00ff41; padding: 10px; border-radius: 5px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin: 0; color: white; font-family: 'Courier New', monospace;">🎯 NEW KEVIN STAMP INQUIRY</h1>
+          <p style="margin: 5px 0 0 0; color: white; opacity: 0.9;">Exclusive Collector Interest</p>
+        </div>
+
+        <div class="content">
+          <div class="terminal">
+            <div>&gt; KEVIN_STAMP_INQUIRY.EXE</div>
+            <div>&gt; Processing inquiry from ${inquiry.name}</div>
+            <div>&gt; Timestamp: ${inquiry.createdAt.toISOString()}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">👤 NAME:</div>
+            <div class="value">${inquiry.name}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">📧 EMAIL:</div>
+            <div class="value">${inquiry.email}</div>
+          </div>
+
+          <div class="field">
+            <div class="label">🎯 BUDGET RANGE:</div>
+            <div class="value">${inquiry.budgetRange} BTC</div>
+          </div>
+
+          <div class="field">
+            <div class="label">💬 MOTIVATION:</div>
+            <div class="value" style="white-space: pre-wrap;">${inquiry.motivation}</div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <p><strong>⚠️ ACTION REQUIRED:</strong> This inquiry needs personal review within 48-72 hours.</p>
+          <p><strong>💡 REMINDER:</strong> Kevin stamps are exclusive collectibles, not publicly traded commodities.</p>
+          <p style="margin-top: 15px; font-size: 12px;">
+            Generated by Kevin Stamp Website<br>
+            Feature, not a bug. 🐛
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+};
+
+const createInquiryEmailText = (inquiry: KevinInquiry): string => {
+  return `
+🎯 NEW KEVIN STAMP INQUIRY
+==========================
+
+> KEVIN_STAMP_INQUIRY.EXE
+> Processing inquiry from ${inquiry.name}
+> Timestamp: ${inquiry.createdAt.toISOString()}
+
+👤 NAME: ${inquiry.name}
+📧 EMAIL: ${inquiry.email}
+🎯 BUDGET RANGE: ${inquiry.budgetRange} BTC
+
+💬 MOTIVATION:
+${inquiry.motivation}
+
+⚠️ ACTION REQUIRED: This inquiry needs personal review within 48-72 hours.
+💡 REMINDER: Kevin stamps are exclusive collectibles, not publicly traded commodities.
+
+Generated by Kevin Stamp Website
+Feature, not a bug. 🐛
+  `;
+};
+
+// Send inquiry email using MailChannels
+export const sendInquiryEmail = async (inquiry: KevinInquiry): Promise<boolean> => {
+  try {
+    const result = await sendMailChannelsEmail({
+      to: MAILCHANNELS_CONFIG.recipientEmail,
+      subject: `🎯 NEW KEVIN STAMP INQUIRY - ${inquiry.name} (${inquiry.budgetRange} BTC)`,
+      text: createInquiryEmailText(inquiry),
+      html: createInquiryEmailHtml(inquiry),
+      replyTo: inquiry.email,
+      headers: {
+        'X-Kevin-Inquiry-ID': inquiry.id,
+        'X-Budget-Range': inquiry.budgetRange,
+        'X-Source': 'kevin-stamp-website',
+        'X-Priority': inquiry.budgetRange === '10+' ? 'high' : 'normal'
+      }
+    });
+
+    if (result.success) {
+      console.log('✅ Email sent successfully via MailChannels:', {
+        messageId: result.messageId,
+        inquiryId: inquiry.id,
+        recipient: MAILCHANNELS_CONFIG.recipientEmail,
+        budgetRange: inquiry.budgetRange
+      });
+      return true;
+    } else {
+      console.error('❌ Failed to send inquiry email via MailChannels:', {
+        error: result.error,
+        inquiryId: inquiry.id,
+        recipient: MAILCHANNELS_CONFIG.recipientEmail
+      });
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ Failed to send inquiry email:', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      inquiryId: inquiry.id,
+      recipient: MAILCHANNELS_CONFIG.recipientEmail
+    });
+
+    // Don't throw - we don't want email failures to break the form submission
+    return false;
+  }
+};
+
+// Test email connection for development
+export const testEmailConnection = async (): Promise<boolean> => {
+  try {
+    // Test with a minimal email
+    const testResult = await sendMailChannelsEmail({
+      to: MAILCHANNELS_CONFIG.recipientEmail,
+      subject: '🧪 MailChannels Test - Kevin Stamp Website',
+      text: 'This is a test email to verify MailChannels integration.',
+      html: '<p>This is a test email to verify MailChannels integration.</p>'
+    });
+
+    if (testResult.success) {
+      console.log('✅ MailChannels service connection verified');
+      return true;
+    } else {
+      console.error('❌ MailChannels service connection failed:', testResult.error);
+      return false;
+    }
+  } catch (error) {
+    console.error('❌ MailChannels service connection failed:', error);
+    return false;
+  }
+};
+
+export default {
+  sendInquiryEmail,
+  testEmailConnection
+};

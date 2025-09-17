@@ -1,30 +1,86 @@
-import nodemailer from 'nodemailer';
 import type { KevinInquiry } from '@shared/schema';
 
-// Email configuration - can be moved to environment variables for production
-const EMAIL_CONFIG = {
-  host: process.env.SMTP_HOST || 'smtp.gmail.com',
-  port: parseInt(process.env.SMTP_PORT || '587'),
-  secure: false, // true for 465, false for other ports
-  auth: {
-    user: process.env.SMTP_USER || 'your-email@gmail.com',
-    pass: process.env.SMTP_PASS || 'your-app-password'
-  },
-  // Additional options for Gmail
-  service: process.env.SMTP_SERVICE || 'gmail'
+// MailChannels REST API configuration for container deployment
+const MAILCHANNELS_CONFIG = {
+  apiEndpoint: 'https://api.mailchannels.net/tx/v1/send',
+  apiKey: process.env.MAILCHANNELS_API_KEY,
+  fromEmail: process.env.FROM_EMAIL || 'noreply@kevinstamp.com',
+  fromName: 'Kevin Stamp Website',
+  recipientEmail: process.env.RECIPIENT_EMAIL || 'enquiries@stampchain.io'
 };
 
-// Create transporter
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    ...EMAIL_CONFIG,
-    // Debug logging in development
-    debug: process.env.NODE_ENV === 'development',
-    logger: process.env.NODE_ENV === 'development'
-  });
+// MailChannels API client
+const sendMailChannelsEmail = async (emailData: {
+  to: string;
+  subject: string;
+  text: string;
+  html: string;
+  replyTo?: string;
+  headers?: Record<string, string>;
+}): Promise<{ success: boolean; messageId?: string; error?: string }> => {
+  try {
+    const payload = {
+      personalizations: [
+        {
+          to: [{ email: emailData.to }],
+          ...(emailData.replyTo && { reply_to: { email: emailData.replyTo } })
+        }
+      ],
+      from: {
+        email: MAILCHANNELS_CONFIG.fromEmail,
+        name: MAILCHANNELS_CONFIG.fromName
+      },
+      subject: emailData.subject,
+      content: [
+        {
+          type: 'text/plain',
+          value: emailData.text
+        },
+        {
+          type: 'text/html',
+          value: emailData.html
+        }
+      ],
+      ...(emailData.headers && { headers: emailData.headers })
+    };
+
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    // Add API key if available (for authenticated sending)
+    if (MAILCHANNELS_CONFIG.apiKey) {
+      headers['Authorization'] = `Bearer ${MAILCHANNELS_CONFIG.apiKey}`;
+    }
+
+    const response = await fetch(MAILCHANNELS_CONFIG.apiEndpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`MailChannels API error: ${response.status} - ${errorText}`);
+    }
+
+    // MailChannels returns 202 for successful queue
+    const messageId = response.headers.get('x-message-id') || `mc_${Date.now()}`;
+    
+    return {
+      success: true,
+      messageId
+    };
+
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
+    };
+  }
 };
 
-// Email templates
+// Email templates (preserved from original KEVIN implementation)
 const createInquiryEmailHtml = (inquiry: KevinInquiry): string => {
   return `
     <!DOCTYPE html>
@@ -116,46 +172,44 @@ Feature, not a bug. 🐛
   `;
 };
 
-// Send inquiry email
+// Send inquiry email using MailChannels (maintains original API)
 export const sendInquiryEmail = async (inquiry: KevinInquiry): Promise<boolean> => {
   try {
-    const transporter = createTransporter();
-
-    // Verify connection configuration
-    await transporter.verify();
-
-    const mailOptions = {
-      from: `"Kevin Stamp Website" <${EMAIL_CONFIG.auth.user}>`,
-      to: 'enquiries@stampchain.io',
+    const result = await sendMailChannelsEmail({
+      to: MAILCHANNELS_CONFIG.recipientEmail,
       subject: `🎯 NEW KEVIN STAMP INQUIRY - ${inquiry.name} (${inquiry.budgetRange} BTC)`,
       text: createInquiryEmailText(inquiry),
       html: createInquiryEmailHtml(inquiry),
-      // Add reply-to for easy response
       replyTo: inquiry.email,
-      // Priority for high-value inquiries
-      priority: (inquiry.budgetRange === '10+' ? 'high' : 'normal') as 'high' | 'normal' | 'low',
       headers: {
         'X-Kevin-Inquiry-ID': inquiry.id,
         'X-Budget-Range': inquiry.budgetRange,
-        'X-Source': 'kevin-stamp-website'
+        'X-Source': 'kevin-stamp-website',
+        'X-Priority': inquiry.budgetRange === '10+' ? 'high' : 'normal'
       }
-    };
-
-    const info = await transporter.sendMail(mailOptions);
-
-    console.log('✅ Email sent successfully:', {
-      messageId: info && 'messageId' in info ? info.messageId : 'N/A',
-      inquiryId: inquiry.id,
-      recipient: 'enquiries@stampchain.io',
-      budgetRange: inquiry.budgetRange
     });
 
-    return true;
+    if (result.success) {
+      console.log('✅ Email sent successfully via MailChannels:', {
+        messageId: result.messageId,
+        inquiryId: inquiry.id,
+        recipient: MAILCHANNELS_CONFIG.recipientEmail,
+        budgetRange: inquiry.budgetRange
+      });
+      return true;
+    } else {
+      console.error('❌ Failed to send inquiry email via MailChannels:', {
+        error: result.error,
+        inquiryId: inquiry.id,
+        recipient: MAILCHANNELS_CONFIG.recipientEmail
+      });
+      return false;
+    }
   } catch (error) {
     console.error('❌ Failed to send inquiry email:', {
       error: error instanceof Error ? error.message : 'Unknown error',
       inquiryId: inquiry.id,
-      recipient: 'enquiries@stampchain.io'
+      recipient: MAILCHANNELS_CONFIG.recipientEmail
     });
 
     // Don't throw - we don't want email failures to break the form submission
@@ -163,15 +217,26 @@ export const sendInquiryEmail = async (inquiry: KevinInquiry): Promise<boolean> 
   }
 };
 
-// Test email function for development
+// Test email connection for development
 export const testEmailConnection = async (): Promise<boolean> => {
   try {
-    const transporter = createTransporter();
-    await transporter.verify();
-    console.log('✅ Email service connection verified');
-    return true;
+    // Test with a minimal email
+    const testResult = await sendMailChannelsEmail({
+      to: MAILCHANNELS_CONFIG.recipientEmail,
+      subject: '🧪 MailChannels Test - Kevin Stamp Website',
+      text: 'This is a test email to verify MailChannels integration.',
+      html: '<p>This is a test email to verify MailChannels integration.</p>'
+    });
+
+    if (testResult.success) {
+      console.log('✅ MailChannels service connection verified');
+      return true;
+    } else {
+      console.error('❌ MailChannels service connection failed:', testResult.error);
+      return false;
+    }
   } catch (error) {
-    console.error('❌ Email service connection failed:', error);
+    console.error('❌ MailChannels service connection failed:', error);
     return false;
   }
 };

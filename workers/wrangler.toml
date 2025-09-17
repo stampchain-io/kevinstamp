@@ -1,0 +1,15 @@
+name = "kevinstamp-email-handler"
+main = "email-handler.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+name = "kevinstamp-email-handler-prod"
+
+# Environment variables (DKIM key will be added as a secret)
+# [env.production.vars]
+# Add any non-sensitive environment variables here
+
+# Add routes after deployment
+# [[env.production.routes]]
+# pattern = "api.kevinstamp.com/*"
+# zone_name = "kevinstamp.com"

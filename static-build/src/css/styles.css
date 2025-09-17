@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(210, 25%, 7.8%);
+  --foreground: hsl(0, 0%, 100%);
+  --kevin-orange: hsl(24, 95%, 53%);
+  --kevin-charcoal: hsl(210, 25%, 7.8%);
+  --kevin-graphite: hsl(210, 20%, 17%);
+  --kevin-steel: hsl(210, 10%, 45%);
+  --kevin-mint: hsl(120, 100%, 35%);
+  --kevin-sand: hsl(25, 35%, 62%);
+  --kevin-neon: hsl(120, 100%, 50%);
+  --kevin-magenta: hsl(300, 100%, 50%);
+  --kevin-cyan: hsl(180, 100%, 50%);
+  --radius: 0;
+}
+
+/* Enhanced animations for KEVIN Gallery */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(255, 107, 53, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.8), 0 0 30px rgba(255, 107, 53, 0.4); }
+}
+
+@keyframes loading-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes lazy-kevin-flash {
+  0%, 100% { 
+    background: linear-gradient(45deg, 
+      var(--kevin-magenta) 0%, 
+      var(--kevin-orange) 25%, 
+      var(--kevin-neon) 50%, 
+      var(--kevin-cyan) 75%, 
+      var(--kevin-magenta) 100%); 
+  }
+  50% { 
+    background: linear-gradient(45deg, 
+      var(--kevin-cyan) 0%, 
+      var(--kevin-magenta) 25%, 
+      var(--kevin-orange) 50%, 
+      var(--kevin-neon) 75%, 
+      var(--kevin-cyan) 100%); 
+  }
+}
+
+/* Utility classes */
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s infinite;
+}
+
+.animate-glow {
+  animation: glow 3s infinite;
+}
+
+.loading-skeleton {
+  background: linear-gradient(90deg,
+    hsl(210, 20%, 17%) 25%,
+    hsl(210, 25%, 7.8%) 50%,
+    hsl(210, 20%, 17%) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+.lazy-kevin-flash {
+  animation: lazy-kevin-flash 2s infinite;
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Terminal styling */
+.terminal-window {
+  background: rgba(11, 15, 19, 0.95);
+  border: 2px solid var(--kevin-orange);
+  padding: 1.5rem;
+  font-family: 'Share Tech Mono', monospace;
+  position: relative;
+}
+
+.terminal-window::before {
+  content: "KEVIN.EXE v2.0 - [ BITCOIN LEGEND PROTOCOL ]";
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  background: var(--kevin-orange);
+  color: black;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* Pixel perfect styling */
+.pixel-perfect {
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.pixel-btn {
+  border: 2px solid var(--kevin-orange);
+  background: var(--kevin-graphite);
+  color: white;
+  font-family: 'Orbitron', monospace;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.pixel-btn:hover {
+  background: var(--kevin-orange);
+  color: black;
+  box-shadow: 0 0 10px var(--kevin-orange);
+}
+
+/* Scanlines effect */
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(255, 107, 53, 0.03) 2px,
+    rgba(255, 107, 53, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* Accessibility improvements */
+.focus-visible {
+  outline: 2px solid var(--kevin-neon);
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer,
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-bounce-gentle,
+  .animate-glow,
+  .loading-skeleton,
+  .lazy-kevin-flash {
+    animation: none;
+  }
+
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .terminal-window,
+  .pixel-btn {
+    border-width: 3px;
+  }
+}
+
+/* Dark mode base */
+.dark {
+  color-scheme: dark;
+}
+
+/* Responsive typography */
+@media (max-width: 768px) {
+  .font-pixel {
+    font-size: 0.875rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .matrix-rain,
+  .scanlines {
+    display: none !important;
+  }
+}

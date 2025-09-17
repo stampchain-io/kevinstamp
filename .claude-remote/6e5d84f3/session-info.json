@@ -1,0 +1,20 @@
+{
+  "session_id": "6e5d84f3-77af-473b-832e-bc22e82c1623",
+  "short_id": "6e5d84f3",
+  "created_at": "2025-09-16T19:29:29.558606",
+  "last_activity": "2025-09-16T19:29:29.558615",
+  "project_root": "/Users/Shared/repos/StampchainWorkspace/kevinstamp",
+  "status": "active",
+  "pid": 3486,
+  "lifecycle": {
+    "created_by": "session_start_hook",
+    "last_heartbeat": "2025-09-16T19:29:29.558617",
+    "heartbeat_count": 1,
+    "cleanup_scheduled": false
+  },
+  "instructions": {
+    "incoming": "Place .txt files here with prompts/commands for Claude",
+    "processed": "Files moved here after being processed",
+    "format": "filename: YYYY-MM-DD_HH-MM-SS_description.txt"
+  }
+}

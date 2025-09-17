@@ -1,0 +1,123 @@
+# Cloudflare-Optimized Dockerfile for KEVINSTAMP Node.js Application
+# Multi-stage build for optimal containerization with Cloudflare Container deployment
+
+# ================================================================================
+# Stage 1: Base dependencies and build environment
+# ================================================================================
+FROM node:20-alpine AS base
+
+# Install system dependencies required for Node.js compilation
+RUN apk add --no-cache \
+    dumb-init \
+    build-base \
+    python3 \
+    py3-pip \
+    make \
+    g++ \
+    git \
+    curl \
+    libc6-compat
+
+# Create app directory with proper ownership
+WORKDIR /app
+
+# Copy package files for dependency resolution
+COPY package*.json ./
+
+# ================================================================================
+# Stage 2: Development dependencies and build
+# ================================================================================
+FROM base AS builder
+
+# Set build-time environment variables
+ENV NODE_ENV=production
+ENV CI=true
+ENV HUSKY=0
+
+# Install all dependencies (including devDependencies for build)
+RUN npm ci --include=dev --frozen-lockfile
+
+# Copy source code for building
+COPY . .
+
+# Build the React frontend and server bundle
+# This creates:
+# - client/dist/ - Static React app
+# - dist/ - Compiled server bundle
+RUN npm run build
+
+# Clean up node_modules and reinstall only production dependencies
+RUN rm -rf node_modules && npm ci --omit=dev --frozen-lockfile
+
+# ================================================================================
+# Stage 3: Production runtime with Cloudflare optimizations
+# ================================================================================
+FROM node:20-alpine AS production
+
+# Install dumb-init for proper signal handling in containers
+RUN apk add --no-cache dumb-init curl wget
+
+# Create non-root user for enhanced security (KEVIN mascot themed)
+RUN addgroup -g 1001 -S kevin && \
+    adduser -S kevinstamp -u 1001 -G kevin -h /home/kevinstamp
+
+# Set working directory
+WORKDIR /app
+
+# Create necessary directories with proper permissions
+RUN mkdir -p /app/logs /app/tmp /app/data && \
+    chown -R kevinstamp:kevin /app
+
+# Copy production dependencies from builder
+COPY --from=builder --chown=kevinstamp:kevin /app/node_modules ./node_modules
+
+# Copy built application from builder stage
+COPY --from=builder --chown=kevinstamp:kevin /app/dist ./dist
+COPY --from=builder --chown=kevinstamp:kevin /app/client/dist ./client/dist
+
+# Copy necessary runtime files
+COPY --from=builder --chown=kevinstamp:kevin /app/server ./server
+COPY --from=builder --chown=kevinstamp:kevin /app/shared ./shared
+COPY --from=builder --chown=kevinstamp:kevin /app/attached_assets ./attached_assets
+
+# Copy configuration files
+COPY --chown=kevinstamp:kevin package*.json ./
+COPY --chown=kevinstamp:kevin tsconfig.json ./
+
+# Switch to non-root user
+USER kevinstamp
+
+# Expose application port (Cloudflare expects port 8080 by default)
+EXPOSE 8080
+
+# Set production environment variables
+ENV NODE_ENV=production
+ENV PORT=8080
+ENV HOST=0.0.0.0
+
+# Cloudflare-specific environment variables (will be set during deployment)
+ENV CLOUDFLARE_ACCOUNT_ID=""
+ENV CLOUDFLARE_KV_NAMESPACE_ID=""
+ENV CLOUDFLARE_API_TOKEN=""
+ENV MAILCHANNELS_API_KEY=""
+ENV RECIPIENT_EMAIL="enquiries@stampchain.io"
+ENV FROM_EMAIL="noreply@kevinstamp.com"
+
+# Health check optimized for Cloudflare Container health monitoring
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+# Label the image for Cloudflare Container registry
+LABEL \
+    org.opencontainers.image.title="KEVINSTAMP - Bitcoin Stamps Mascot Site" \
+    org.opencontainers.image.description="Cultural preservation site for KEVIN, the beloved Bitcoin Stamps community mascot" \
+    org.opencontainers.image.vendor="Bitcoin Stamps Community" \
+    org.opencontainers.image.source="https://github.com/stampchain-io/kevinstamp" \
+    cloudflare.deployment.type="container" \
+    cloudflare.service.name="kevinstamp"
+
+# Use dumb-init to handle signals properly in container environment
+ENTRYPOINT ["dumb-init", "--"]
+
+# Start the KEVINSTAMP application
+CMD ["node", "dist/index.js"]
